@@ -6,6 +6,7 @@
 <title>Rising Together — Walk It (Internal Review Only)</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="play.css">
+<link rel="stylesheet" href="locker.css">
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js" defer></script>
 </head>
 <body data-episode="1">
@@ -36,6 +37,75 @@
 </div>
 
 <main>
+<!-- ============ LOCKER ROOM — EPISODE 1 OPENING (2026-11-25) ============
+     Carl: "Imagine Henry, John and Tony in the high school locker room
+     before a game, the championship game, names on their back, Chofu above
+     their heads, zoom to the line of scrimmage, ball snaps. Cheers"
+     An experience, not a paragraph: scroll or tap to travel locker room →
+     tunnel → line; tap to snap the ball; the crowd rises. Painted / SVG
+     only, from behind, names on jersey backs, no faces, no likeness, no
+     voice, no dialogue, no music, no audio. Cheers are visual. -->
+<section id="locker-room" data-state="locker" aria-labelledby="lk-h">
+  <div class="lk-head">
+    <h2 id="lk-h">Episode 1 — Chofu: the championship game</h2>
+    <p class="lk-register">Imagined — to be witnessed and experienced by everyone</p>
+  </div>
+  <div class="lk-stage">
+    <!-- Beat 1: locker room -->
+    <div class="lk-scene lk-scene-locker" aria-label="Locker room. Three players from behind, names on their backs, CHOFU above their heads.">
+      <div class="lk-lockers" aria-hidden="true"><span class="lk-locker"></span><span class="lk-locker"></span><span class="lk-locker"></span><span class="lk-locker"></span><span class="lk-locker"></span><span class="lk-locker"></span></div>
+      <span class="lk-chofu" aria-hidden="true">CHOFU</span>
+      <div class="lk-bench" aria-hidden="true"></div>
+      <div class="lk-players" aria-hidden="true">
+        <span class="lk-player"><svg viewBox="0 0 74 96"><circle cx="37" cy="14" r="13" fill="#f2f0e4"/><path d="M14 40 Q37 28 60 40 L66 92 L8 92 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="3"/></svg><span class="lk-name">OKABAYASHI</span></span>
+        <span class="lk-player"><svg viewBox="0 0 74 96"><circle cx="37" cy="14" r="13" fill="#f2f0e4"/><path d="M14 40 Q37 28 60 40 L66 92 L8 92 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="3"/></svg><span class="lk-name">REED</span></span>
+        <span class="lk-player"><svg viewBox="0 0 74 96"><circle cx="37" cy="14" r="13" fill="#f2f0e4"/><path d="M14 40 Q37 28 60 40 L66 92 L8 92 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="3"/></svg><span class="lk-name">WILLIAMS</span><span class="lk-num">32</span></span>
+      </div>
+      <span class="lk-door" aria-hidden="true"></span>
+    </div>
+    <!-- Beat 2: tunnel -->
+    <div class="lk-scene lk-scene-tunnel" aria-label="Tunnel. The team walks toward the light.">
+      <div class="lk-tunnel-light" aria-hidden="true"></div>
+      <div class="lk-tunnel-walls" aria-hidden="true"></div>
+      <div class="lk-tunnel-team" aria-hidden="true">
+        <svg viewBox="0 0 52 70"><circle cx="26" cy="10" r="9" fill="#f2f0e4"/><path d="M10 28 Q26 20 42 28 L46 66 L6 66 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="2"/></svg>
+        <svg viewBox="0 0 52 70"><circle cx="26" cy="10" r="9" fill="#f2f0e4"/><path d="M10 28 Q26 20 42 28 L46 66 L6 66 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="2"/></svg>
+        <svg viewBox="0 0 52 70"><circle cx="26" cy="10" r="9" fill="#f2f0e4"/><path d="M10 28 Q26 20 42 28 L46 66 L6 66 Z" fill="#f2f0e4" stroke="#7a1f1f" stroke-width="2"/></svg>
+      </div>
+    </div>
+    <!-- Beats 3–5: line of scrimmage, snap, cheers -->
+    <div class="lk-scene lk-scene-line" aria-label="The field. Line of scrimmage, ball snaps, the crowd rises.">
+      <div class="lk-yard y1" aria-hidden="true"></div>
+      <div class="lk-yard y2" aria-hidden="true"></div>
+      <div class="lk-yard y3" aria-hidden="true"></div>
+      <div class="lk-crowd" aria-hidden="true"><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span><span class="lk-fan"></span></div>
+      <span class="lk-cheers" aria-hidden="true">CHEERS</span>
+      <div class="lk-team-line" aria-hidden="true"><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span></div>
+      <div class="lk-team-line lk-def" aria-hidden="true"><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span><span class="lk-lineman"></span></div>
+      <span class="lk-qb" aria-hidden="true"></span>
+      <span class="lk-runner" aria-hidden="true"></span>
+      <span class="lk-ball" aria-hidden="true"></span>
+      <span class="lk-scrimmage" aria-hidden="true"></span>
+      <span class="lk-huddle">Huddle breaks</span>
+    </div>
+  </div>
+  <div class="lk-controls">
+    <p class="lk-step" id="lk-step" role="status">Before the game. Quiet.</p>
+    <button type="button" id="lk-go-locker">Open the door</button>
+    <button type="button" id="lk-go-tunnel" hidden>Walk the tunnel</button>
+    <button type="button" id="lk-go-play" hidden>Snap the ball</button>
+    <button type="button" id="lk-go-cheers" hidden>Cheers</button>
+    <button type="button" id="lk-replay">Replay it</button>
+    <button type="button" id="lk-walk-on">Walk the field →</button>
+  </div>
+  <details class="lk-facts">
+    <summary>About this moment — the facts, hidden until you ask</summary>
+    <p>Chofu Vikings, Varsity Football 1971, Far East Champions, 9 wins, 1 loss — the only loss 8–18 to Yamato.</p>
+    <p>John Okabayashi — All-Conference Quarterback, Senior. Tony Reed — All-Conference Running Back, Junior. Henry Williams — Junior, running back / defensive back, Honorable Mention, jersey 32. Coaches: R. Williams, G. C. Smith, L. Deane.</p>
+    <p>Source: Hosho 1972, pp. 96–107, one visual reading, 2026-11-24 — not publication-grade, no second independent close read yet. This scene is an imagined reconstruction, painted, from behind, names on jersey backs. No photograph, no likeness, no voice, no dialogue. Living status of all three is unverified — proceed as if living.</p>
+  </details>
+</section>
+
 <!-- ============ THE STAGE: visitor is IN the scene on load ============ -->
 <div class="travel" id="travel">
   <section class="viewport" id="stage" data-episode="1" tabindex="0"
@@ -210,5 +280,6 @@
 
 <script src="app.js"></script>
 <script src="play.js"></script>
+<script src="locker.js"></script>
 </body>
 </html>

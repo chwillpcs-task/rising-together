@@ -1,6 +1,14 @@
 /* Rising Together — PLAY mode styles (2026-11-25).
    Painted CSS only. No photographs, no game art, no trademarks.
    The district is a wide street you walk; the camera follows you. */
+/* Phaser PLAY district (Episode 1, Chofu) — vendored Phaser 3.80.1, silent. */
+#phaser-wrap{margin:10px 0 18px}
+#phaser-game{width:100%;max-width:420px;height:min(78vh,680px);margin:0 auto;border:3px solid #333;border-radius:8px;background:#9db98a;overflow:hidden}
+#phaser-game canvas{margin:0 auto;display:block;touch-action:none}
+#phaser-status{margin:10px 0;padding:10px 12px;background:#eef5ee;border:2px solid #2e6b3e;border-radius:6px;font-weight:600}
+#phaser-fallback{margin:10px 0;padding:10px 12px;background:#fff8e1;border:2px solid #8a6d3b;border-radius:6px}
+.phaser-note{color:#555;font-size:.9rem}
+.play-sub{margin:18px 0 4px}
 #play{border:3px solid #2e6b3e;background:#fff;border-radius:8px;padding:14px 16px;margin:28px 0}
 #play h2{margin-top:0}
 .play-lede{max-width:70ch;color:#444}

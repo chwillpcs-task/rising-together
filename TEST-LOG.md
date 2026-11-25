@@ -6,6 +6,30 @@
 **Prototype:** `~/workspace/goals/rising-together/prototype/` — `index.html`, `styles.css`, `app.js`, `assets/`
 **Status:** Internal review only. Not publication, not launch, not a live LINE app.
 
+## Locker-room scene — tested 2026-11-25 (this round)
+
+**What changed (Carl's scene, 2026-11-25):** the Episode 1 opening is now the
+championship-game locker room as an experience, not a paragraph — `locker.css`,
+`locker.js`, `#locker-room` in `index.html`. Henry, John and Tony from behind,
+names on jersey backs, CHOFU above their heads; door opens, tunnel, zoom to
+the line of scrimmage, tap to snap the ball, play moves, crowd rises, CHEERS.
+Facts behind "About this moment" only (Hosho 1972, single visual read).
+No faces, likeness, voice, dialogue, music, or audio; cheers are visual.
+
+**Tested in this VM, 2026-11-25:** `node --check locker.js` — syntax OK.
+jsdom 24 (`/tmp/rt-locker/test-locker.js`): **19 checks passed, 0 failed.**
+Verified: locker room loads in locker state; register mark exact; three names
+on backs, jersey 32, CHOFU; no `<audio>`, no `<img>` in the scene; facts
+hidden behind details and naming Hosho; door → tunnel → line → snap → play →
+cheers → replay returns to the locker room; hidden on Episode 2, shown again
+on Episode 1. The rest of the app was not re-run in this round — see the
+polish round above (37 checks, 0 failed, before this change).
+
+**NOT tested — and therefore NOT claimed (unchanged):** no real browser run;
+no phone, no LINE, no LIFF browser run. The 2.5D-first design is **still not
+confirmed: 0 of 18 P-criteria fully passed on a device / in LINE.** Device
+test in LINE's real WebView: NOT RUN.
+
 ## Polish round — tested 2026-11-25 (this round)
 
 **What changed (Carl's corrections, 2026-11-25, applied, not asked):**

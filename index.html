@@ -178,11 +178,23 @@
 
 <!-- ============ PLAY — WALK THE DISTRICT (2026-11-25) ============
      The stage above is where you look and tap moments. This is where you
-     WALK and DO jobs, GTA/Sega-style: a walkable district, free movement,
-     multi-step substories, a visible tracker. Same pilots, played. -->
+     WALK and DO jobs: the Phaser 3 Chofu district is the PLAY mode for
+     Episode 1 — walk, talk to Miki, find the lost ball, bring it back,
+     and watch the trust heart fill and the district map light up. The
+     CSS street below holds the other Chofu jobs (Old Jiro, Aya) and the
+     full districts for Episodes 2–4, which have no Phaser scene yet.
+     Same pilots, played. Painted only, silent, no server. -->
 <section id="play" aria-labelledby="play-h">
   <h2 id="play-h">Play — walk the district</h2>
-  <p class="play-lede">Walk the street, meet someone, take a small job, do it, and watch the district change. Tap the street to walk there, use the ◀ ▶ buttons, or arrow keys. <span class="play-register">Imagined, to be witnessed and experienced by everyone.</span></p>
+  <p class="play-lede">Walk the street, meet someone, take a small job, do it, and watch the district change. Tap the district to walk there, or use arrow keys / WASD. <span class="play-register">Imagined, to be witnessed and experienced by everyone.</span></p>
+  <div id="phaser-wrap">
+    <div id="phaser-game" role="application" aria-label="Walkable Chofu district game. Tap to walk, tap Miki to talk, find the lost ball and bring it back."></div>
+    <p id="phaser-status" role="status">The Lost Ball — walk the Chofu district, talk to Miki, find the ball, bring it back.</p>
+    <p id="phaser-fallback" hidden></p>
+    <p class="phaser-note">Chofu, Episode 1 — the Phaser district. Painted, silent, no music. Progress is kept on this device only. The houses fade as you walk toward Ajinomoto Stadium.</p>
+  </div>
+  <h3 class="play-sub">More jobs in this district — walk the street</h3>
+  <p class="play-lede">The Lost Ball is played in the game above. The street below holds the other Chofu jobs, and the full districts for Episodes 2–4.</p>
   <div id="play-hud" role="status">
     <span class="play-day" id="play-day"></span>
     <span id="play-map" aria-label="Places visited"></span>
@@ -281,5 +293,7 @@
 <script src="app.js"></script>
 <script src="play.js"></script>
 <script src="locker.js"></script>
+<script src="phaser.min.js"></script>
+<script src="phaser-game.js"></script>
 </body>
 </html>

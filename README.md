@@ -35,6 +35,21 @@ Episode choice is agent-selected, pending Carl's review (see the shared brief, �
 If Carl prefers Yokosuka first on the strength of its living street and Shenmue pilgrimage,
 the evidence supports that as a defensible choice.
 
+## Locker room — Episode 1 opening (2026-11-25, Carl's scene)
+
+`locker.css`, `locker.js`, and the `#locker-room` section at the top of
+`index.html`: Henry, John and Tony in the high school locker room before the
+championship game — from behind, names on their backs (OKABAYASHI, REED,
+WILLIAMS 32), CHOFU above their heads. The visitor travels it: scroll or tap
+to move locker room → tunnel (door opens, team walks toward the light) →
+line of scrimmage (camera zooms in, huddle breaks) → tap **Snap the ball** →
+the play moves (Williams 32 breaks right) → the crowd rises, CHEERS. Replay,
+or walk on to the field stage. Facts (9–1, Far East Champions, positions,
+Hosho 1972 pp. 96–107, single visual read) live behind "About this moment"
+only. Painted / SVG only, no faces, no likeness, no voice, no dialogue, no
+music, no audio — cheers are visual. Register mark persistent in the section
+header. Hidden on Episodes 2–4, shown again on Episode 1.
+
 ## GTA/Sega-style pilots (2026-11-25)
 
 Each episode is built as a GTA/Sega-style pilot: a dense small district,

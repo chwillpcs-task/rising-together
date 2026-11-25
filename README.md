@@ -24,7 +24,9 @@ Four Episodes Shared Brief 2026-11-24 (`../episodes/shared-brief.md`).
   Japan map, Read-it, clip, talk-back and LIFF. No external CSS/JS
   libraries. No photographs, no yearbook images, no copied game or shop
   images. PLAY mode and the locker room live in their own files
-  (`play.js`/`play.css`, `locker.js`/`locker.css`); `app.js` keeps only the
+  (`play.js`/`play.css`, `locker.js`/`locker.css`); the Phaser district
+  lives in `phaser.min.js` (vendored Phaser 3.80.1) and `phaser-game.js`;
+  `app.js` keeps only the
   integration — episode switching calls `window.__rtPlaySetEpisode(n)` when
   it exists. No duplicate wiring: each button has exactly one handler.
 - The stage: scroll = travel through 5 beats per episode (field → same
@@ -240,5 +242,25 @@ No server, no personal data, no LIFF analytics claim. Retention: this page sessi
 - **First minute:** walk to Miki, take The Lost Ball, find the ball in the grass, bring it back — a complete loop in under a minute.
 
 The sibling experience-first rebuild (same day, same files) already gave the stage: visitor in the scene on load, hotspots that do something (chase, train, runway line, rain, cats, ducks), a daily job, side streets as text, an animated Japan map. PLAY mode adds what that stage did not have: free walking, multi-step jobs, and a tracker you can see fill. The two layers are complementary, not duplicates. `app.js` `switchEpisode()` now also calls `window.__rtPlaySetEpisode(n)` so the district follows the episode.
+
+**Phaser PLAY mode (2026-11-25, same day):** the Chofu district is now a
+real Phaser 3 game, not CSS. `phaser.min.js` (Phaser 3.80.1, vendored
+locally, no CDN) and `phaser-game.js` (adapted from
+`../tools/phaser-district/game.js` — same painted district, same job "The
+Lost Ball", same save key `rising-together:v1`) sit at the top of the
+`#play` section as the PLAY mode for Episode 1: walk the district, talk
+to Miki, find the lost ball on the field, bring it back — the trust heart
+fills, the district map lights up, the houses fade as you walk toward
+Ajinomoto Stadium, and finishing the job marks the day's job done in the
+stage above. Tap to walk, arrow keys / WASD, tap Miki (or E / Space) to
+talk. Silent, no server, no Service Worker. It boots lazily, pauses on
+other episodes, and hides on Episodes 2–4, which have no Phaser scene
+yet. If Phaser cannot load, the section says so honestly and the CSS
+street below still works. The CSS district is kept below as "More jobs in
+this district" — the other Chofu jobs (Old Jiro, Aya) and the full
+districts for Episodes 2–4. Verified in this VM: `node --check` on all
+scripts, local HTTP 200s, jsdom 41 checks 0 failed including a full
+play-through of The Lost Ball (see `TEST-LOG.md`). **Not yet verified on
+a real browser, a phone, or in LINE's real WebView — device test NOT RUN.**
 
 **Still not there (honest):** no real 3D, no vehicle, no other players, no multiplayer — LIFF cannot do those, and none is claimed. No music. No 2029 immersive scene. The district is 2D painted CSS, one street per episode, not an open city. The stage and the district are two separate places in one page; they do not yet share one camera or one player.

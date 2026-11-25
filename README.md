@@ -6,17 +6,40 @@
 Story team 9-shot storyboard; Visual team 7-layer stack and register system;
 Four Episodes Shared Brief 2026-11-24 (`../episodes/shared-brief.md`).
 
-## What was built
+## What was built (experience-first rebuild, 2026-11-25)
 
 `~/workspace/goals/rising-together/prototype/`
 
-- `index.html` — one page, four episodes plus two shared sections: an episode selector
-  (1–4) at the top, switching scenes without a page reload; per-episode 2.5D scene,
-  opening clip, and “Stand here” panorama; then a shared 2029 question in words only
-  and shared notes + instrumentation log.
-- `styles.css`, `app.js` — no external CSS/JS libraries. No CDN except YouTube, and only
-  on demand (see below). Episode 2–4 scenes, posters, and panoramas are painted CSS
-  (gradients) — no photographs, no yearbook images, no copied game or shop images.
+- `index.html` — one page. On load the visitor is IN an experience, not a book:
+  the locker-room opening (other team's `locker.js`/`locker.css` — locker →
+  tunnel → line, snap the ball, cheers, visual only), then a full-screen
+  painted stage that is already moving, with a tiny HUD (4-episode strip +
+  small persistent register mark) and nothing else up top. After the stage:
+  the PLAY district (other team's `play.js`/`play.css`), the 2029 question
+  in words only, a compact Talk back section, and Notes collapsed to a
+  `<details>` with the event log. No big header, no intro paragraph, no
+  episode-selector wall, no per-episode pilot essays, no YouTube harness,
+  no panorama sections, no long Pinatubo note.
+- `styles.css`, `app.js` — the stage, hotspots, daily job, side streets,
+  Japan map, Read-it, clip, talk-back and LIFF. No external CSS/JS
+  libraries. No photographs, no yearbook images, no copied game or shop
+  images. PLAY mode and the locker room live in their own files
+  (`play.js`/`play.css`, `locker.js`/`locker.css`); `app.js` keeps only the
+  integration — episode switching calls `window.__rtPlaySetEpisode(n)` when
+  it exists. No duplicate wiring: each button has exactly one handler.
+- The stage: scroll = travel through 5 beats per episode (field → same
+  ground re-dressed → housing fading house by house → Ajinomoto Stadium
+  rising → animated Japan map), drag-to-pan = walking, auto-drift and
+  parallax layers, animated silhouettes (runners run, ball rolls, kite
+  drifts), moving fog, warm faded past washing into full-colour present.
+  Hotspots (4 per episode) DO something — ball chase, pigeon steals the
+  ball, train passes, runway line appears, rain runway, tap-the-cats,
+  tap-the-ducks — max 3 short lines per moment, facts only behind "About
+  this place". One choice a day (which contact hands out the work) is the
+  return reason. "Read it" shows at most 5 one-line beats, hidden by
+  default. The 12 s silent Chofu clip is a "Watch the field move" tap,
+  poster first. 2029 stays a short text question; Pinatubo one line behind
+  "About this question".
 - `assets/` (unchanged, Episode 1 only) — `opening-clip.mp4`, 12 s, 1280×720, 132 KB,
   painted frames only, **silent by design** (no audio track, no music, no clearance needed);
   `poster-field.png`, `poster-housing.png`, `poster-stadium.png`, `poster-japan.png`

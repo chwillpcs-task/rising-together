@@ -1,5 +1,6 @@
 /* Rising Together — four-episode LIFF-ready web app, internal review only.
-   Standalone first; loadable later as a LIFF endpoint. No LIFF ID exists.
+   Standalone first; LIFF endpoint at https://chwillpcs-task.github.io/rising-together/
+   (LIFF app "Rising Together", ID 2012800911-7BPP3dHp, channel 2012800911).
    Instrumentation: client-side log only. No server, no personal data,
    no LIFF analytics claim. */
 (function () {
@@ -26,7 +27,7 @@
   var EPISODES = {
     "1": {
       name: "Chofu — the field",
-      mark: "Imagined — to bring the place alive",
+      mark: "Imagined, to be witnessed and experienced by everyone",
       beats: [
         "Beat 1 of 5 — The field",
         "Beat 2 of 5 — Track, soccer, football (same ground, re-dressed)",
@@ -40,7 +41,7 @@
     },
     "2": {
       name: "Yokosuka — the street",
-      mark: "Imagined — to bring the place alive",
+      mark: "Imagined, to be witnessed and experienced by everyone",
       beats: [
         "Beat 1 of 5 — Dobuita street",
         "Beat 2 of 5 — The harbour",
@@ -54,7 +55,7 @@
     },
     "3": {
       name: "Tachikawa — the park",
-      mark: "Imagined — to bring the place alive",
+      mark: "Imagined, to be witnessed and experienced by everyone",
       beats: [
         "Beat 1 of 5 — The airfield, 1977",
         "Beat 2 of 5 — The runways fall silent",
@@ -64,11 +65,11 @@
       ],
       what: "What you are looking at: a painted reconstruction of Tachikawa, airfield to park. " +
         "The base closed 30 September 1977 and was fully returned that year; Showa Kinen Park opened 26 October 1983 — on the record. " +
-        "The museum photograph of Akebonocho (c.1952) is not used here: permission not held."
+        "The museum photograph of Akebonocho (c.1952) is not used here."
     },
     "4": {
       name: "Tama — imagined",
-      mark: "Imagined — to bring the place alive",
+      mark: "Imagined, to be witnessed and experienced by everyone",
       beats: [
         "Beat 1 of 5 — Open grass, imagined",
         "Beat 2 of 5 — Trees and water",
@@ -106,11 +107,12 @@
 
   /* Register mark + "What am I looking at?" (per episode) */
   var registerText = document.getElementById("register-text");
+  /* Persistent register mark (Carl, 2026-11-25): the header mark never
+     changes — not between episodes, not on scroll, not on a hotspot tap.
+     "On the record" / "Not established" live inside hotspot cards only. */
   function setRegister(key) {
     if (!registerText) return;
-    if (key === "record") { registerText.textContent = "On the record"; return; }
-    if (key === "notestablished") { registerText.textContent = "Not established — we don't know this yet"; return; }
-    registerText.textContent = EPISODES[activeEpisode].mark;
+    registerText.textContent = "Imagined, to be witnessed and experienced by everyone";
   }
   var whatBtn = document.getElementById("what-am-i");
   if (whatBtn) whatBtn.addEventListener("click", function () {
@@ -397,11 +399,14 @@
      - liff.permanentLink.createUrlBy(endpointUrl + "?episode=N&hotspot=X")
        returns a LIFF URL whose liff.state carries that query, so a bot Flex
        message can re-open the LIFF app at the right episode and hotspot.
-     CURRENT LIVE STATE (2026-11-25): LIFF app 2012800911-7BPP3dHp has
-     scopes openid, profile ONLY. chat_message.write is NOT enabled.
-     Until the parent browser step adds it (see two-way-communication.md
-     §1, exact change), every send attempt in LINE will fail with 403 and
-     this code MUST say so honestly, never pretend it sent. */
+     CURRENT LIVE STATE (2026-11-25, per the progress tracker record):
+     LIFF app 2012800911-7BPP3dHp has scopes openid, profile,
+     chat_message.write. That record was not re-verified in the LINE
+     console in the polish round, so this code still checks the scope at
+     run time and says so honestly if it is missing or not granted —
+     the run-time check, not the record, decides what the visitor sees.
+     A send attempt without the scope fails with 403; this code MUST
+     say so honestly, never pretend it sent. */
   var LIFF_ID = "2012800911-7BPP3dHp";
   var LIFF_URL = "https://liff.line.me/" + LIFF_ID;
   var ENDPOINT_URL = "https://chwillpcs-task.github.io/rising-together/";
@@ -465,7 +470,7 @@
       if (banner && liffInClient) banner.hidden = true;
       if (!liffInClient) { setTalk("You opened this outside LINE's chat view. Talk-back needs the LIFF browser: open the link from inside the TASK chat in LINE. Nothing has been sent."); return; }
       if (liffScopes.indexOf("chat_message.write") === -1) {
-        setTalk("Talk-back is not switched on yet for this LIFF app: the chat_message.write permission is not enabled on it. Your words are safe here — nothing has been sent, and the Send button will tell you this instead of failing silently. The team has prepared the exact change to switch it on.");
+        setTalk("Talk-back is not switched on for this LIFF app in this session: the chat_message.write permission is not enabled or not granted here. Your words are safe here — nothing has been sent, and the Send button will tell you this instead of failing silently.");
         log("liff_scope_missing", "chat_message.write not in LIFF scopes — send will fail 403 until the console change is made");
         return;
       }

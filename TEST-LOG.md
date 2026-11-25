@@ -223,3 +223,12 @@ assets unchanged), Pages build status "built", 4 pilot sections and
 `.pilot` CSS present in the live files, "Ajinomoto Stadium" present, no
 forbidden phrases. Repo main and local files verified byte-identical (md5).
 Device test in LINE's real WebView still untested (P-01–P-18, D-01–D-22).
+
+## PLAY mode — tested 2026-11-25 (this round)
+
+**What changed:** `play.js` (new, 32 KB) + `play.css` (new, 5 KB) + `#play` section in `index.html` + one line in `app.js` `switchEpisode()` calling `window.__rtPlaySetEpisode(n)`. No other app.js behaviour changed; the sibling experience-first rebuild (stage, hotspots, daily job, side streets, Japan map) is intact underneath.
+
+**Tested in this VM, 2026-11-25:**
+- `node --check app.js` and `node --check play.js` — syntax OK.
+- jsdom 24 (Node, `/tmp/rt-play-test/test.js`, `pretendToBeVisual`): **28 checks passed, 0 failed.** Full playthrough, episode 1: play section loads; stage hotspots render (4); daily job renders; HUD shows day, 4 map dots, "Jobs done: 0 of 3"; talking to Miki starts The Lost Ball (step 2 shown); walking right with ArrowRight makes the ball target glow when near; tapping the ball advances to "Bring it back to Miki"; walking left back to Miki completes the job — counter 1 of 3, Miki ♥, map dots lit. A look-closely detail shows its one-line effect. Side street opens; pigeon tapped 3 times — "The pigeon wins." Episode switch to Yokosuka: district switches, counter resets 0 of 3, Rin present, stage hotspots re-rendered (4). Static checks: no "Carl remembers", no "present Olympic Stadium", register mark present.
+- **NOT tested — and therefore NOT claimed:** no real browser run; jsdom is not a browser (no paint/frame times, no touch). No phone, no LINE, no LIFF browser run. 2.5D-first still **not confirmed: 0 of 18 P-criteria fully passed on a device / in LINE.** The playthrough above proves the mechanics run in code; it proves nothing about how the district feels on a phone in LINE.

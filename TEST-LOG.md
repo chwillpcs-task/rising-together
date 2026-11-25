@@ -191,3 +191,35 @@ or commercial viability. Those need real-visitor testing with consent, not this 
 - The stadium is Ajinomoto Stadium — the actual name. There is no naming option.
 - A device test in LINE’s real WebView on a phone (D-01–D-22), server-side instrumentation (P-17 as originally specified), and a Flex Message test (P-11) — team work, still untested. The LIFF ID and LINE channel already exist (channel 2012800911, LIFF app 2012800911-7BPP3dHp).
 - The Hosho correction in the Drive finals was applied 24 November 2026 (C-16, Docs 01, 03, 04, 10), including the stale unknowns paragraph in Docs 03 and 04.
+
+## GTA/Sega-style pilots (2026-11-25)
+
+Pilot sections built for all four episodes, in the episode files
+(`episodes/01-chofu/episode.md` through `episodes/04-tama/episode.md`, one
+`## The pilot` section each) and as one `<section class="pilot">` per episode
+in `index.html` plus `.pilot` styles in `styles.css`. Each pilot: dense small
+district, 3 substories with named fictional contacts (labelled fictional,
+never real people), "look closely" details, "Imagined — play" side streets
+(craziness millions enjoy, short, cleanly exited, no crime/violence/
+interpersonal conflict as entertainment), calendar with one choice a day and
+weekly rotation. Register "Imagined, to be witnessed and experienced by
+everyone"; fog is the feeling of moving, not a pilot; Ajinomoto Stadium is
+the name everywhere, no "present Olympic Stadium" option; no decision stops;
+no outside contract, permit, or permission needed or claimed; no
+partnership/consent/funding claimed. Painted only; no photographs, no
+likeness/voice/dialogue for real people, no yearbook photos, no music, no
+2029 immersive scene (2029 text only, imagined future/what-if).
+Tama stays imagined, civilian-era framing only, internal only, no era
+claimed, no access claimed. Tachikawa museum photograph not used:
+permission not held, not used.
+
+Verification, 2026-11-25: `node --check app.js` OK. jsdom 24: page loads,
+4 pilot sections, 4 episodes, 12 hotspots (max 3 per episode intact),
+episode switching works (episode 2 shown, episode 1 hidden), no "Carl
+remembers" / "present Olympic Stadium" in page text. Local HTTP 200 for all
+10 URLs. Live GitHub Pages verified: all 10 URLs HTTP 200 with sizes
+matching local (index.html 61,349 B; styles.css 10,589 B; app.js 33,089 B;
+assets unchanged), Pages build status "built", 4 pilot sections and
+`.pilot` CSS present in the live files, "Ajinomoto Stadium" present, no
+forbidden phrases. Repo main and local files verified byte-identical (md5).
+Device test in LINE's real WebView still untested (P-01–P-18, D-01–D-22).

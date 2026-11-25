@@ -56,8 +56,11 @@ blank box.
 with real canvas drawing via node-canvas — it proves nothing about how
 the district feels, its frame rate, or touch handling on a phone); no
 phone run; no test in LINE's real WebView. **Device test in LINE's real
-WebView: NOT RUN.** The hosted endpoint was redeployed with this build —
-see the live check below (to be filled after redeploy).
+WebView: NOT RUN.** The hosted endpoint was redeployed with this build on
+2026-11-25: all 12 app URLs HTTP 200 with sizes matching local
+(`index.html` 24,200 B; `app.js` 48,939 B; `play.css` 5,874 B;
+`phaser.min.js` 1,181,917 B; `phaser-game.js` 26,592 B; clip 200); Pages
+build served the new `index.html` on the third poll (~40 s after push).
 
 ## Locker-room scene — tested 2026-11-25 (this round)
 

@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rising Together — Four-Episode LIFF-Ready App (Internal Review Only)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#read-mode">Skip to “Read the scene” (linear text, Episode 1)</a>
+
+<header class="topbar">
+  <div>
+    <h1>Rising Together — Four-Episode LIFF-Ready App</h1>
+    <p class="sub">Internal review only. Not publication, not launch, not a live LINE app. No LIFF ID. No consent, funding, or partnership is claimed. Four episodes: Chofu, Yokosuka, Tachikawa, Tama.</p>
+  </div>
+  <div class="register-mark" id="register-mark" role="status" aria-live="polite">
+    <span class="mark-label">Register:</span>
+    <strong id="register-text">Imagined — to bring the place alive</strong>
+    <button id="what-am-i" type="button">What am I looking at?</button>
+  </div>
+</header>
+
+<div class="episode-selector" role="group" aria-label="Choose an episode">
+  <span class="selector-label">Episode:</span>
+  <button type="button" class="episode-btn" data-episode="1" aria-pressed="true">1 · Chofu — the field</button>
+  <button type="button" class="episode-btn" data-episode="2" aria-pressed="false">2 · Yokosuka — the street</button>
+  <button type="button" class="episode-btn" data-episode="3" aria-pressed="false">3 · Tachikawa — the park</button>
+  <button type="button" class="episode-btn" data-episode="4" aria-pressed="false">4 · Tama — imagined</button>
+</div>
+
+<div class="banner banner-external" id="external-banner" role="note">
+  <strong>External-browser fallback.</strong>
+  You are opening this app in a regular browser, not the LIFF browser.
+  No LIFF features are available here, and no LIFF ID exists for this app.
+  It is built as a standalone web app that <em>could later</em> be loaded as a LIFF endpoint.
+  That loading in LINE has <strong>not</strong> been tested.
+</div>
+<div class="banner banner-offline" id="offline-banner" role="alert" hidden>
+  <strong>You appear to be offline.</strong>
+  This app has no offline mode — LIFF does not support Service Workers.
+  The still images and text below remain readable; the video will not load until you are back online.
+  No infinite spinner is used.
+</div>
+
+<nav class="nav" aria-label="App sections">
+  <a href="#episode-1" data-episode-link="1">1 · Chofu</a>
+  <a href="#episode-2" data-episode-link="2">2 · Yokosuka</a>
+  <a href="#episode-3" data-episode-link="3">3 · Tachikawa</a>
+  <a href="#episode-4" data-episode-link="4">4 · Tama</a>
+  <a href="#question-2029">2029 question (text only)</a>
+  <a href="#notes">Notes &amp; log</a>
+</nav>
+
+<main>
+<!-- ============ EPISODE 1 · CHOFU ============ -->
+<div class="episode" id="episode-1" data-episode="1">
+<section id="scene" aria-labelledby="scene-h">
+  <h2 id="scene-h">Episode 1 · Chofu field — one 2.5D scene</h2>
+  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
+  The field is a painted reconstruction. The exact spot of the old field inside today’s stadium area is <strong>not established</strong> — school, housing, airfield and stadium share the same returned 203.6-hectare tract.</p>
+
+  <div class="scene-wrap">
+    <div class="viewport" id="viewport" data-episode="1" tabindex="0" aria-label="Chofu field, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
+      <!-- 7-layer stack, Visual team §3.2. Ratios: 0.1 / 0.25 / 0.5 / 1.0 / 1.25 / 1.6 -->
+      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
+      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">▲ Mt. Fuji, from the Chofu breezeway — as described in the first yearbook</span></div>
+      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
+      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
+      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
+        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
+      </div>
+      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
+      <div class="layer layer-ui" aria-hidden="true"><span class="era">1971 — CHOFU · warm, faded past</span></div>
+
+      <!-- Hotspots: max 3 -->
+      <button class="hotspot" type="button" style="left:18%;top:62%" data-card="card-field" aria-label="Hotspot: the field, imagined, to be witnessed and experienced by everyone">1</button>
+      <button class="hotspot" type="button" style="left:52%;top:48%" data-card="card-season" aria-label="Hotspot: the 1971 season, on the record">2</button>
+      <button class="hotspot" type="button" style="left:78%;top:70%" data-card="card-spot" aria-label="Hotspot: the exact spot, not established">3</button>
+
+      <div class="zoom-label" id="zoom-label" aria-live="polite">Beat 1 of 5 — The field</div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: field → housing → stadium → Japan ↓</div>
+    <div class="scroll-track" id="scroll-track" aria-hidden="true"><div class="scroll-progress" id="scroll-progress"></div></div>
+
+    <div class="cards">
+      <article class="card" id="card-field" hidden tabindex="-1">
+        <h3>1 · The field — “Imagined, to be witnessed and experienced by everyone”</h3>
+        <p>Chofu High School opened 1963 and closed 1974, in the Kanto Mura Housing Annex. The field here is an imagined reconstruction, not a photograph, and not from Carl's eyes — nothing in this scene is from his eyes until he witnesses it. It is imagined to be witnessed and experienced by everyone.</p>
+        <p class="source">Source line: School dates: Doc 03 (revised), E90. No firsthand visual claim is made for this scene.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-season" hidden tabindex="-1">
+        <h3>2 · The 1971 season — “On the record”</h3>
+        <p>Chofu Vikings Varsity Football 1971, Far East Champions. Record 9 wins, 1 loss; only loss 8–18 to Yamato.</p>
+        <p>John Okabayashi — Quarterback, Senior, Honolulu, Hawaii.<br>
+        Tony Reed — Running Back, Junior, San Francisco, Calif.<br>
+        Henry Williams — Junior, RB / DB, Honorable Mention; jersey 32 in his portrait.</p>
+        <p>No likeness is drawn for any of the three men. No play is presented as a real play from a real game. No score for a single game is shown — only the season record.</p>
+        <p class="source">Source line: Hosho 1972, pp. 96–99 — verified visual reading, 2026-11-24. Tony Reed’s NFL career (1977–1981, Kansas City and Denver, drafted 1977 round 2 #37) is documented separately. No reliable record of John Okabayashi in the NFL was found.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-spot" hidden tabindex="-1">
+        <h3>3 · The exact spot — “Not established”</h3>
+        <p>We do not know this yet. No georeferenced source maps the school building or the old football field onto present-day parcels. The honest claim is regional only: school, housing, airfield, stadium and sports grounds share the same returned 203-hectare tract.</p>
+        <p class="source">Source line: Doc 03 (revised), §1.7, E17, E99, E109.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+    </div>
+
+    <p class="controls">
+      <button type="button" class="drift-toggle" id="drift-toggle" aria-pressed="true">Pause auto-drift</button>
+      <button type="button" class="read-toggle" id="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
+    </p>
+  </div>
+
+  <div class="read-mode" id="read-mode" hidden>
+    <h3>Read the scene — linear text, no panning or zooming required</h3>
+    <ol>
+      <li><strong>Beat 1 — The field.</strong> A painted school field, warm and faded, 1971. Imagined reconstruction. Runners are drawn figures, not likenesses.</li>
+      <li><strong>Beat 2 — Track, soccer, football.</strong> The same ground, re-dressed for three sports. No documented track-meet or soccer result is claimed. The football season is on the record: 1971 Vikings, 9–1, Far East Champions.</li>
+      <li><strong>Beat 3 — The housing disappears.</strong> Kanto Mura housing: about 880 homes, about 4,500 people. Fully returned to Japan in 1974. On the record. The fading is an imagined picture of a documented return.</li>
+      <li><strong>Beat 4 — The present stadium.</strong> Ajinomoto Stadium (Tokyo Stadium), opened 10 March 2001, on the former Kanto Mura housing area. On the record. <em>Naming question open:</em> Carl’s brief said “present Olympic Stadium”. The documented name is Ajinomoto Stadium. That naming is not decided here.</li>
+      <li><strong>Beat 5 — Japan, today.</strong> A painted map, not a satellite image. Chofu, Tachikawa, Yokosuka, Tama and Tokachi as named dots. No 2029 scene is built in this app.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="video" aria-labelledby="video-h">
+  <h2 id="video-h">Episode 1 · Opening clip — field → housing → stadium → Japan</h2>
+  <p class="lede">One short pre-rendered clip, 12 seconds, painted frames, <strong>silent by design</strong> — no audio track, no music, no clearance needed.
+  Muted autoplay is <em>attempted</em>; if the browser blocks it, the poster shows and you tap to play. <strong>Autoplay in LINE’s WebView is not claimed</strong> — it is untested (Technical team D-11/D-12).</p>
+
+  <div class="video-wrap">
+    <video id="clip" width="1280" height="720" poster="assets/poster-field.png" playsinline muted loop preload="metadata" controls>
+      <source src="assets/opening-clip.mp4" type="video/mp4">
+      <p>Your browser cannot play this video. <a href="assets/poster-field.png">See the poster still image instead.</a></p>
+    </video>
+    <button type="button" class="play-cover" id="play-cover">▶ Tap to play the opening clip (12 s, silent)</button>
+    <p class="video-note" id="video-note" role="status">Poster shown. Autoplay not assumed.</p>
+  </div>
+
+  <h3>YouTube embed — test harness, no video selected</h3>
+  <p class="lede">A YouTube iframe embed <em>can</em> be carried in a LIFF page (ordinary HTML in WKWebView / Android WebView), with <code>playsinline</code>, muted autoplay attempted, and sound on tap. No YouTube video is embedded here by default — <strong>no video was selected and no rights were cleared</strong>. Enter a video ID to test the route, or leave it empty and use the still fallback.</p>
+  <form id="yt-form" class="yt-form">
+    <label for="yt-id">YouTube video ID (11 characters, e.g. from a video you own or have permission to embed)</label>
+    <input id="yt-id" name="yt-id" inputmode="text" autocomplete="off" placeholder="— no video selected —" maxlength="20">
+    <button type="submit">Load YouTube embed</button>
+    <button type="button" id="yt-clear">Clear embed</button>
+  </form>
+  <div id="yt-slot" aria-live="polite"><p class="still-fallback">Still fallback: <a href="assets/poster-field.png">poster still image</a>. No YouTube video loaded.</p></div>
+  <p class="small">If a video is loaded: it plays inline where the WebView allows it; sound requires a tap; tapping the YouTube title or “Watch on YouTube” leaves LINE / this page for YouTube. Embedding can be disabled by the video owner, and age-restricted videos will not embed — those are YouTube limits, not LIFF limits.</p>
+</section>
+
+<section id="panorama" aria-labelledby="pano-h">
+  <h2 id="pano-h">Episode 1 · “Stand here” — one panorama viewpoint</h2>
+  <p class="lede">A single 360° painted still of the Chofu tract. Drag left or right to look around. One hotspot jump.</p>
+  <div class="pano" id="pano" tabindex="0" aria-label="Panorama: painted view of the Chofu tract. Drag to look around.">
+    <img src="assets/panorama.png" alt="Painted panorama of the Chofu tract: housing rows, a field, and Mt. Fuji in the distance. Painted reconstruction, not a photograph." draggable="false">
+    <button type="button" class="hotspot pano-hotspot" data-pano-jump="scene">Jump to the field ↓</button>
+  </div>
+  <p class="small">Panorama loads as one still image (20 KB). No WebGL, no 360° video. If the image fails to load, the text below it remains: “Chofu tract, painted panorama — image unavailable in this test.”</p>
+</section>
+</div><!-- /episode 1 -->
+
+<!-- ============ EPISODE 2 · YOKOSUKA ============ -->
+<div class="episode" id="episode-2" data-episode="2" hidden>
+<section aria-labelledby="scene-h-2">
+  <h2 id="scene-h-2">Episode 2 · Yokosuka street — one 2.5D scene</h2>
+  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
+  Dobuita is a real street in Yokosuka, outside the base — and this picture of it is <strong>painted, not a photograph</strong>. No shop is named as participating, and no shopfront here is a portrait of a real shop.</p>
+
+  <div class="scene-wrap">
+    <div class="viewport ep-yokosuka" data-episode="2" tabindex="0" aria-label="Dobuita street, Yokosuka, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
+      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
+      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Harbour light — Yokosuka, a working port town</span></div>
+      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
+      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
+      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
+        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
+      </div>
+      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
+      <div class="layer layer-ui" aria-hidden="true"><span class="era">DOBUITA · painted street, present day</span></div>
+
+      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e2-street" aria-label="Hotspot: the street, imagined, to bring the place alive">1</button>
+      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e2-real" aria-label="Hotspot: Dobuita, a real street, on the record">2</button>
+      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e2-shops" aria-label="Hotspot: the shops, not established">3</button>
+
+      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — Dobuita street</div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: street → harbour → shopfronts → sukajan → Yokosuka ↓</div>
+    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
+
+    <div class="cards">
+      <article class="card" id="card-e2-street" hidden tabindex="-1">
+        <h3>1 · The street — “Imagined — to bring the place alive”</h3>
+        <p>A painted working port-town street, outside the base. The street itself is real; the shopfronts, light, weather, and passers-by are imagined to bring the place alive. No shopfront here is a portrait of a real shop.</p>
+        <p class="source">Source line: Dobuita is a real street in Yokosuka (Research / Visual teams). The picture is painted; no photograph is used.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e2-real" hidden tabindex="-1">
+        <h3>2 · Dobuita, a real street — “On the record”</h3>
+        <p>Dobuita is a real street in Yokosuka, photographable today. Shenmue's Dobuita is a real street, modified in-game, which visitors check against reality — and a Shenmue pilgrimage to the street is noted in the research.</p>
+        <p class="source">Source line: Visual team §2 (Shenmue's Dobuita); Research team place comparison. No game image, screenshot, or logo is used here.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e2-shops" hidden tabindex="-1">
+        <h3>3 · The shops — “Not established”</h3>
+        <p>Which shops, which tailor, who is there now — not established here. No shop is named as participating, and no shop participation is presumed. No shop sign, logo, or jacket design is reproduced; per-shop permission would be required for any of those.</p>
+        <p class="source">Source line: Rights team — Yokosuka shop signs, logos, and jacket designs need per-shop permission. None sought, none given.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+    </div>
+
+    <p class="controls">
+      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
+      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
+    </p>
+  </div>
+
+  <div class="read-mode" hidden>
+    <h3>Read the scene — linear text, no panning or zooming required</h3>
+    <ol>
+      <li><strong>Beat 1 — Dobuita street.</strong> A painted street in a working port town, outside the base. Imagined reconstruction; figures are drawn silhouettes, not likenesses.</li>
+      <li><strong>Beat 2 — The harbour.</strong> Yokosuka is a working port town. Painted harbour light; no ship is named or depicted as a real vessel.</li>
+      <li><strong>Beat 3 — Shopfronts, painted.</strong> Painted shopfronts, none a portrait of a real shop. No shop is named as participating.</li>
+      <li><strong>Beat 4 — The sukajan.</strong> The souvenir jacket as a painted object, in general terms. No specific jacket design is reproduced.</li>
+      <li><strong>Beat 5 — Yokosuka, today.</strong> A painted map dot, not a satellite image. No 2029 scene is built in this app.</li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="video-h-2">
+  <h2 id="video-h-2">Episode 2 · Opening clip — Dobuita street</h2>
+  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
+  <div class="video-wrap">
+    <div class="poster-still poster-yokosuka" role="img" aria-label="Painted poster still: Dobuita street, Yokosuka. Painted, not a photograph. Opening clip not yet rendered."><span>DOBUITA · YOKOSUKA — painted poster still</span></div>
+    <button type="button" class="play-cover clip-not-rendered" data-episode="2">▶ Tap to play the opening clip</button>
+    <p class="video-note" role="status">Clip not yet rendered for Episode 2. Poster still shown. No video file exists for this episode.</p>
+  </div>
+</section>
+
+<section aria-labelledby="pano-h-2">
+  <h2 id="pano-h-2">Episode 2 · “Stand here” — one panorama viewpoint</h2>
+  <p class="lede">A painted still panorama of Dobuita street, built from CSS/painted assets — not a photograph. Drag left or right to look around. One hotspot jump.</p>
+  <div class="pano" tabindex="0" aria-label="Panorama: painted view of Dobuita street, Yokosuka. Drag to look around.">
+    <div class="pano-strip pano-strip-yokosuka" aria-hidden="true"></div>
+    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-2">Jump to the street ↓</button>
+  </div>
+  <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph.</p>
+</section>
+</div><!-- /episode 2 -->
+
+<!-- ============ EPISODE 3 · TACHIKAWA ============ -->
+<div class="episode" id="episode-3" data-episode="3" hidden>
+<section aria-labelledby="scene-h-3">
+  <h2 id="scene-h-3">Episode 3 · Tachikawa — the airfield that became a park</h2>
+  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
+  Tachikawa Air Base closed permanently on 30 September 1977 and was fully returned that year; Showa Kinen Park opened on the former airfield on 26 October 1983. The scene is <strong>painted, not a photograph</strong> — the museum photograph is not used, because permission is not held.</p>
+
+  <div class="scene-wrap">
+    <div class="viewport ep-tachikawa" data-episode="3" tabindex="0" aria-label="Tachikawa, airfield to park, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
+      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
+      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Park trees — Showa Kinen Park, present day</span></div>
+      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
+      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
+      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
+        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
+      </div>
+      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
+      <div class="layer layer-ui" aria-hidden="true"><span class="era">TACHIKAWA · airfield → park</span></div>
+
+      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e3-park" aria-label="Hotspot: the airfield becomes a park, on the record">1</button>
+      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e3-photo" aria-label="Hotspot: the museum photograph, permission not held, not used">2</button>
+      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e3-town" aria-label="Hotspot: the base town, imagined">3</button>
+
+      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — The airfield, 1977</div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: airfield → silence → return → park → Tachikawa ↓</div>
+    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
+
+    <div class="cards">
+      <article class="card" id="card-e3-park" hidden tabindex="-1">
+        <h3>1 · The airfield becomes a park — “On the record”</h3>
+        <p>Tachikawa Air Base: permanently closed 30 September 1977, full return to Japan in 1977. Showa Kinen Park opened 26 October 1983, on the former airfield.</p>
+        <p class="source">Source line: Doc 03 (revised); integrated findings §2.1/§2.3. The painted change from runway to park is an imagined picture of a documented change.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e3-photo" hidden tabindex="-1">
+        <h3>2 · The museum photograph — “Not established” for use</h3>
+        <p>A c.1952 photograph of Akebonocho, Tachikawa, is held by a museum. It is the strongest single visual anchor among the four places — and it is not shown here. <strong>Permission not held, not used.</strong> Permission is still required before ANY use of that photograph. It is described in words only; it is not shown, copied, or traced.</p>
+        <p class="source">Source line: Visual team §2; Rights team — separate museum permission required. None sought, none given.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e3-town" hidden tabindex="-1">
+        <h3>3 · The base town — “Imagined — to bring the place alive”</h3>
+        <p>The town around the base as painted. Japanese voices for Tachikawa are absent except as summarised by city and tourism sources; no community viewpoint is invented here.</p>
+        <p class="source">Source line: Integrated findings §4, unknown 12. Painted only; no photograph used.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+    </div>
+
+    <p class="controls">
+      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
+      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
+    </p>
+  </div>
+
+  <div class="read-mode" hidden>
+    <h3>Read the scene — linear text, no panning or zooming required</h3>
+    <ol>
+      <li><strong>Beat 1 — The airfield, 1977.</strong> A painted airfield in its last year. Imagined reconstruction; figures are drawn silhouettes, not likenesses.</li>
+      <li><strong>Beat 2 — The runways fall silent.</strong> Base permanently closed 30 September 1977. On the record.</li>
+      <li><strong>Beat 3 — The return.</strong> Full return to Japan, 1977. On the record. The painted emptying is an imagined picture of a documented return.</li>
+      <li><strong>Beat 4 — Showa Kinen Park, present.</strong> Park opened 26 October 1983, on the former airfield. On the record. The museum photograph is not used: permission not held.</li>
+      <li><strong>Beat 5 — Tachikawa, today.</strong> A painted map dot, not a satellite image. No 2029 scene is built in this app.</li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="video-h-3">
+  <h2 id="video-h-3">Episode 3 · Opening clip — airfield to park</h2>
+  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
+  <div class="video-wrap">
+    <div class="poster-still poster-tachikawa" role="img" aria-label="Painted poster still: Tachikawa airfield becoming Showa Kinen Park. Painted, not a photograph. Opening clip not yet rendered."><span>TACHIKAWA · AIRFIELD → PARK — painted poster still</span></div>
+    <button type="button" class="play-cover clip-not-rendered" data-episode="3">▶ Tap to play the opening clip</button>
+    <p class="video-note" role="status">Clip not yet rendered for Episode 3. Poster still shown. No video file exists for this episode.</p>
+  </div>
+</section>
+
+<section aria-labelledby="pano-h-3">
+  <h2 id="pano-h-3">Episode 3 · “Stand here” — one panorama viewpoint</h2>
+  <p class="lede">A painted still panorama of the park on the former airfield, built from CSS/painted assets — not a photograph. Drag left or right to look around. One hotspot jump.</p>
+  <div class="pano" tabindex="0" aria-label="Panorama: painted view of Showa Kinen Park, Tachikawa. Drag to look around.">
+    <div class="pano-strip pano-strip-tachikawa" aria-hidden="true"></div>
+    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-3">Jump to the park ↓</button>
+  </div>
+  <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph. The museum photograph is not used here.</p>
+</section>
+</div><!-- /episode 3 -->
+
+<!-- ============ EPISODE 4 · TAMA ============ -->
+<div class="episode" id="episode-4" data-episode="4" hidden>
+<section aria-labelledby="scene-h-4">
+  <h2 id="scene-h-4">Episode 4 · Tama — imagined, civilian-era framing only</h2>
+  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
+  This whole episode is <strong>imagined</strong>: open grass, trees, and water, as a civilian imagining of recreation. Tama is an active annex — access is ID/guest-only — and it is <strong>not depicted as publicly visitable</strong>. No facility, building, boundary, or interior is shown. The era is unresolved and none is claimed.</p>
+
+  <div class="scene-wrap">
+    <div class="viewport ep-tama" data-episode="4" tabindex="0" aria-label="Tama Recreation Area, imagined, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
+      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
+      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Hills — imagined, civilian-era framing only</span></div>
+      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
+      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
+      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
+        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
+      </div>
+      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
+      <div class="layer layer-ui" aria-hidden="true"><span class="era">TAMA · imagined — not a visit</span></div>
+
+      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e4-imagined" aria-label="Hotspot: imagined recreation, to bring the place alive">1</button>
+      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e4-era" aria-label="Hotspot: which era, not established">2</button>
+      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e4-access" aria-label="Hotspot: access, on the record, ID or guest only">3</button>
+
+      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — Open grass, imagined</div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: grass → trees → water → the era question → Tama, imagined ↓</div>
+    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
+
+    <div class="cards">
+      <article class="card" id="card-e4-imagined" hidden tabindex="-1">
+        <h3>1 · Imagined recreation — “Imagined — to bring the place alive”</h3>
+        <p>A painted imagining of open, civilian recreation — trees, grass, water — not a picture of any real facility. The scene is deliberately soft-edged: it shows its gaps rather than filling in a guess.</p>
+        <p class="source">Source line: Imagined, civilian-era framing only. No facility, building, boundary, or interior is depicted.</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e4-era" hidden tabindex="-1">
+        <h3>2 · Which era? — “Not established”</h3>
+        <p>The era Carl intends to portray at Tama is undecided — arsenal, Korean-War depot, 1980s recreation, or present. Nothing in this scene settles it, and no era is claimed. If the era question cannot be settled, the honest course is to keep this episode as an internal imagined study and not build it further.</p>
+        <p class="source">Source line: Integrated findings §3/§4, unknown 15; Story team decisions list. Era selection needs Carl's go (C-4).</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+      <article class="card" id="card-e4-access" hidden tabindex="-1">
+        <h3>3 · Access — “On the record”</h3>
+        <p>Tama is an active annex. Access is U.S. military ID or guest-only. This episode does not depict Tama as publicly visitable and claims no access. Any depiction of an annex interior would need command permission — none exists, none was sought.</p>
+        <p class="source">Source line: Research team — Tama, ID or guest-only access; Rights team — interior needs command permission (not PAS).</p>
+        <button type="button" class="close-card">Close</button>
+      </article>
+    </div>
+
+    <p class="controls">
+      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
+      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
+    </p>
+  </div>
+
+  <div class="read-mode" hidden>
+    <h3>Read the scene — linear text, no panning or zooming required</h3>
+    <ol>
+      <li><strong>Beat 1 — Open grass, imagined.</strong> A painted imagining of open grass. Imagined, civilian-era framing only; figures are drawn silhouettes, not likenesses.</li>
+      <li><strong>Beat 2 — Trees and water.</strong> Painted trees and a lake edge. Imagined; no real facility is depicted.</li>
+      <li><strong>Beat 3 — Recreation, imagined.</strong> Leisure, imagined. No real person, no real event.</li>
+      <li><strong>Beat 4 — The question of era.</strong> Which era? Not established. The episode does not pick an era by drawing one.</li>
+      <li><strong>Beat 5 — Tama, imagined — not a visit.</strong> Tama is an active annex, ID/guest-only access. This episode is internal only. No 2029 scene is built in this app.</li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="video-h-4">
+  <h2 id="video-h-4">Episode 4 · Opening clip — imagined recreation</h2>
+  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
+  <div class="video-wrap">
+    <div class="poster-still poster-tama" role="img" aria-label="Painted poster still: Tama, imagined open grass and water. Painted, not a photograph. Opening clip not yet rendered."><span>TAMA · IMAGINED — painted poster still</span></div>
+    <button type="button" class="play-cover clip-not-rendered" data-episode="4">▶ Tap to play the opening clip</button>
+    <p class="video-note" role="status">Clip not yet rendered for Episode 4. Poster still shown. No video file exists for this episode.</p>
+  </div>
+</section>
+
+<section aria-labelledby="pano-h-4">
+  <h2 id="pano-h-4">Episode 4 · “Stand here” — one panorama viewpoint</h2>
+  <p class="lede">A painted still panorama of imagined open grass and water, built from CSS/painted assets — not a photograph, and not a view from inside the annex. Drag left or right to look around. One hotspot jump.</p>
+  <div class="pano" tabindex="0" aria-label="Panorama: painted imagined view of open grass and water at Tama. Drag to look around.">
+    <div class="pano-strip pano-strip-tama" aria-hidden="true"></div>
+    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-4">Jump to the grass ↓</button>
+  </div>
+  <p class="small">Painted still panorama (CSS/painted assets), imagined. No WebGL, no 360° video, no photograph, no view from inside the annex.</p>
+</section>
+</div><!-- /episode 4 -->
+
+<!-- ============ SHARED: 2029 QUESTION — TEXT ONLY ============ -->
+<section id="question-2029" aria-labelledby="q-h" class="whatif-text">
+  <h2 id="q-h">2029 — a question in words only (no scene built)</h2>
+  <p class="whatif-banner"><strong>2029 — imagined. A what-if, not a prediction.</strong></p>
+  <p><strong>What happened — America left?</strong></p>
+  <p>This is a stakes question, not a forecast. No cause is given for “America left”, because none has been established. No immersive 2029 scene, video, or prediction is built in this app — that needs a separate Carl go (C-7), plus the nine presentation requirements and a test reading. This question sits after all four episodes, the same for each.</p>
+  <p>Three honest paths, offered, none forced:</p>
+  <ol>
+    <li><strong>Look back at what actually happened before.</strong> Kanto Mura / Chofu: fully returned to Japan in 1974. Tachikawa: base permanently closed 30 September 1977, full return 1977; the airfield became Showa Kinen Park (opened 26 October 1983). Returns are real, with real consequences — loss and remaking both.</li>
+    <li><strong>Look at what is needed now, on the record.</strong> The U.S. Embassy Tokyo Public Affairs Section once stated, in an outdated, closed funding call, a need to strengthen the relationship between USFJ and host communities. That call is evidence of a stated need — not consent, not a live invitation, not an authorisation. Its amount is not impactful for us financially.</li>
+    <li><strong>Ask what would be worth keeping.</strong> If this were the future, what would you wish had been kept? A field where two countries’ children played together; a street where a tailor and a sailor met; a park that was once an airfield.</li>
+  </ol>
+  <p class="small">The visitor is returned to the present-day fog after this question. The what-if never loops and never ends in a donation or recruitment ask.</p>
+</section>
+
+<!-- ============ SHARED: NOTES & LOG ============ -->
+<section id="notes" aria-labelledby="notes-h">
+  <h2 id="notes-h">Notes, Pinatubo lesson, and instrumentation log</h2>
+
+  <h3>Pinatubo — internal note (documented, not a scene)</h3>
+  <p>America has left a nation before. In the Philippines, Mount Pinatubo erupted in June 1991. Operation Fiery Vigil evacuated about 20,000 people from Clark Air Base and Subic Bay. Clark was turned over on 1991-11-26 and the United States military never returned to it. The Philippine Senate rejected a new bases treaty 12–11 on 1991-09-16. Subic closed on 1992-11-24, ending a 94-year U.S. military presence. <strong>That departure was political as much as it was environmental</strong> — the volcano emptied Clark, but politics decided America would not come back. This is a history lesson for the 2029 question, not a prediction about Japan, and it is not built as a scene here.</p>
+  <p class="small">Internal note on the broken-down vacancy figure (for internal notes only, not public copy): the 2023 Housing and Land Survey counted 9.0 million vacant dwellings (13.8% of housing stock), but only 3.85 million had no plan to rent or sell. Public copy must use the broken-down figure, never a single headline number for “abandoned houses”.</p>
+
+  <h3>What this app does not do</h3>
+  <ul>
+    <li>No LIFF ID, no LINE account change, no live LINE app, no Flex Message, no ShareTargetPicker, no <code>liff.closeWindow()</code> — those need a real LINE channel and a device test in LINE.</li>
+    <li>No real-time 3D, no Unity WebGL, no Genesis, no purchase, no MINI App features, no calendar, no multiplayer, no broadcast.</li>
+    <li>No likeness, illustration, animation, voice, or dialogue for John Okabayashi, Tony Reed, or Henry Williams beyond documented facts in words. No likeness, voice, or dialogue for any real person in any episode.</li>
+    <li>No yearbook photographs (no reuse licence), no music (no clearance), no archival photographs. The Tachikawa museum photograph is not used: permission not held.</li>
+    <li>No 2029 immersive scene, no Pinatubo footage.</li>
+    <li>Episodes 2–4 have no rendered opening clip — poster still plus an honest "clip not yet rendered" note, not a fake video.</li>
+  </ul>
+
+  <h3>Instrumentation — client-side log only</h3>
+  <p class="small">Events are logged to the browser console and to this list only. No server, no personal data, no LIFF analytics claim. Retention: this page session only. Episode events: <code>episode_select</code>, <code>episode_entry</code>.</p>
+  <ol id="event-log" aria-live="polite"><li>Log started — no events yet.</li></ol>
+  <p><button type="button" id="return-btn">Return to chat (simulated)</button>
+  <span class="small" id="return-note">In a real LIFF browser this would call <code>liff.closeWindow()</code>. Here there is no LIFF, so this button only logs the event and shows this note.</span></p>
+</section>
+</main>
+
+<footer>
+  <p><strong>Internal review only — Rising Together four-episode LIFF-ready app, 2026-11-24.</strong>
+  Built from: Integrated Findings §5–§6; Technical team §§4–5 (P-01–P-18, D-01–D-22); Story team 9-shot storyboard; Visual team 7-layer stack and register system; Four Episodes Shared Brief 2026-11-24.
+  See <a href="README.md">README.md</a> and <a href="TEST-LOG.md">TEST-LOG.md</a> for scope, open questions, and test results.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

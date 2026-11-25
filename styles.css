@@ -137,3 +137,8 @@ footer{padding:16px 20px;border-top:3px solid var(--accent);background:#fff;colo
   radial-gradient(ellipse 30% 40% at 30% 70%,rgba(120,160,190,.8),transparent 70%),
   radial-gradient(ellipse 25% 35% at 75% 72%,rgba(120,160,190,.7),transparent 70%),
   linear-gradient(#d8e8d8 0%,#eef4ea 30%,#8aa87e 45%,#b5d3a0 60%,#8fbf7d 100%)}
+
+/* ---- GTA/Sega-style pilots (2026-11-25) ---- */
+.pilot{border:3px solid var(--accent);background:#fff;padding:14px 16px;border-radius:6px}
+.pilot h2{margin-top:0}
+.pilot-mark{background:#eef5ee;border-left:6px solid var(--accent);padding:10px 12px}

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rising Together — Four-Episode LIFF-Ready App (Internal Review Only)</title>
 <link rel="stylesheet" href="styles.css">
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#read-mode">Skip to “Read the scene” (linear text, Episode 1)</a>
@@ -12,7 +13,7 @@
 <header class="topbar">
   <div>
     <h1>Rising Together — Four-Episode LIFF-Ready App</h1>
-    <p class="sub">Internal review only. Not publication, not launch, not a live LINE app. No LIFF ID. No consent, funding, or partnership is claimed. Four episodes: Chofu, Yokosuka, Tachikawa, Tama.</p>
+    <p class="sub">Internal review only. Not publication, not launch. LIFF app “Rising Together”, ID 2012800911-7BPP3dHp, on channel 2012800911, endpoint https://chwillpcs-task.github.io/rising-together/ — device test in LINE's real WebView still untested. Four episodes: Chofu, Yokosuka, Tachikawa, Tama.</p>
   </div>
   <div class="register-mark" id="register-mark" role="status" aria-live="polite">
     <span class="mark-label">Register:</span>
@@ -32,9 +33,7 @@
 <div class="banner banner-external" id="external-banner" role="note">
   <strong>External-browser fallback.</strong>
   You are opening this app in a regular browser, not the LIFF browser.
-  No LIFF features are available here, and no LIFF ID exists for this app.
-  It is built as a standalone web app that <em>could later</em> be loaded as a LIFF endpoint.
-  That loading in LINE has <strong>not</strong> been tested.
+  No LIFF features are available here. Talk-back, sharing, and returning to chat need LINE — open this app from the TASK chat in LINE. This banner hides itself when the app detects it is inside LINE.
 </div>
 <div class="banner banner-offline" id="offline-banner" role="alert" hidden>
   <strong>You appear to be offline.</strong>
@@ -161,6 +160,14 @@
     <button type="button" class="hotspot pano-hotspot" data-pano-jump="scene">Jump to the field ↓</button>
   </div>
   <p class="small">Panorama loads as one still image (20 KB). No WebGL, no 360° video. If the image fails to load, the text below it remains: “Chofu tract, painted panorama — image unavailable in this test.”</p>
+  <div class="two-way" role="group" aria-label="Talk back — Episode 1, Chofu">
+    <h3>Talk back — Chofu asks you something</h3>
+    <p>Did a school field ever matter to you? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
+    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="memory" data-choice="I played on a field like this" data-prompt="I played on a field like this. What I remember about it is: ">I played on a field like this</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="memory" data-choice="I watched, I never played" data-prompt="I watched from the side, I never played. What I saw was: ">I watched, I never played</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="question" data-choice="I never saw a field like this — what was it like?" data-prompt="I never saw a field like this. My question is: ">I never saw a field like this — what was it like?</button>
+    <p class="small">Your choice changes what TASK answers: a player gets the 1971 season, on the record; a watcher gets the field, imagined; a question gets an answer back in chat, from a person.</p>
+  </div>
 </section>
 </div><!-- /episode 1 -->
 
@@ -250,6 +257,14 @@
     <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-2">Jump to the street ↓</button>
   </div>
   <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph.</p>
+  <div class="two-way" role="group" aria-label="Talk back — Episode 2, Yokosuka">
+    <h3>Talk back — Dobuita asks you something</h3>
+    <p>What caught your eye on this street? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
+    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="place-note" data-choice="A shopfront I noticed" data-prompt="On Dobuita I noticed: ">A shopfront I noticed</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="question" data-choice="I have walked Dobuita" data-prompt="I have walked Dobuita. What I found there was: ">I have walked Dobuita</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="question" data-choice="I have never been — what should I look for first?" data-prompt="I have never been to Dobuita. What should I look for first? ">I have never been — what should I look for first?</button>
+    <p class="small">A place note is a suggestion, labelled not-yet-researched — never a fact, never a shop named as participating. TASK answers in chat, and your next step is Tachikawa, the airfield that became a park.</p>
+  </div>
 </section>
 </div><!-- /episode 2 -->
 
@@ -339,6 +354,14 @@
     <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-3">Jump to the park ↓</button>
   </div>
   <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph. The museum photograph is not used here.</p>
+  <div class="two-way" role="group" aria-label="Talk back — Episode 3, Tachikawa">
+    <h3>Talk back — Tachikawa asks you something</h3>
+    <p>Which do you see here — the airfield, or the park? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
+    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="question" data-choice="I see the airfield" data-prompt="In Tachikawa I see the airfield. What I see is: ">I see the airfield</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="question" data-choice="I see the park" data-prompt="In Tachikawa I see the park. What I see is: ">I see the park</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="memory" data-choice="I know a place that changed like this" data-prompt="I know a place that changed from one use to another, like Tachikawa. My place is: ">I know a place that changed like this</button>
+    <p class="small">Your answer changes what comes back: airfield or park, TASK answers with the record for that side — closed 1977, or opened 1983 — and a place that changed, in your own words, is held for human review, never shown as a fact.</p>
+  </div>
 </section>
 </div><!-- /episode 3 -->
 
@@ -428,8 +451,41 @@
     <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-4">Jump to the grass ↓</button>
   </div>
   <p class="small">Painted still panorama (CSS/painted assets), imagined. No WebGL, no 360° video, no photograph, no view from inside the annex.</p>
+  <div class="two-way" role="group" aria-label="Talk back — Episode 4, Tama">
+    <h3>Talk back — Tama asks you something</h3>
+    <p>This episode has no settled era. Which era should it be? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below. Your choice does not decide it; it is a question back, and TASK answers why the era is still open.</p>
+    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Show the 1980s recreation era" data-prompt="For Tama, show the 1980s recreation era, because: ">Show the 1980s recreation era</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Show the present, as it is" data-prompt="For Tama, show the present, as it is, because: ">Show the present, as it is</button>
+    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Keep it imagined — do not pick an era" data-prompt="For Tama, keep it imagined and do not pick an era, because: ">Keep it imagined — do not pick an era</button>
+    <p class="small">Tama is an active annex, ID/guest-only access. No choice here claims access, and no era is settled by a visitor's vote — the era decision stays with Carl (C-4).</p>
+  </div>
 </section>
 </div><!-- /episode 4 -->
+
+<!-- ============ SHARED: TALK BACK TO TASK — TWO-WAY ============ -->
+<section id="talkback" aria-labelledby="talk-h" class="talkback">
+  <h2 id="talk-h">Talk back to TASK — this is the return path</h2>
+  <p class="lede">LIFF alone is one-way: you can look, tap, and scroll, but nothing comes back. This section is the way back. <strong>Nothing here sends silently.</strong> You write, you tick the box, you tap <strong>Send to TASK</strong>, and your words go — as a text message, from you — into the TASK chat in LINE, where a person reads them and answers you there. Nothing you write is published or shared.</p>
+  <p id="talk-status" role="status">Checking LINE… If you are in a regular browser, talk-back needs LINE: open this app from the TASK chat in LINE.</p>
+  <label for="contrib-type">What are you sending?</label>
+  <select id="contrib-type">
+    <option value="memory">A memory — your own experience only</option>
+    <option value="place-note">A place note — a suggestion, not yet researched</option>
+    <option value="question">A question back to TASK</option>
+  </select>
+  <label for="contrib-text">Your words (up to 500 characters, text only — no photo, no file)</label>
+  <textarea id="contrib-text" rows="4" maxlength="500" placeholder="Write here. A choice above fills this in for you — edit it as you like."></textarea>
+  <p><label><input type="checkbox" id="contrib-optin"> I am happy for TASK to keep and read my words, and to answer me in chat. I understand they will not be published or shared, and I can ask TASK to withdraw them.</label></p>
+  <p>
+    <button type="button" id="send-to-task">Send to TASK</button>
+    <button type="button" id="share-btn">Share this episode instead</button>
+    <button type="button" id="withdraw-btn">Withdraw — delete my draft / ask TASK to remove what I sent</button>
+  </p>
+  <h3>What you have written here</h3>
+  <ul id="pending-list"><li>No contribution written yet. Nothing has been sent.</li></ul>
+  <p class="small">Kept on this device, this session only, until you send it. Sending puts it in the TASK chat, where a human reviews it first. It is never shown in the app, never published, never used as a fact, until a person at TASK has read it and, if it is to be shown at all, it is shown only as approved, with your words as you wrote them. What TASK will never ask you for: money, personal data, photos of children or of people without their consent, speaking for a community, naming or judging an identifiable real person, trauma, recruitment, outreach on TASK's behalf, or Carl's private material.</p>
+  <p class="small">Talk-back needs the LIFF browser, opened from a chat in LINE, and the <code>chat_message.write</code> permission on this LIFF app. That permission is <strong>not yet enabled</strong> on LIFF app 2012800911-7BPP3dHp (scopes: openid, profile only). Until it is switched on, the Send button will tell you so honestly instead of failing silently. If you opened this from Keep Memo, the recent-services list, or an external browser, sending will not work — open it from the TASK chat instead.</p>
+</section>
 
 <!-- ============ SHARED: 2029 QUESTION — TEXT ONLY ============ -->
 <section id="question-2029" aria-labelledby="q-h" class="whatif-text">
@@ -456,7 +512,7 @@
 
   <h3>What this app does not do</h3>
   <ul>
-    <li>No LIFF ID, no LINE account change, no live LINE app, no Flex Message, no ShareTargetPicker, no <code>liff.closeWindow()</code> — those need a real LINE channel and a device test in LINE.</li>
+    <li>No LIFF send yet in the live app: <code>liff.sendMessages()</code> is built and guarded in this code, but the live LIFF app does not yet have the <code>chat_message.write</code> scope — see the Talk back section for the exact change still needed. No Flex Message sent, no ShareTargetPicker opened in LINE, no <code>liff.closeWindow()</code> called in LINE — those need a device test in LINE.</li>
     <li>No real-time 3D, no Unity WebGL, no Genesis, no purchase, no MINI App features, no calendar, no multiplayer, no broadcast.</li>
     <li>No likeness, illustration, animation, voice, or dialogue for John Okabayashi, Tony Reed, or Henry Williams beyond documented facts in words. No likeness, voice, or dialogue for any real person in any episode.</li>
     <li>No yearbook photographs (no reuse licence), no music (no clearance), no archival photographs. The Tachikawa museum photograph is not used: permission not held.</li>

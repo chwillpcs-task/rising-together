@@ -1,0 +1,52 @@
+/* Rising Together — PLAY mode styles (2026-11-25).
+   Painted CSS only. No photographs, no game art, no trademarks.
+   The district is a wide street you walk; the camera follows you. */
+#play{border:3px solid #2e6b3e;background:#fff;border-radius:8px;padding:14px 16px;margin:28px 0}
+#play h2{margin-top:0}
+.play-lede{max-width:70ch;color:#444}
+.play-register{font-size:.85rem;color:#2e6b3e;font-weight:700}
+#play-hud{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border:2px solid #2e6b3e;background:#eef5ee;padding:8px 12px;border-radius:6px;margin:10px 0}
+#play-hud .play-day{font-weight:700}
+#play-map .play-dot{color:#bbb;font-size:1.1rem;margin-right:2px}
+#play-map .play-dot.on{color:#2e6b3e}
+#play-count{font-weight:700}
+#play-trust .play-trust-one{margin-right:10px;font-size:.9rem}
+#play-view{position:relative;height:340px;overflow:hidden;border:3px solid #333;border-radius:8px;background:linear-gradient(#e8d9a8 0%,#f2e6c0 40%,#d6c496 60%,#9a8a62 100%);touch-action:pan-y;cursor:pointer}
+#play-street{position:absolute;left:0;top:0;width:2200px;height:340px;will-change:transform}
+#play-street.raining{filter:brightness(.82) saturate(1.25)}
+.play-place{position:absolute;top:0;bottom:0;width:220px;border:0;border-left:2px dashed rgba(0,0,0,.25);background:transparent;cursor:pointer;padding:0}
+.play-place span{position:absolute;top:10px;left:8px;right:8px;background:rgba(255,255,255,.85);padding:4px 8px;border-radius:4px;font-weight:700;font-size:.9rem;text-align:left}
+.play-place.p0{background:linear-gradient(180deg,transparent 55%,rgba(90,140,70,.35) 55%)}
+.play-place.p1{background:linear-gradient(180deg,transparent 55%,rgba(150,110,70,.35) 55%)}
+.play-place.p2{background:linear-gradient(180deg,transparent 55%,rgba(70,90,130,.35) 55%)}
+.play-place.p3{background:linear-gradient(180deg,transparent 55%,rgba(120,90,60,.35) 55%)}
+.play-contact{position:absolute;bottom:70px;width:90px;margin-left:-45px;background:transparent;border:0;cursor:pointer;padding:0;text-align:center;z-index:3}
+.play-contact .pc-face{display:block;width:34px;height:34px;margin:0 auto;background:#7a4a2b;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.play-contact::after{content:"";display:block;width:44px;height:52px;margin:-4px auto 0;background:#3a5a8a;border-radius:12px 12px 4px 4px}
+.play-contact .pc-name{display:block;font-weight:700;background:rgba(255,255,255,.9);border-radius:4px;padding:1px 4px;margin-top:2px;font-size:.9rem}
+.play-contact .pc-job{display:block;font-size:.75rem;color:#333;background:rgba(255,255,255,.75);border-radius:4px;padding:1px 4px}
+.play-contact.active .pc-face{outline:3px solid #ffbf00}
+.play-contact.done .pc-face{background:#2e6b3e}
+.play-find{position:absolute;bottom:150px;width:30px;height:30px;margin-left:-15px;border-radius:50%;border:2px solid #fff;background:#8a6d3b;color:#fff;font-weight:700;cursor:pointer;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.play-target{position:absolute;bottom:110px;min-width:56px;margin-left:-28px;padding:6px 8px;border-radius:20px;border:3px solid #fff;background:#b3541e;color:#fff;font-weight:700;cursor:pointer;z-index:4;box-shadow:0 2px 8px rgba(0,0,0,.4);opacity:.55}
+.play-target.ready{opacity:1;animation:play-pulse 1s infinite}
+@keyframes play-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+#play-player{position:absolute;bottom:60px;width:40px;margin-left:-20px;z-index:5;pointer-events:none}
+#play-player .pp-face{display:block;width:26px;height:26px;margin:0 auto;background:#2e6b3e;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+#play-player::after{content:"";display:block;width:34px;height:44px;margin:-2px auto 0;background:#2e6b3e;border-radius:10px 10px 4px 4px}
+#play-player.walking{animation:play-bob .35s infinite alternate}
+@keyframes play-bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+#play-toast{margin:10px 0;padding:10px 12px;background:#fff8e1;border:2px solid #8a6d3b;border-radius:6px;font-weight:600}
+#play-mission{margin:10px 0;padding:10px 12px;background:#eef5ee;border:2px solid #2e6b3e;border-radius:6px}
+.play-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.play-controls button{padding:12px 18px;cursor:pointer;font-size:1.1rem;border:2px solid #2e6b3e;background:#fff;border-radius:6px}
+.play-controls button:active{background:#eef5ee}
+.play-hint{color:#555;font-size:.9rem}
+#play-side{margin:12px 0;padding:14px;border:3px solid #8a6d3b;background:#fff8e1;border-radius:6px}
+.play-pen{position:relative;height:180px;border:2px dashed #8a6d3b;border-radius:6px;background:#fdf6dd;overflow:hidden;margin:10px 0}
+.play-pigeon{position:absolute;left:40%;top:40%;padding:8px 12px;cursor:pointer;border:2px solid #333;background:#fff;border-radius:20px;font-weight:700}
+.play-choice{display:block;margin:6px 0;padding:10px 14px;cursor:pointer;font-size:1rem;border:2px solid #8a6d3b;background:#fff;border-radius:6px}
+.play-plane{display:inline-block;margin:6px;padding:10px 14px;cursor:pointer;border:2px solid #4a6b8a;background:#eaf1f8;border-radius:6px}
+@media (prefers-reduced-motion: reduce){
+  .play-target.ready,#play-player.walking{animation:none !important}
+}

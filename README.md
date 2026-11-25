@@ -35,6 +35,22 @@ Episode choice is agent-selected, pending Carl's review (see the shared brief, �
 If Carl prefers Yokosuka first on the strength of its living street and Shenmue pilgrimage,
 the evidence supports that as a defensible choice.
 
+## GTA/Sega-style pilots (2026-11-25)
+
+Each episode is built as a GTA/Sega-style pilot: a dense small district,
+substories with named fictional contacts, "look closely" hotspots, labelled
+"Imagined — play" side streets, and a calendar with one choice a day and
+weekly rotation. Full pilot text lives in the episode files
+(`../episodes/01-chofu/episode.md` through `../episodes/04-tama/episode.md`);
+a condensed pilot section per episode is in `index.html` (`.pilot` styles in
+`styles.css`). Chofu: the Tract — field, fading Kanto Mura housing,
+Ajinomoto Stadium present. Yokosuka: Dobuita and the harbour steps, working
+port town outside the base. Tachikawa: park, runway line, base town; museum
+photograph not used, permission not held. Tama: imagined, civilian-era
+framing only, internal only. Fog is the feeling of moving, not a pilot. No
+decision stops; no outside contract, permit, or permission needed or
+claimed; no partnership, consent, or funding claimed. Painted only.
+
 ## The 2.5D scenes (all four episodes)
 
 - 7-layer stack (Visual team §3.2), ratios 0.1 / 0.25 / 0.5 / 1.0 / 1.25 / 1.6:

@@ -370,9 +370,199 @@
     });
   });
 
-  /* Return to chat — simulated, no LIFF */
+  /* ---- Two-way communication: LIFF -> chat, chat -> LIFF (2026-11-25) ----
+     Carl: "I'm still not sure that feels limiting and only one way
+     communication." He is right: LIFF alone is a web view — a visitor can
+     look, tap, and scroll, but nothing comes back unless we build a return
+     path. This section builds it, guarded, never silent.
+     Verified LINE rules (developers.line.biz, LIFF API reference, read
+     2026-11-25):
+     - liff.sendMessages() sends up to 5 messages on behalf of the user to
+       the chat room where the LIFF app was opened, ONLY in the LIFF browser,
+       ONLY when launched from a 1:1, group, or multi-person chat, ONLY when
+       the chat_message.write scope is enabled AND granted by the visitor.
+       Otherwise it fails with 403 "user doesn't grant required permissions
+       yet". It does NOT work from Keep Memo, from the recently-used-services
+       list, or from an external-browser redirect.
+     - A TEXT message sent with sendMessages DOES trigger a webhook on the
+       Messaging API channel. A Flex/template message sent the same way does
+       NOT trigger a webhook. Contributions are therefore sent as TEXT, never
+       as Flex, so TASK's bot can answer them.
+     - A bot reply made with the webhook's single-use replyToken is FREE and
+       does not count against the Official Account's monthly free messages.
+       Push / multicast / broadcast DO count. Reply tokens expire in about
+       60 seconds and can be used once — the bot must answer fast, or fall
+       back to push (which costs quota, 0/500 used this month, Communication
+       plan, no additional messages).
+     - liff.permanentLink.createUrlBy(endpointUrl + "?episode=N&hotspot=X")
+       returns a LIFF URL whose liff.state carries that query, so a bot Flex
+       message can re-open the LIFF app at the right episode and hotspot.
+     CURRENT LIVE STATE (2026-11-25): LIFF app 2012800911-7BPP3dHp has
+     scopes openid, profile ONLY. chat_message.write is NOT enabled.
+     Until the parent browser step adds it (see two-way-communication.md
+     §1, exact change), every send attempt in LINE will fail with 403 and
+     this code MUST say so honestly, never pretend it sent. */
+  var LIFF_ID = "2012800911-7BPP3dHp";
+  var LIFF_URL = "https://liff.line.me/" + LIFF_ID;
+  var ENDPOINT_URL = "https://chwillpcs-task.github.io/rising-together/";
+  var liffReady = false, liffInClient = false, liffScopes = [];
+  var talkStatus = document.getElementById("talk-status");
+  var sendBtn = document.getElementById("send-to-task");
+  var withdrawBtn = document.getElementById("withdraw-btn");
+  var contribText = document.getElementById("contrib-text");
+  var contribType = document.getElementById("contrib-type");
+  var contribOptin = document.getElementById("contrib-optin");
+  var pendingList = document.getElementById("pending-list");
+  var pending = []; /* in-memory only, this session only; never persisted */
+  function setTalk(msg) { if (talkStatus) talkStatus.textContent = msg; log("talkback_status", msg); }
+  function renderPending() {
+    if (!pendingList) return;
+    pendingList.innerHTML = "";
+    if (!pending.length) { pendingList.innerHTML = "<li>No contribution written yet. Nothing has been sent.</li>"; return; }
+    pending.forEach(function (p, i) {
+      var li = document.createElement("li");
+      li.textContent = "[" + p.type + ", Episode " + p.episode + "] " + p.text + " — " + p.state;
+      pendingList.appendChild(li);
+    });
+  }
+  renderPending();
+  /* Deep link in: ?episode=N&hotspot=card-id[&from=bot] — from a bot Flex
+     message (liff.state) or a plain LIFF URL query. Never trust it blindly:
+     episode must be 1–4, hotspot must be a card that exists in that episode. */
+  function parseDeepLink() {
+    var q = new URLSearchParams(window.location.search || "");
+    var state = q.get("liff.state");
+    if (state) { try { q = new URLSearchParams(decodeURIComponent(state)); } catch (e) { q = new URLSearchParams(state); } }
+    var ep = q.get("episode"), hs = q.get("hotspot");
+    if (ep && EPISODES[ep]) {
+      switchEpisode(ep, q.get("from") === "bot" ? "bot-deep-link" : "deep-link");
+      if (hs) {
+        var card = document.getElementById(hs);
+        if (card && card.closest(".episode").getAttribute("data-episode") === ep) {
+          document.querySelectorAll(".card").forEach(function (c) { c.hidden = true; });
+          card.hidden = false; card.focus();
+          log("deep_link_hotspot", hs + " opened from " + (q.get("from") || "link"));
+        } else { log("deep_link_hotspot_rejected", "unknown hotspot '" + hs + "' for episode " + ep); }
+      }
+    } else if (ep) { log("deep_link_episode_rejected", "unknown episode '" + ep + "'"); }
+  }
+  /* LIFF init, guarded: no liff object in a standalone browser is normal,
+     not an error. Never call sendMessages before init resolves. */
+  function initLiff() {
+    if (typeof window.liff === "undefined") {
+      setTalk("You are in a regular browser, not LINE. Talk-back needs LINE: open this app from the TASK chat in LINE, and the Send button will work there. Nothing has been sent.");
+      log("liff_not_present", "standalone browser — send/return are simulated only");
+      return;
+    }
+    window.liff.init({ liffId: LIFF_ID }).then(function () {
+      liffReady = true;
+      liffInClient = window.liff.isInClient();
+      try { liffScopes = window.liff.getContext().scope || []; } catch (e) { liffScopes = []; }
+      var granted = [];
+      try { granted = window.liff.permission ? window.liff.permission.getGrantedAll() : []; } catch (e) { granted = []; }
+      log("liff_ready", "inClient=" + liffInClient + ", scopes=" + liffScopes.join(",") + ", granted=" + (granted.join ? granted.join(",") : granted));
+      var banner = document.getElementById("external-banner");
+      if (banner && liffInClient) banner.hidden = true;
+      if (!liffInClient) { setTalk("You opened this outside LINE's chat view. Talk-back needs the LIFF browser: open the link from inside the TASK chat in LINE. Nothing has been sent."); return; }
+      if (liffScopes.indexOf("chat_message.write") === -1) {
+        setTalk("Talk-back is not switched on yet for this LIFF app: the chat_message.write permission is not enabled on it. Your words are safe here — nothing has been sent, and the Send button will tell you this instead of failing silently. The team has prepared the exact change to switch it on.");
+        log("liff_scope_missing", "chat_message.write not in LIFF scopes — send will fail 403 until the console change is made");
+        return;
+      }
+      if (granted && granted.indexOf && granted.indexOf("chat_message.write") === -1) {
+        setTalk("LINE is asking for one permission before you can send: 'Send messages to chat'. Grant it on the permission screen when it appears, or tap Send again. Nothing has been sent yet.");
+        return;
+      }
+      setTalk("You are in LINE, in the TASK chat. Tap Send to TASK to send your words back — one tap, nothing silent, and TASK will answer here in chat.");
+    }).catch(function (err) {
+      log("liff_init_failed", err && err.message ? err.message : String(err));
+      setTalk("LINE could not start here (" + (err && err.code ? err.code : "init failed") + "). Nothing has been sent. Try opening the link again from inside the TASK chat in LINE.");
+    });
+  }
+  initLiff();
+  parseDeepLink();
+  /* Two-way moments: a choice in an episode fills the talk-back form and
+     takes the visitor to it. A choice is a draft, not a send. */
+  document.querySelectorAll("[data-two-way]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var ep = btn.getAttribute("data-episode") || activeEpisode;
+      var choice = btn.getAttribute("data-choice") || "";
+      var prompt = btn.getAttribute("data-prompt") || "";
+      if (contribText) contribText.value = prompt;
+      if (contribType) contribType.value = btn.getAttribute("data-kind") || "question";
+      var talk = document.getElementById("talkback");
+      if (talk && talk.scrollIntoView) talk.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      log("two_way_choice", "episode " + ep + " — " + choice + " (draft only, nothing sent)");
+      setTalk("Your choice is written in the box below — '" + choice + "'. Edit it if you like, tick the box to say you are happy for TASK to keep it, then tap Send to TASK. Nothing has been sent yet.");
+    });
+  });
+  /* Send to TASK — one explicit tap, text only (so the webhook fires),
+     max 1 message, never silent, never automatic. */
+  if (sendBtn) sendBtn.addEventListener("click", function () {
+    var text = contribText ? contribText.value.trim() : "";
+    var kind = contribType ? contribType.value : "question";
+    if (!text) { setTalk("Write a few words first — the box is empty, so nothing was sent."); return; }
+    if (text.length > 500) { setTalk("That is over 500 characters. Please shorten it — nothing was sent."); return; }
+    if (!contribOptin || !contribOptin.checked) { setTalk("Tick the box first, to say you are happy for TASK to keep and read your words. Nothing was sent."); return; }
+    var msg = "Rising Together — Episode " + activeEpisode + " (" + EPISODES[activeEpisode].name + "), " + kind + ": " + text;
+    if (typeof window.liff === "undefined" || !liffReady || !liffInClient) {
+      pending.push({ type: kind, episode: activeEpisode, text: text, state: "NOT SENT — you are not in LINE's chat view. Open this from the TASK chat to send it." });
+      renderPending(); log("send_blocked_not_in_line", "draft kept on this device only, nothing sent");
+      setTalk("Not sent — you are not in LINE's chat view. Your words are kept only on this device, this session. Open this app from the TASK chat in LINE and tap Send again.");
+      return;
+    }
+    if (liffScopes.indexOf("chat_message.write") === -1) {
+      pending.push({ type: kind, episode: activeEpisode, text: text, state: "NOT SENT — chat_message.write not enabled on this LIFF app yet." });
+      renderPending(); log("send_blocked_scope", "chat_message.write not enabled — nothing sent");
+      setTalk("Not sent — talk-back is not switched on yet for this LIFF app. Your words are kept only on this device, this session. The team has prepared the exact change to switch it on.");
+      return;
+    }
+    window.liff.sendMessages([{ type: "text", text: msg }]).then(function () {
+      pending.push({ type: kind, episode: activeEpisode, text: text, state: "SENT TO TASK CHAT — awaiting a human reply. Not published, not shared." });
+      renderPending(); log("send_to_task", "text message sent via liff.sendMessages, episode " + activeEpisode + ", kind " + kind);
+      setTalk("Sent to the TASK chat. TASK will answer you here in chat — a person reads it first, and nothing you wrote is published or shared. Thank you.");
+      if (contribText) contribText.value = "";
+    }).catch(function (err) {
+      log("send_failed", err && err.code ? err.code + " " + (err.message || "") : String(err));
+      setTalk("Send failed (" + (err && err.code ? err.code : "unknown") + "). Nothing was sent. This usually means the permission was not granted, or the app was opened from Keep Memo or the recent-services list instead of from a chat — open it from the TASK chat and try again.");
+    });
+  });
+  /* Share instead: pick a friend or group to send the LIFF link to. Also
+     needs chat_message.write, also guarded, also one explicit tap. */
+  var shareBtn = document.getElementById("share-btn");
+  if (shareBtn) shareBtn.addEventListener("click", function () {
+    if (typeof window.liff === "undefined" || !liffReady || !liffInClient) { setTalk("Sharing needs LINE: open this from the TASK chat in LINE. Nothing was shared."); log("share_blocked_not_in_line", "nothing shared"); return; }
+    window.liff.shareTargetPicker([{ type: "text", text: "Rising Together — Episode " + activeEpisode + " (" + EPISODES[activeEpisode].name + "). " + LIFF_URL + "?episode=" + activeEpisode }]).then(function (res) {
+      log("share_chosen", res ? "picker returned" : "picker closed");
+      setTalk(res ? "Shared — thank you. How many people receive it is not counted, and never will be." : "Share picker closed — nothing was shared.");
+    }).catch(function (err) { log("share_failed", err && err.code ? err.code : String(err)); setTalk("Sharing failed. Nothing was shared."); });
+  });
+  /* Withdraw: before sending, delete the draft on this device. After
+     sending, send a second TEXT message asking TASK to withdraw it — the
+     only honest withdrawal once words are in a chat. */
+  if (withdrawBtn) withdrawBtn.addEventListener("click", function () {
+    var sent = pending.filter(function (p) { return p.state.indexOf("SENT") === 0; });
+    if (!sent.length) {
+      pending.length = 0; if (contribText) contribText.value = ""; renderPending();
+      log("withdraw_draft", "unsent draft deleted on this device");
+      setTalk("Draft deleted from this device. Nothing was ever sent.");
+      return;
+    }
+    if (typeof window.liff === "undefined" || !liffReady || !liffInClient) { setTalk("To withdraw what you already sent, open this from the TASK chat in LINE and tap Withdraw again — it sends TASK a withdrawal note. Your sent words stay in the chat until a person at TASK removes them."); return; }
+    window.liff.sendMessages([{ type: "text", text: "Rising Together — please withdraw my earlier note from Episode " + activeEpisode + ". Please do not keep or show it." }]).then(function () {
+      log("withdraw_sent", "withdrawal note sent via liff.sendMessages");
+      setTalk("Withdrawal note sent to TASK. A person will remove your earlier note and confirm back here in chat.");
+    }).catch(function (err) { log("withdraw_failed", err && err.code ? err.code : String(err)); setTalk("Withdrawal note failed to send. Please write to TASK in chat and ask them to remove it."); });
+  });
+
+  /* Return to chat — real in LIFF, simulated standalone */
   var returnBtn = document.getElementById("return-btn");
   if (returnBtn) returnBtn.addEventListener("click", function () {
+    if (typeof window.liff !== "undefined" && liffReady && liffInClient) {
+      log("return", "liff.closeWindow() called");
+      window.liff.closeWindow();
+      return;
+    }
     log("return", "simulated — liff.closeWindow() not available in standalone app");
     alert("In a real LIFF browser this would return to chat. Here there is no LIFF, so this only logs the event.");
   });

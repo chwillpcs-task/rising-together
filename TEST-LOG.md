@@ -6,6 +6,59 @@
 **Prototype:** `~/workspace/goals/rising-together/prototype/` — `index.html`, `styles.css`, `app.js`, `assets/`
 **Status:** Internal review only. Not publication, not launch, not a live LINE app.
 
+## Phaser PLAY mode — tested 2026-11-25 (this round)
+
+**What changed:** Phaser 3.80.1 is now the PLAY mode for Episode 1 (Chofu).
+`phaser.min.js` vendored into the app (1,181,917 B, SHA256
+`62081f6a1b51d040473f919ffedef9009953c20833518e146da5a8d1c9405ea8` —
+same file as the `tools/phaser-district` prototype, no CDN at runtime),
+`phaser-game.js` adapted from that prototype's `game.js` (same scene, same
+job "The Lost Ball", same save key `rising-together:v1`), `#phaser-wrap` /
+`#phaser-game` at the top of the `#play` section, loaded after `locker.js`.
+The game boots lazily (Episode 1 only, when the PLAY section comes into
+view), pauses when another episode is chosen, and hides on Episodes 2–4,
+which keep the CSS street district. Completing The Lost Ball fills the
+trust heart, lights the district map, and marks the day's job done in the
+stage above (`window.__rtFinishJob`, exposed by `app.js`; `app.js`
+`switchEpisode()` also calls `window.__rtPhaserSetEpisode(n)`). The CSS
+street district is kept below the game as "More jobs in this district"
+(the other Chofu jobs, Old Jiro and Aya, and the full districts for
+Episodes 2–4) — nothing was removed. If Phaser cannot load or no canvas
+appears (4 s watchdog), the section says so honestly and the CSS district
+still works. Silent, no server, no Service Worker, no downloads, no
+offline claim. Locker room, stage, hotspots, daily job, 2029 text-only
+question and Talk back are untouched.
+
+**Tested in this VM, 2026-11-25:** `node --check` OK on `app.js`,
+`play.js`, `locker.js`, `phaser-game.js`, `phaser.min.js`. Local HTTP: all
+files 200 (`index.html` 24,200 B; `app.js` 48,939 B; `play.css` 5,874 B;
+`phaser.min.js` 1,181,917 B; `phaser-game.js` 26,592 B; clip 200). jsdom
+41 (`/tmp/rt-test/phaser-integration-test.js`, jsdom + node-canvas with a
+`CanvasRenderingContext2D` shim jsdom itself lacks): **41 checks passed,
+0 failed.** Verified: Phaser 3.80.1 boots, canvas renders in
+`#phaser-game`, ChofuDistrict scene active, Ajinomoto Stadium labelled,
+Miki present, ball hidden at stage 0; full play-through of The Lost Ball
+(talk → stage 1, ball visible, save written; pick up ball → stage 2;
+return to Miki → stage 3, trust heart red, map lit, save stage 3, daily
+job marked done); houses fade near the stadium; reset returns to stage 0;
+Phaser hides on Episode 2 and shows again on Episode 1; locker room,
+stage hotspots, daily job, Talk back (opt-in, 500 max), register mark and
+2029 text-only all intact; no page JS errors. Two bugs found and fixed in
+this round: (1) the scene's prototype chain touched `Phaser.Scene` at
+script load, so a missing Phaser crashed `phaser-game.js` before its
+fallback could run — now guarded at load with the honest fallback;
+(2) Phaser boots asynchronously, so a boot failure escaped the
+try/catch — a 4 s no-canvas watchdog now shows the fallback instead of a
+blank box.
+
+**NOT tested — and therefore NOT claimed:** no real browser play-through
+(the jsdom run proves the scene builds and the quest logic runs in code,
+with real canvas drawing via node-canvas — it proves nothing about how
+the district feels, its frame rate, or touch handling on a phone); no
+phone run; no test in LINE's real WebView. **Device test in LINE's real
+WebView: NOT RUN.** The hosted endpoint was redeployed with this build —
+see the live check below (to be filled after redeploy).
+
 ## Locker-room scene — tested 2026-11-25 (this round)
 
 **What changed (Carl's scene, 2026-11-25):** the Episode 1 opening is now the

@@ -49,10 +49,10 @@ Four Episodes Shared Brief 2026-11-24 (`../episodes/shared-brief.md`).
 
 | # | Episode | Scene | Clip | Panorama |
 |---|---|---|---|---|
-| 1 | Chofu — the field | Reuses the bounded prototype's painted 2.5D scene | Reuses the silent painted 12 s clip | Reuses the painted panorama still |
-| 2 | Yokosuka — the street | New painted/CSS 2.5D scene, Dobuita street | Poster still + honest "clip not yet rendered" note — not a fake video | Painted still panorama from CSS/painted assets |
-| 3 | Tachikawa — the park | New painted/CSS 2.5D scene, airfield → park | Poster still + honest "clip not yet rendered" note — not a fake video | Painted still panorama from CSS/painted assets |
-| 4 | Tama — imagined | New painted/CSS 2.5D scene, civilian-era framing only, imagined | Poster still + honest "clip not yet rendered" note — not a fake video | Painted still panorama from CSS/painted assets, imagined |
+| 1 | Chofu — the field | Full-screen moving stage | Silent painted 12 s clip, tap to watch | Stage + PLAY district, no panorama |
+| 2 | Yokosuka — the street | Full-screen moving stage, Dobuita street | Clip not rendered, said honestly | Stage + PLAY district, no panorama |
+| 3 | Tachikawa — the park | Full-screen moving stage, airfield → park | Clip not rendered, said honestly | Stage + PLAY district, no panorama |
+| 4 | Tama — imagined | Full-screen moving stage, civilian-era framing only, imagined | Clip not rendered, said honestly | Stage + PLAY district, no panorama |
 
 Episode choice is agent-selected, pending Carl's review (see the shared brief, §1 and §8).
 If Carl prefers Yokosuka first on the strength of its living street and Shenmue pilgrimage,
@@ -79,9 +79,11 @@ Each episode is built as a GTA/Sega-style pilot: a dense small district,
 substories with named fictional contacts, "look closely" hotspots, labelled
 "Imagined — play" side streets, and a calendar with one choice a day and
 weekly rotation. Full pilot text lives in the episode files
-(`../episodes/01-chofu/episode.md` through `../episodes/04-tama/episode.md`);
-a condensed pilot section per episode is in `index.html` (`.pilot` styles in
-`styles.css`). Chofu: the Tract — field, fading Kanto Mura housing,
+(`../episodes/01-chofu/episode.md` through `../episodes/04-tama/episode.md`),
+rewritten 2026-11-25 as playable do-steps (cut by half). In the app the pilots
+are PLAYED, not read: hotspots do things, substories are jobs handed out by
+contacts, side streets are entered by choice (`play.js` PLAY district,
+`app.js` moment engine). Chofu: the Tract — field, fading Kanto Mura housing,
 Ajinomoto Stadium present. Yokosuka: Dobuita and the harbour steps, working
 port town outside the base. Tachikawa: park, runway line, base town; museum
 photograph not used, permission not held. Tama: imagined, civilian-era
@@ -98,8 +100,10 @@ claimed; no partnership, consent, or funding claimed. Painted only.
   street → harbour → shopfronts → sukajan → Yokosuka).
 - Slow auto-drift, capped, pausable; drag-to-pan (per-episode pan state);
   respects `prefers-reduced-motion` (drift off, still alternative).
-- Hotspots: max 3 per episode (12 total). Each opens a card with a one-sentence source line.
-- Linear “Read the scene” mode per episode: the whole zoom as text, no panning or zooming required.
+- Hotspots: 4 per episode (16 total). Each DOES something — a chase, a
+  moment, a choice — max 3 short lines; facts only behind "About this place".
+- "Read it" is a toggle showing at most 5 one-line beats, hidden by default.
+  There is no long linear Read-the-scene mode as the main mode any more.
 - Figures are drawn silhouettes from behind. No likeness of any real person, in any episode.
 - Persistent register mark, always visible, the same in every episode:
   “Imagined, to be witnessed and experienced by everyone” (Carl, 2026-11-25 —
@@ -110,15 +114,12 @@ claimed; no partnership, consent, or funding claimed. Painted only.
 ## The opening clips
 
 - Episode 1: the self-hosted MP4 above, `playsinline`, muted, poster shown,
-  tap-to-play cover if autoplay is blocked. Muted autoplay is **attempted, not claimed** in LINE.
-- Episodes 2–4: no video file exists. Each shows a painted poster still with a
-  tap-to-play cover; tapping it shows an honest "clip not yet rendered" note and
-  logs `clip_not_rendered`. No fake video is played.
-- YouTube: a test harness (Episode 1 only), not a selected video. No YouTube video is
-  embedded by default — no video was selected and no rights were cleared. A reviewer
-  can enter a video ID to load `youtube-nocookie.com/embed/<id>?playsinline=1&mute=1&autoplay=1&rel=0`.
-  Sound requires a tap. Tapping the YouTube title leaves this page for YouTube.
-  Embedding can be disabled by the owner; age-restricted videos will not embed.
+  behind a "Watch the field move" tap. Muted autoplay is **attempted, not claimed** in LINE.
+- Episodes 2–4: no video file exists. Each honestly says the clip is not
+  rendered. No fake video is played.
+- No YouTube harness in the app any more — removed in the experience-first
+  rebuild. No panorama sections in the app any more — the stage and the PLAY
+  district are the way around, not a still panorama.
 
 ## Register system
 

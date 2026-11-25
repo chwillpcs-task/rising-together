@@ -430,12 +430,14 @@
     renderRead();
     renderDaily();
     if (window.__rtPlaySetEpisode) window.__rtPlaySetEpisode(n);
+    if (window.__rtPhaserSetEpisode) window.__rtPhaserSetEpisode(n);
     log("episode_select", "episode " + n + " (" + ep.name + ") selected from " + (source || "unknown") + ", was " + prev);
     log("episode_entry", "episode " + n + " (" + ep.name + ")");
     onScroll();
     if (stage.scrollIntoView) stage.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
   }
   window.__rtSwitchEpisode = switchEpisode;
+  window.__rtFinishJob = finishJob;
   document.querySelectorAll(".episode-btn").forEach(function (btn) {
     btn.addEventListener("click", function () { switchEpisode(btn.getAttribute("data-episode"), "selector"); });
   });

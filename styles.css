@@ -1,0 +1,129 @@
+/* Rising Together — bounded prototype. Painted layers only; no photographs. */
+:root{--ink:#222;--paper:#faf7ef;--accent:#2e6b3e;--warn:#8a5a00;--line:#c9c2b0}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.55}
+a{color:#1d4e2b}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:#fff;padding:8px;z-index:99}
+.topbar{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;padding:16px 20px;border-bottom:3px solid var(--accent);background:#fff}
+.topbar h1{margin:0;font-size:1.25rem}.sub{margin:4px 0 0;color:#555;max-width:60ch}
+.register-mark{border:2px solid var(--accent);padding:10px 12px;max-width:340px;background:#eef5ee}
+.register-mark strong{display:block;margin:2px 0 6px}
+.register-mark button{padding:6px 10px;cursor:pointer}
+.banner{margin:12px 20px;padding:12px 14px;border:2px solid}
+.banner-external{border-color:#5b7fa6;background:#eaf1f8}
+.banner-offline{border-color:#a33;background:#fdecec}
+.nav{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 12px}
+.nav a{padding:6px 10px;border:1px solid var(--line);background:#fff;text-decoration:none;border-radius:4px}
+main{padding:0 20px 30px;max-width:1100px;margin:0 auto}
+section{margin:28px 0;padding-top:8px;border-top:2px solid var(--line)}
+h2{font-size:1.3rem}h3{font-size:1.05rem}
+.lede{max-width:70ch}.small{color:#555;font-size:.9rem}
+code{background:#eee;padding:1px 4px;border-radius:3px}
+
+/* 2.5D scene */
+.scene-wrap{position:relative}
+.viewport{position:sticky;top:0;height:70vh;min-height:420px;overflow:hidden;border:3px solid #333;border-radius:8px;background:#d6c496;touch-action:pan-y}
+.layer{position:absolute;inset:-6% -20%;will-change:transform}
+.layer-sky{background:linear-gradient(#e8d9a8,#f2e6c0 55%,#d6c496)}
+.layer-far{background:transparent}
+.fuji{position:absolute;right:12%;top:18%;font-size:.85rem;background:rgba(255,255,255,.75);padding:4px 8px;border-radius:4px}
+.layer-midfar{inset:-6% -20%;background:url("assets/poster-housing.png") center 30%/cover no-repeat;opacity:.45}
+.layer-mid{background:url("assets/poster-field.png") center 60%/cover no-repeat}
+.layer-figures{display:flex;align-items:flex-end;justify-content:space-around;padding-bottom:18%}
+.runner{width:34px;height:64px;background:#2c2c44;border-radius:16px 16px 4px 4px;position:relative}
+.runner::after{content:"";position:absolute;left:8px;top:-18px;width:18px;height:18px;background:#2c2c44;border-radius:50%}
+.layer-near{background:linear-gradient(transparent 78%,rgba(60,90,40,.55) 82%,rgba(40,70,30,.75));pointer-events:none}
+.layer-ui{position:absolute;inset:auto 0 0 0;text-align:center;padding:6px}
+.era{background:rgba(0,0,0,.65);color:#fff;padding:4px 10px;border-radius:4px;font-size:.85rem}
+.hotspot{position:absolute;z-index:5;width:44px;height:44px;border-radius:50%;border:3px solid #fff;background:var(--accent);color:#fff;font-weight:700;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.hotspot:focus-visible,.card button:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #ffbf00;outline-offset:2px}
+.zoom-label{position:absolute;left:10px;top:10px;z-index:5;background:rgba(255,255,255,.9);padding:6px 10px;border-radius:4px;font-weight:600}
+.scroll-hint{text-align:center;color:#555;margin:10px 0 4px}
+.scroll-track{height:8px;background:#ddd;border-radius:4px;overflow:hidden}
+.scroll-progress{height:100%;width:0;background:var(--accent)}
+.cards{margin-top:14px;display:grid;gap:10px}
+.card{border:2px solid var(--accent);background:#fff;padding:14px;border-radius:6px}
+.card h3{margin-top:0}
+.source{font-size:.9rem;color:#555}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.controls button{padding:10px 14px;cursor:pointer;font-size:1rem}
+#read-mode{border:2px solid #333;background:#fff;padding:14px;border-radius:6px;margin-top:12px}
+
+/* video */
+.video-wrap{position:relative;max-width:900px}
+video{width:100%;height:auto;display:block;background:#000;border:3px solid #333;border-radius:6px}
+.play-cover{position:absolute;inset:auto 12px 12px 12px;padding:12px;cursor:pointer;font-size:1rem;background:rgba(255,255,255,.95);border:2px solid var(--accent);border-radius:6px}
+.play-cover[hidden]{display:none}
+.video-note{margin:8px 0}
+.yt-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.yt-form input{flex:1;min-width:220px;padding:8px}
+.yt-form button{padding:8px 12px;cursor:pointer}
+#yt-slot iframe{width:100%;aspect-ratio:16/9;border:3px solid #333;border-radius:6px}
+.still-fallback{border:1px dashed #888;padding:10px;background:#fff}
+
+/* panorama */
+.pano{overflow:hidden;border:3px solid #333;border-radius:8px;position:relative;cursor:grab;touch-action:pan-y}
+.pano:active{cursor:grabbing}
+.pano img{width:2400px;max-width:none;height:300px;display:block;will-change:transform}
+.pano-hotspot{left:45%;top:60%}
+
+/* 2029 text only */
+.whatif-text{background:#eef2f5;border-left:6px solid #4a6b8a;padding:12px 16px}
+.whatif-banner{background:#fff;border:2px solid #4a6b8a;padding:10px;display:inline-block}
+#event-log{background:#fff;border:1px solid var(--line);padding:14px 14px 14px 28px;max-height:220px;overflow:auto}
+footer{padding:16px 20px;border-top:3px solid var(--accent);background:#fff;color:#444}
+
+@media (prefers-reduced-motion: reduce){
+  .layer,.runner{transition:none !important;animation:none !important}
+}
+
+/* ---- Four-episode app (2026-11-24) ---- */
+.episode[hidden]{display:none}
+.episode-selector{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 20px;background:#fff;border-bottom:2px solid var(--line)}
+.selector-label{font-weight:700}
+.episode-btn{padding:8px 12px;cursor:pointer;border:2px solid var(--accent);background:#fff;border-radius:4px;font-size:1rem}
+.episode-btn[aria-pressed="true"]{background:var(--accent);color:#fff;font-weight:700}
+
+/* Episode 2 · Yokosuka — harbour / street palette (painted CSS only) */
+.ep-yokosuka .layer-sky{background:linear-gradient(#bcd6e8,#dfe9ee 55%,#c8b49a)}
+.ep-yokosuka .layer-midfar{background:linear-gradient(180deg,transparent 0%,#7d9bb5 30%,#5d7d99 60%,#48647c 100%);opacity:.45}
+.ep-yokosuka .layer-mid{background:
+  linear-gradient(90deg,rgba(90,60,40,.55) 0 12%,rgba(140,90,55,.5) 12% 26%,rgba(70,90,110,.5) 26% 44%,rgba(150,110,70,.5) 44% 62%,rgba(90,70,50,.5) 62% 82%,rgba(120,80,60,.5) 82% 100%),
+  linear-gradient(#c8b49a 62%,#8a7a5f 62% 100%)}
+.ep-yokosuka .layer-near{background:linear-gradient(transparent 78%,rgba(70,60,45,.55) 82%,rgba(50,45,35,.75))}
+
+/* Episode 3 · Tachikawa — park / former runway palette (painted CSS only) */
+.ep-tachikawa .layer-sky{background:linear-gradient(#cfe3c0,#eef3df 55%,#b9cf9a)}
+.ep-tachikawa .layer-midfar{background:linear-gradient(180deg,transparent 0%,#6f9a5f 35%,#4e7d44 65%,#3c6334 100%);opacity:.45}
+.ep-tachikawa .layer-mid{background:
+  linear-gradient(90deg,transparent 46%,rgba(200,200,190,.65) 46% 54%,transparent 54%),
+  linear-gradient(#a8c48a 60%,#7fae62 60% 100%)}
+.ep-tachikawa .layer-near{background:linear-gradient(transparent 78%,rgba(50,90,40,.55) 82%,rgba(35,70,30,.75))}
+
+/* Episode 4 · Tama — imagined open grass / water palette (painted CSS only) */
+.ep-tama .layer-sky{background:linear-gradient(#d8e8d8,#eef4ea 55%,#c4d6c2)}
+.ep-tama .layer-midfar{background:linear-gradient(180deg,transparent 0%,#8aa87e 35%,#6b9463 65%,#557a4f 100%);opacity:.45}
+.ep-tama .layer-mid{background:
+  radial-gradient(ellipse 40% 30% at 70% 72%,rgba(120,160,190,.7),transparent 70%),
+  linear-gradient(#b5d3a0 58%,#8fbf7d 58% 100%)}
+.ep-tama .layer-near{background:linear-gradient(transparent 78%,rgba(60,100,55,.55) 82%,rgba(40,80,40,.75))}
+
+/* Poster stills (painted CSS, Episodes 2–4 — no video file exists) */
+.poster-still{width:100%;aspect-ratio:16/9;display:flex;align-items:flex-end;justify-content:center;border:3px solid #333;border-radius:6px;color:#fff;font-weight:700;text-align:center}
+.poster-still span{background:rgba(0,0,0,.65);padding:6px 12px;border-radius:4px;margin-bottom:16px;font-size:.95rem}
+.poster-yokosuka{background:linear-gradient(180deg,#bcd6e8 0%,#dfe9ee 40%,#7d9bb5 55%,#c8b49a 62%,#8a7a5f 100%)}
+.poster-tachikawa{background:linear-gradient(180deg,#cfe3c0 0%,#eef3df 40%,#6f9a5f 55%,#a8c48a 62%,#7fae62 100%)}
+.poster-tama{background:linear-gradient(180deg,#d8e8d8 0%,#eef4ea 40%,#8aa87e 55%,#b5d3a0 62%,#8fbf7d 100%)}
+
+/* Painted still panoramas (CSS, Episodes 2–4) */
+.pano-strip{width:2400px;max-width:none;height:300px;display:block;will-change:transform}
+.pano-strip-yokosuka{background:
+  repeating-linear-gradient(90deg,rgba(90,60,40,.5) 0 300px,rgba(140,90,55,.5) 300px 600px,rgba(70,90,110,.5) 600px 900px,rgba(150,110,70,.5) 900px 1200px,rgba(90,70,50,.5) 1200px 1500px,rgba(120,80,60,.5) 1500px 1800px,rgba(90,60,40,.5) 1800px 2100px,rgba(140,90,55,.5) 2100px 2400px),
+  linear-gradient(#bcd6e8 0%,#dfe9ee 35%,#7d9bb5 45%,#c8b49a 60%,#8a7a5f 100%)}
+.pano-strip-tachikawa{background:
+  linear-gradient(90deg,transparent 46%,rgba(220,220,210,.7) 46% 54%,transparent 54%),
+  linear-gradient(#cfe3c0 0%,#eef3df 30%,#6f9a5f 45%,#a8c48a 60%,#7fae62 100%)}
+.pano-strip-tama{background:
+  radial-gradient(ellipse 30% 40% at 30% 70%,rgba(120,160,190,.8),transparent 70%),
+  radial-gradient(ellipse 25% 35% at 75% 72%,rgba(120,160,190,.7),transparent 70%),
+  linear-gradient(#d8e8d8 0%,#eef4ea 30%,#8aa87e 45%,#b5d3a0 60%,#8fbf7d 100%)}

@@ -186,3 +186,20 @@ share_chosen / share_blocked_not_in_line / share_failed,
 withdraw_draft / withdraw_sent / withdraw_failed,
 deep_link_hotspot / deep_link_hotspot_rejected / deep_link_episode_rejected.
 No server, no personal data, no LIFF analytics claim. Retention: this page session only.
+
+## PLAY mode — walk the district (2026-11-25, Carl's challenge)
+
+**Carl, 2026-11-25:** what of the app has any resemblance of GTA or Sega, or anything popular? Honest answer, given to him in chat: almost nothing in the built app — the resemblance was on paper only, names of mechanisms in documents, not in the experience. The app was a written book with old fashioned graphics and lots of text.
+
+**What changed, in the app itself (`play.js` + `play.css`, section `#play` in `index.html`):** a walkable district under the stage, per episode. The visitor arrives, moves, meets someone, gets a small job, does it, and sees the district change — the GTA / Yakuza / Shenmue / Persona mechanics, stolen, never the picture (no GTA/Sega art, assets, characters, music, or trademarks):
+
+- **Free movement:** tap the street to walk there, hold ◀ ▶, or arrow keys. A painted figure walks; the camera follows. Not scroll-a-picture.
+- **Substories as missions:** 3 per episode, from the fictional contacts in the episode files (Miki / Old Jiro / Aya in Chofu; Rin / Haru / Mrs. Umi in Yokosuka; Mr. Kaze / Sora / Nana in Tachikawa; Mrs. Mori / Pip / the path-keeper in Tama). Each is 2–3 steps — talk, walk somewhere, tap a target, return — and the last step changes the scene and fills a trust heart.
+- **Visible progression, not text:** HUD shows today's job (one a day, by weekday), a map of 4 places that lights up as you visit them, "Jobs done: n of 3", and a trust heart per contact. Progress is kept on this device only (localStorage, guarded).
+- **Look closely:** 3 hidden details per episode; tapping one shows one line and marks it found.
+- **Side streets, playable:** "Imagined — play", short, clean exit. Chofu: chase the pigeon (tap it 3 times — the pigeon always wins). Yokosuka: the Cat Mayor approves everyone. Tachikawa: make it rain, land 3 paper planes. Tama: shout a word, the meadow returns a different one.
+- **First minute:** walk to Miki, take The Lost Ball, find the ball in the grass, bring it back — a complete loop in under a minute.
+
+The sibling experience-first rebuild (same day, same files) already gave the stage: visitor in the scene on load, hotspots that do something (chase, train, runway line, rain, cats, ducks), a daily job, side streets as text, an animated Japan map. PLAY mode adds what that stage did not have: free walking, multi-step jobs, and a tracker you can see fill. The two layers are complementary, not duplicates. `app.js` `switchEpisode()` now also calls `window.__rtPlaySetEpisode(n)` so the district follows the episode.
+
+**Still not there (honest):** no real 3D, no vehicle, no other players, no multiplayer — LIFF cannot do those, and none is claimed. No music. No 2029 immersive scene. The district is 2D painted CSS, one street per episode, not an open city. The stage and the district are two separate places in one page; they do not yet share one camera or one player.

@@ -3,513 +3,175 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rising Together — Four-Episode LIFF-Ready App (Internal Review Only)</title>
+<title>Rising Together — Walk It (Internal Review Only)</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="play.css">
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js" defer></script>
 </head>
-<body>
-<a class="skip" href="#read-mode">Skip to “Read the scene” (linear text, Episode 1)</a>
+<body data-episode="1">
+<a class="skip" href="#stage">Skip to the field — walk, don't read</a>
 
-<header class="topbar">
-  <div>
-    <h1>Rising Together — Four-Episode LIFF-Ready App</h1>
-    <p class="sub">Internal review only. Not publication, not launch. LIFF app “Rising Together”, ID 2012800911-7BPP3dHp, on channel 2012800911, endpoint https://chwillpcs-task.github.io/rising-together/ — device test in LINE's real WebView still untested. Four episodes: Chofu, Yokosuka, Tachikawa, Tama.</p>
-  </div>
-  <div class="register-mark" id="register-mark" role="status" aria-live="polite">
-    <span class="mark-label">Register:</span>
-    <strong id="register-text">Imagined, to be witnessed and experienced by everyone</strong>
-    <button id="what-am-i" type="button">What am I looking at?</button>
+<!-- Tiny persistent HUD: episode strip + register mark. No big header, no intro paragraph. -->
+<header class="hud" id="hud">
+  <nav class="episode-strip" role="group" aria-label="Choose a place to walk">
+    <button type="button" class="episode-btn" data-episode="1" aria-pressed="true">1 Chofu</button>
+    <button type="button" class="episode-btn" data-episode="2" aria-pressed="false">2 Yokosuka</button>
+    <button type="button" class="episode-btn" data-episode="3" aria-pressed="false">3 Tachikawa</button>
+    <button type="button" class="episode-btn" data-episode="4" aria-pressed="false">4 Tama</button>
+  </nav>
+  <p class="register-mark" id="register-mark">Imagined — to be witnessed and experienced by everyone</p>
+  <div class="hud-actions">
+    <button type="button" id="watch-btn">Watch the field move</button>
+    <button type="button" id="drift-toggle" aria-pressed="true">Pause drift</button>
+    <button type="button" id="read-toggle" aria-pressed="false">Read it</button>
+    <button type="button" id="talk-jump">Talk back</button>
   </div>
 </header>
 
-<div class="episode-selector" role="group" aria-label="Choose an episode">
-  <span class="selector-label">Episode:</span>
-  <button type="button" class="episode-btn" data-episode="1" aria-pressed="true">1 · Chofu — the field</button>
-  <button type="button" class="episode-btn" data-episode="2" aria-pressed="false">2 · Yokosuka — the street</button>
-  <button type="button" class="episode-btn" data-episode="3" aria-pressed="false">3 · Tachikawa — the park</button>
-  <button type="button" class="episode-btn" data-episode="4" aria-pressed="false">4 · Tama — imagined</button>
-</div>
-
-<div class="banner banner-external" id="external-banner" role="note">
-  <strong>External-browser fallback.</strong>
-  You are opening this app in a regular browser, not the LIFF browser.
-  No LIFF features are available here. Talk-back, sharing, and returning to chat need LINE — open this app from the TASK chat in LINE. This banner hides itself when the app detects it is inside LINE.
+<div class="banner banner-external" id="external-banner" role="note" hidden>
+  <strong>Outside LINE.</strong> Talk-back, sharing and returning to chat need LINE — open this from the TASK chat in LINE.
 </div>
 <div class="banner banner-offline" id="offline-banner" role="alert" hidden>
-  <strong>You appear to be offline.</strong>
-  This app has no offline mode — LIFF does not support Service Workers.
-  The still images and text below remain readable; the video will not load until you are back online.
-  No infinite spinner is used.
+  <strong>You appear to be offline.</strong> No offline mode — the painted scene stays, the clip will not load until you are back online. No spinner.
 </div>
 
-<nav class="nav" aria-label="App sections">
-  <a href="#episode-1" data-episode-link="1">1 · Chofu</a>
-  <a href="#episode-2" data-episode-link="2">2 · Yokosuka</a>
-  <a href="#episode-3" data-episode-link="3">3 · Tachikawa</a>
-  <a href="#episode-4" data-episode-link="4">4 · Tama</a>
-  <a href="#question-2029">2029 question (text only)</a>
-  <a href="#notes">Notes &amp; log</a>
-</nav>
-
 <main>
-<!-- ============ EPISODE 1 · CHOFU ============ -->
-<div class="episode" id="episode-1" data-episode="1">
-<section id="scene" aria-labelledby="scene-h">
-  <h2 id="scene-h">Episode 1 · Chofu field — one 2.5D scene</h2>
-  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
-  The field is a painted reconstruction. The exact spot of the old field inside today’s stadium area is <strong>not established</strong> — school, housing, airfield and stadium share the same returned 203.6-hectare tract.</p>
-
-  <div class="scene-wrap">
-    <div class="viewport" id="viewport" data-episode="1" tabindex="0" aria-label="Chofu field, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
-      <!-- 7-layer stack, Visual team §3.2. Ratios: 0.1 / 0.25 / 0.5 / 1.0 / 1.25 / 1.6 -->
-      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
-      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">▲ Mt. Fuji, from the Chofu breezeway — as described in the first yearbook</span></div>
-      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
-      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
-      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
-        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
-      </div>
-      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
-      <div class="layer layer-ui" aria-hidden="true"><span class="era">1971 — CHOFU · warm, faded past</span></div>
-
-      <!-- Hotspots: max 3 -->
-      <button class="hotspot" type="button" style="left:18%;top:62%" data-card="card-field" aria-label="Hotspot: the field, imagined, to be witnessed and experienced by everyone">1</button>
-      <button class="hotspot" type="button" style="left:52%;top:48%" data-card="card-season" aria-label="Hotspot: the 1971 season, on the record">2</button>
-      <button class="hotspot" type="button" style="left:78%;top:70%" data-card="card-spot" aria-label="Hotspot: the exact spot, not established">3</button>
-
-      <div class="zoom-label" id="zoom-label" aria-live="polite">Beat 1 of 5 — The field</div>
+<!-- ============ THE STAGE: visitor is IN the scene on load ============ -->
+<div class="travel" id="travel">
+  <section class="viewport" id="stage" data-episode="1" tabindex="0"
+    aria-label="Walkable painted scene. Scroll to travel, drag to walk. Tap a numbered spot to do something there.">
+    <!-- Parallax layers, different speeds. Painted/CSS/SVG only. -->
+    <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
+    <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="far-label" id="far-label">Mt. Fuji, from the Chofu breezeway</span></div>
+    <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true" id="houses-layer"></div>
+    <div class="layer layer-mid" data-speed="1.0" aria-hidden="true" id="ground-layer"></div>
+    <div class="layer layer-figures" data-speed="1.25" aria-hidden="true" id="figures-layer">
+      <span class="fig runner r1" aria-hidden="true"><svg viewBox="0 0 40 70"><circle cx="20" cy="10" r="8"/><path d="M18 20 L14 40 L8 62 M18 20 L26 38 L34 56 M18 24 L6 34 M18 24 L32 30" stroke="#22223a" stroke-width="5" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="fig runner r2" aria-hidden="true"><svg viewBox="0 0 40 70"><circle cx="20" cy="10" r="8"/><path d="M18 20 L14 40 L8 62 M18 20 L26 38 L34 56 M18 24 L6 34 M18 24 L32 30" stroke="#22223a" stroke-width="5" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="fig runner r3" aria-hidden="true"><svg viewBox="0 0 40 70"><circle cx="20" cy="10" r="8"/><path d="M18 20 L14 40 L8 62 M18 20 L26 38 L34 56 M18 24 L6 34 M18 24 L32 30" stroke="#22223a" stroke-width="5" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="fig ball" id="ball" aria-hidden="true"></span>
+      <span class="fig kite" id="kite" aria-hidden="true"><svg viewBox="0 0 60 80"><path d="M30 4 L54 34 L30 76 L6 34 Z" fill="#c94f3d"/><path d="M30 34 L30 78" stroke="#333" stroke-width="2"/><circle cx="30" cy="44" r="3" fill="#333"/></svg></span>
+      <span class="fig pigeon" id="pigeon" aria-hidden="true"><svg viewBox="0 0 50 30"><ellipse cx="25" cy="18" rx="16" ry="9" fill="#5a6b7d"/><circle cx="38" cy="10" r="6" fill="#5a6b7d"/><path d="M10 16 L2 10 L10 20 Z" fill="#5a6b7d"/></svg></span>
+      <span class="fig train" id="train" aria-hidden="true"><svg viewBox="0 0 120 34"><rect x="2" y="4" width="116" height="24" rx="4" fill="#3d5a73"/><rect x="10" y="10" width="14" height="8" fill="#cfe3ef"/><rect x="30" y="10" width="14" height="8" fill="#cfe3ef"/><rect x="50" y="10" width="14" height="8" fill="#cfe3ef"/><rect x="70" y="10" width="14" height="8" fill="#cfe3ef"/></svg></span>
+      <span class="fig cat c1" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="18" rx="14" ry="8" fill="#3a3a3a"/><circle cx="32" cy="10" r="6" fill="#3a3a3a"/><path d="M28 5 L30 1 L33 5 Z M34 5 L36 1 L38 6 Z" fill="#3a3a3a"/></svg></span>
+      <span class="fig cat c2" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="18" rx="14" ry="8" fill="#7a5a3a"/><circle cx="32" cy="10" r="6" fill="#7a5a3a"/></svg></span>
+      <span class="fig cat c3" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="18" rx="14" ry="8" fill="#888"/><circle cx="32" cy="10" r="6" fill="#888"/></svg></span>
+      <span class="fig duck d1" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="17" rx="13" ry="8" fill="#e8e0c8"/><circle cx="31" cy="9" r="6" fill="#e8e0c8"/><path d="M36 9 L42 11 L36 13 Z" fill="#d98a2b"/></svg></span>
+      <span class="fig duck d2" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="17" rx="13" ry="8" fill="#c8c8c8"/><circle cx="31" cy="9" r="6" fill="#c8c8c8"/></svg></span>
+      <span class="fig duck d3" aria-hidden="true"><svg viewBox="0 0 40 26"><ellipse cx="20" cy="17" rx="13" ry="8" fill="#8a6a4a"/><circle cx="31" cy="9" r="6" fill="#8a6a4a"/></svg></span>
+      <span class="fig bike" id="bike" aria-hidden="true"><svg viewBox="0 0 70 40"><circle cx="14" cy="28" r="10" fill="none" stroke="#222" stroke-width="3"/><circle cx="56" cy="28" r="10" fill="none" stroke="#222" stroke-width="3"/><path d="M14 28 L30 12 L56 28 M30 12 L44 28 M30 12 L26 6" stroke="#222" stroke-width="3" fill="none"/></svg></span>
     </div>
-
-    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: field → housing → stadium → Japan ↓</div>
-    <div class="scroll-track" id="scroll-track" aria-hidden="true"><div class="scroll-progress" id="scroll-progress"></div></div>
-
-    <div class="cards">
-      <article class="card" id="card-field" hidden tabindex="-1">
-        <h3>1 · The field — “Imagined, to be witnessed and experienced by everyone”</h3>
-        <p>Chofu High School opened 1963 and closed 1974, in the Kanto Mura Housing Annex. The field here is an imagined reconstruction, not a photograph, and not from Carl's eyes — nothing in this scene is from his eyes until he witnesses it. It is imagined to be witnessed and experienced by everyone.</p>
-        <p class="source">Source line: School dates: Doc 03 (revised), E90. No firsthand visual claim is made for this scene.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-season" hidden tabindex="-1">
-        <h3>2 · The 1971 season — “On the record”</h3>
-        <p>Chofu Vikings Varsity Football 1971, Far East Champions. Record 9 wins, 1 loss; only loss 8–18 to Yamato.</p>
-        <p>John Okabayashi — Quarterback, Senior, Honolulu, Hawaii.<br>
-        Tony Reed — Running Back, Junior, San Francisco, Calif.<br>
-        Henry Williams — Junior, RB / DB, Honorable Mention; jersey 32 in his portrait.</p>
-        <p>No likeness is drawn for any of the three men. No play is presented as a real play from a real game. No score for a single game is shown — only the season record.</p>
-        <p class="source">Source line: Hosho 1972, pp. 96–99 — verified visual reading, 2026-11-24. Tony Reed’s NFL career (1977–1981, Kansas City and Denver, drafted 1977 round 2 #37) is documented separately. No reliable record of John Okabayashi in the NFL was found.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-spot" hidden tabindex="-1">
-        <h3>3 · The exact spot — “Not established”</h3>
-        <p>We do not know this yet. No georeferenced source maps the school building or the old football field onto present-day parcels. The honest claim is regional only: school, housing, airfield, stadium and sports grounds share the same returned 203-hectare tract.</p>
-        <p class="source">Source line: Doc 03 (revised), §1.7, E17, E99, E109.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
+    <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
+    <div class="fog f1" aria-hidden="true"></div>
+    <div class="fog f2" aria-hidden="true"></div>
+    <div class="wash" id="wash" aria-hidden="true"></div>
+    <!-- Beat 5: animated Japan map you can travel across -->
+    <div class="japan-map" id="japan-map" aria-hidden="true">
+      <svg viewBox="0 0 300 220" role="presentation">
+        <path class="map-line" d="M40 150 L110 120 L170 80 L230 40" fill="none" stroke="#2e6b3e" stroke-width="2" stroke-dasharray="6 6"/>
+        <circle class="map-dot" data-place="chofu" cx="170" cy="80" r="7"/><circle class="map-dot" data-place="tachikawa" cx="150" cy="72" r="6"/>
+        <circle class="map-dot" data-place="yokosuka" cx="185" cy="105" r="6"/><circle class="map-dot" data-place="tama" cx="140" cy="90" r="5"/>
+        <circle class="map-dot" data-place="tokachi" cx="235" cy="35" r="5"/>
+        <text x="178" y="76" class="map-label">Chofu</text><text x="118" y="66" class="map-label">Tachikawa</text>
+        <text x="192" y="122" class="map-label">Yokosuka</text><text x="100" y="96" class="map-label">Tama</text>
+        <text x="210" y="28" class="map-label">Tokachi</text>
+      </svg>
     </div>
+    <div class="layer-ui" aria-hidden="true"><span class="era" id="era-chip">1971 — CHOFU · warm, faded past</span></div>
+    <div class="beat-label" id="beat-label" aria-live="polite">Beat 1 of 5 — The field</div>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+    <p class="walk-hint" id="walk-hint">Scroll to travel. Drag to walk. Tap a number.</p>
+    <!-- Hotspots are rendered here by app.js — they DO something, they don't open paragraphs. -->
+    <div id="hotspots"></div>
+    <!-- Today's job: one choice a day, a return reason that is a thing to do. -->
+    <div class="daily-job" id="daily-job" role="group" aria-label="Today's job"></div>
+    <!-- Moment sheet: max 3 short lines, a choice, an exit. Facts hide behind About. -->
+    <div class="moment" id="moment" hidden role="dialog" aria-modal="false" aria-labelledby="moment-title">
+      <h2 id="moment-title"></h2>
+      <p id="moment-lines"></p>
+      <div class="moment-choices" id="moment-choices"></div>
+      <div class="moment-about" id="moment-about" hidden></div>
+      <p class="moment-actions">
+        <button type="button" id="moment-about-btn">About this place</button>
+        <button type="button" id="moment-leave">Leave</button>
+      </p>
+    </div>
+    <!-- Side street overlay: labelled play, short, clean exit. -->
+    <div class="sidestreet" id="sidestreet" hidden role="dialog" aria-modal="false" aria-labelledby="sidestreet-title">
+      <p class="side-label">Imagined — play</p>
+      <h2 id="sidestreet-title"></h2>
+      <p id="sidestreet-lines"></p>
+      <p><button type="button" id="sidestreet-exit">Back to the main road</button></p>
+    </div>
+  </section>
+</div>
 
-    <p class="controls">
-      <button type="button" class="drift-toggle" id="drift-toggle" aria-pressed="true">Pause auto-drift</button>
-      <button type="button" class="read-toggle" id="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
-    </p>
+<!-- ============ PLAY — WALK THE DISTRICT (2026-11-25) ============
+     The stage above is where you look and tap moments. This is where you
+     WALK and DO jobs, GTA/Sega-style: a walkable district, free movement,
+     multi-step substories, a visible tracker. Same pilots, played. -->
+<section id="play" aria-labelledby="play-h">
+  <h2 id="play-h">Play — walk the district</h2>
+  <p class="play-lede">Walk the street, meet someone, take a small job, do it, and watch the district change. Tap the street to walk there, use the ◀ ▶ buttons, or arrow keys. <span class="play-register">Imagined, to be witnessed and experienced by everyone.</span></p>
+  <div id="play-hud" role="status">
+    <span class="play-day" id="play-day"></span>
+    <span id="play-map" aria-label="Places visited"></span>
+    <span id="play-count"></span>
+    <span id="play-trust" aria-label="People you have helped"></span>
   </div>
-
-  <div class="read-mode" id="read-mode" hidden>
-    <h3>Read the scene — linear text, no panning or zooming required</h3>
-    <ol>
-      <li><strong>Beat 1 — The field.</strong> A painted school field, warm and faded, 1971. Imagined reconstruction. Runners are drawn figures, not likenesses.</li>
-      <li><strong>Beat 2 — Track, soccer, football.</strong> The same ground, re-dressed for three sports. No documented track-meet or soccer result is claimed. The football season is on the record: 1971 Vikings, 9–1, Far East Champions.</li>
-      <li><strong>Beat 3 — The housing disappears.</strong> Kanto Mura housing: about 880 homes, about 4,500 people. Fully returned to Japan in 1974. On the record. The fading is an imagined picture of a documented return.</li>
-      <li><strong>Beat 4 — The present stadium.</strong> Ajinomoto Stadium (Tokyo Stadium), opened 10 March 2001, on the former Kanto Mura housing area. On the record. Ajinomoto Stadium is the actual name.</li>
-      <li><strong>Beat 5 — Japan, today.</strong> A painted map, not a satellite image. Chofu, Tachikawa, Yokosuka, Tama and Tokachi as named dots. No 2029 scene is built in this app.</li>
-    </ol>
+  <div id="play-view">
+    <div id="play-street"></div>
+    <div id="play-player" aria-hidden="true"><span class="pp-face"></span></div>
   </div>
+  <p id="play-toast" role="status" hidden></p>
+  <p id="play-mission" role="status"></p>
+  <div class="play-controls">
+    <button type="button" id="play-left" aria-label="Walk left">◀ Walk left</button>
+    <button type="button" id="play-right" aria-label="Walk right">Walk right ▶</button>
+    <button type="button" id="play-side-btn">Side street — Imagined, play</button>
+  </div>
+  <p class="play-hint">First minute: walk to Miki at the drink stand, take the job, find the ball, bring it back. The map fills in as you go. Progress is kept on this device only.</p>
+  <div id="play-side" hidden><div id="play-side-body"></div></div>
 </section>
 
-<section id="video" aria-labelledby="video-h">
-  <h2 id="video-h">Episode 1 · Opening clip — field → housing → stadium → Japan</h2>
-  <p class="lede">One short pre-rendered clip, 12 seconds, painted frames, <strong>silent by design</strong> — no audio track, no music, no clearance needed.
-  Muted autoplay is <em>attempted</em>; if the browser blocks it, the poster shows and you tap to play. <strong>Autoplay in LINE’s WebView is not claimed</strong> — it is untested (Technical team D-11/D-12).</p>
+<!-- Read it: tiny toggle, at most 5 one-line beats, hidden by default. -->
+<div class="read-mode" id="read-mode" hidden>
+  <h2>Read it — five lines, nothing more</h2>
+  <ol id="read-lines"></ol>
+  <p><button type="button" id="read-close">Close — back to walking</button></p>
+</div>
 
+<!-- Watch the field move: the 12 s silent Chofu clip, poster first, tap to play. -->
+<div class="clipbox" id="clipbox" hidden role="dialog" aria-modal="false" aria-labelledby="clip-h">
+  <h2 id="clip-h">Watch the field move — 12 seconds, silent</h2>
   <div class="video-wrap">
     <video id="clip" width="1280" height="720" poster="assets/poster-field.png" playsinline muted loop preload="metadata" controls>
       <source src="assets/opening-clip.mp4" type="video/mp4">
       <p>Your browser cannot play this video. <a href="assets/poster-field.png">See the poster still image instead.</a></p>
     </video>
-    <button type="button" class="play-cover" id="play-cover">▶ Tap to play the opening clip (12 s, silent)</button>
+    <button type="button" class="play-cover" id="play-cover">▶ Tap to play (12 s, silent)</button>
     <p class="video-note" id="video-note" role="status">Poster shown. Autoplay not assumed.</p>
   </div>
+  <p><button type="button" id="clip-close">Close — back to walking</button></p>
+</div>
 
-  <h3>YouTube embed — test harness, no video selected</h3>
-  <p class="lede">A YouTube iframe embed <em>can</em> be carried in a LIFF page (ordinary HTML in WKWebView / Android WebView), with <code>playsinline</code>, muted autoplay attempted, and sound on tap. No YouTube video is embedded here by default — <strong>no video was selected and no rights were cleared</strong>. Enter a video ID to test the route, or leave it empty and use the still fallback.</p>
-  <form id="yt-form" class="yt-form">
-    <label for="yt-id">YouTube video ID (11 characters, e.g. from a video you own or have permission to embed)</label>
-    <input id="yt-id" name="yt-id" inputmode="text" autocomplete="off" placeholder="— no video selected —" maxlength="20">
-    <button type="submit">Load YouTube embed</button>
-    <button type="button" id="yt-clear">Clear embed</button>
-  </form>
-  <div id="yt-slot" aria-live="polite"><p class="still-fallback">Still fallback: <a href="assets/poster-field.png">poster still image</a>. No YouTube video loaded.</p></div>
-  <p class="small">If a video is loaded: it plays inline where the WebView allows it; sound requires a tap; tapping the YouTube title or “Watch on YouTube” leaves LINE / this page for YouTube. Embedding can be disabled by the video owner, and age-restricted videos will not embed — those are YouTube limits, not LIFF limits.</p>
+<!-- ============ 2029 — short text question only, after the episodes ============ -->
+<section id="question-2029" aria-labelledby="q-h" class="whatif-text">
+  <h2 id="q-h">2029 — a question in words only</h2>
+  <p><strong>2029 — imagined. A what-if, not a prediction.</strong><br>What happened — America left?</p>
+  <ol class="paths">
+    <li><strong>Look back.</strong> Chofu returned in 1974. Tachikawa closed in 1977 and became a park in 1983. Returns are real — loss and remaking both.</li>
+    <li><strong>Look at the need now.</strong> The U.S. Embassy Tokyo once stated a need to strengthen USFJ–host-community ties. Evidence of a stated need — not consent, not a live invitation.</li>
+    <li><strong>Ask what to keep.</strong> A field where two countries' children played. A street where a tailor and a sailor met. A park that was once an airfield.</li>
+  </ol>
+  <p><button type="button" id="q-about-btn">About this question</button></p>
+  <p class="q-about" id="q-about" hidden>Pinatubo, June 1991: the volcano emptied Clark, politics decided America would not come back — a history lesson, not a prediction about Japan. No immersive 2029 scene is built here.</p>
 </section>
 
-<section id="panorama" aria-labelledby="pano-h">
-  <h2 id="pano-h">Episode 1 · “Stand here” — one panorama viewpoint</h2>
-  <p class="lede">A single 360° painted still of the Chofu tract. Drag left or right to look around. One hotspot jump.</p>
-  <div class="pano" id="pano" tabindex="0" aria-label="Panorama: painted view of the Chofu tract. Drag to look around.">
-    <img src="assets/panorama.png" alt="Painted panorama of the Chofu tract: housing rows, a field, and Mt. Fuji in the distance. Painted reconstruction, not a photograph." draggable="false">
-    <button type="button" class="hotspot pano-hotspot" data-pano-jump="scene">Jump to the field ↓</button>
-  </div>
-  <p class="small">Panorama loads as one still image (20 KB). No WebGL, no 360° video. If the image fails to load, the text below it remains: “Chofu tract, painted panorama — image unavailable in this test.”</p>
-  <div class="two-way" role="group" aria-label="Talk back — Episode 1, Chofu">
-    <h3>Talk back — Chofu asks you something</h3>
-    <p>Did a school field ever matter to you? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
-    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="memory" data-choice="I played on a field like this" data-prompt="I played on a field like this. What I remember about it is: ">I played on a field like this</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="memory" data-choice="I watched, I never played" data-prompt="I watched from the side, I never played. What I saw was: ">I watched, I never played</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="1" data-kind="question" data-choice="I never saw a field like this — what was it like?" data-prompt="I never saw a field like this. My question is: ">I never saw a field like this — what was it like?</button>
-    <p class="small">Your choice changes what TASK answers: a player gets the 1971 season, on the record; a watcher gets the field, imagined; a question gets an answer back in chat, from a person.</p>
-  </div>
-</section>
-<section class="pilot" aria-labelledby="pilot-h-1">
-  <h2 id="pilot-h-1">Episode 1 · The pilot — a GTA/Sega-style district</h2>
-  <p class="pilot-mark"><strong>Register: “Imagined, to be witnessed and experienced by everyone”.</strong> Fog is the feeling of moving through the place, not the pilot. No decision stops; no outside contract, permit, or permission is needed, and none is claimed.</p>
-  <p><strong>The district — “The Tract”.</strong> One dense small district, painted, walked on foot: the field at the centre; the Kanto Mura housing rows to the north, fading as you scroll (an imagined picture of the documented 1974 return); Ajinomoto Stadium present at the east edge; the station road with its corner shops; the river path.</p>
-  <p><strong>Named contacts — fictional, imagined, never real people.</strong> <strong>Miki</strong>, who runs the drink stand by the field gate. <strong>Old Jiro</strong>, who sweeps the stadium steps. <strong>Aya</strong>, who flies kites over the field. The real players of the 1971 season appear only as facts on the record — they are not characters here, and no likeness, voice, or dialogue is given to them.</p>
-  <p><strong>Substories.</strong> <em>The Lost Ball</em> (Miki): balls keep landing in her bottle crate — bring one back and she tells you which way the wind runs over the field. <em>The Step That Is Always Dusty</em> (Old Jiro): one stadium step is always dusty; it is the last step of a house that is gone. <em>The Kite on the Roof</em> (Aya): her kite is stuck on the stadium roof, and the chase runs field → housing rows → stadium.</p>
-  <p><strong>Look closely.</strong> A chalk line that never quite fades; a house number painted on a wall where the house is gone; a seat in Ajinomoto Stadium with no number on it; the track's white line continuing past the fence as a painted ghost line.</p>
-  <p><strong>Side streets — “Imagined — play”.</strong> <em>Pigeon Steals the Ball:</em> a pigeon takes the ball mid-game and the whole district chases it down the station road; the pigeon always wins. <em>The Wrong-Drink Machine:</em> the vending machine by the gate gives the wrong drink every third push, and the district plays it like a lottery. <em>The Street That Gets Shorter:</em> the lane through the housing rows is shorter every time you walk it. Short, cleanly exited, never on the main road; no crime, no violence, no interpersonal conflict as entertainment.</p>
-  <p><strong>Calendar — one choice a day.</strong> Monday practice, Wednesday market on the station road, Friday night game under the lights at Ajinomoto Stadium, Sunday kite day. A different contact hands out the work each week. No clock, no score, no streaks.</p>
-  <p class="small">Painted only; figures are drawn silhouettes from behind. No photograph, no yearbook page, no music, no 2029 immersive scene — 2029 stays text only, labelled imagined future / what-if, not a prediction. No claim about the exact spot of the old field; no single-game score.</p>
-</section>
-</div><!-- /episode 1 -->
-
-<!-- ============ EPISODE 2 · YOKOSUKA ============ -->
-<div class="episode" id="episode-2" data-episode="2" hidden>
-<section aria-labelledby="scene-h-2">
-  <h2 id="scene-h-2">Episode 2 · Yokosuka street — one 2.5D scene</h2>
-  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
-  Dobuita is a real street in Yokosuka, outside the base — and this picture of it is <strong>painted, not a photograph</strong>. No shop is named as participating, and no shopfront here is a portrait of a real shop.</p>
-
-  <div class="scene-wrap">
-    <div class="viewport ep-yokosuka" data-episode="2" tabindex="0" aria-label="Dobuita street, Yokosuka, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
-      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
-      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Harbour light — Yokosuka, a working port town</span></div>
-      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
-      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
-      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
-        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
-      </div>
-      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
-      <div class="layer layer-ui" aria-hidden="true"><span class="era">DOBUITA · painted street, present day</span></div>
-
-      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e2-street" aria-label="Hotspot: the street, imagined, to be witnessed and experienced by everyone">1</button>
-      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e2-real" aria-label="Hotspot: Dobuita, a real street, on the record">2</button>
-      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e2-shops" aria-label="Hotspot: the shops, not established">3</button>
-
-      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — Dobuita street</div>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: street → harbour → shopfronts → sukajan → Yokosuka ↓</div>
-    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
-
-    <div class="cards">
-      <article class="card" id="card-e2-street" hidden tabindex="-1">
-        <h3>1 · The street — “Imagined, to be witnessed and experienced by everyone”</h3>
-        <p>A painted working port-town street, outside the base. The street itself is real; the shopfronts, light, weather, and passers-by are imagined. No shopfront here is a portrait of a real shop.</p>
-        <p class="source">Source line: Dobuita is a real street in Yokosuka (Research / Visual teams). The picture is painted; no photograph is used.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e2-real" hidden tabindex="-1">
-        <h3>2 · Dobuita, a real street — “On the record”</h3>
-        <p>Dobuita is a real street in Yokosuka, photographable today. Shenmue's Dobuita is a real street, modified in-game, which visitors check against reality — and a Shenmue pilgrimage to the street is noted in the research.</p>
-        <p class="source">Source line: Visual team §2 (Shenmue's Dobuita); Research team place comparison. No game image, screenshot, or logo is used here.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e2-shops" hidden tabindex="-1">
-        <h3>3 · The shops — “Not established”</h3>
-        <p>Which shops, which tailor, who is there now — not established here. No shop is named as participating, and no shop participation is presumed. No shop sign, logo, or jacket design is reproduced here.</p>
-        <p class="source">Source line: No shop sign, logo, or jacket design is reproduced here. No shop is named as participating.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-    </div>
-
-    <p class="controls">
-      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
-      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
-    </p>
-  </div>
-
-  <div class="read-mode" hidden>
-    <h3>Read the scene — linear text, no panning or zooming required</h3>
-    <ol>
-      <li><strong>Beat 1 — Dobuita street.</strong> A painted street in a working port town, outside the base. Imagined reconstruction; figures are drawn silhouettes, not likenesses.</li>
-      <li><strong>Beat 2 — The harbour.</strong> Yokosuka is a working port town. Painted harbour light; no ship is named or depicted as a real vessel.</li>
-      <li><strong>Beat 3 — Shopfronts, painted.</strong> Painted shopfronts, none a portrait of a real shop. No shop is named as participating.</li>
-      <li><strong>Beat 4 — The sukajan.</strong> The souvenir jacket as a painted object, in general terms. No specific jacket design is reproduced.</li>
-      <li><strong>Beat 5 — Yokosuka, today.</strong> A painted map dot, not a satellite image. No 2029 scene is built in this app.</li>
-    </ol>
-  </div>
-</section>
-
-<section aria-labelledby="video-h-2">
-  <h2 id="video-h-2">Episode 2 · Opening clip — Dobuita street</h2>
-  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
-  <div class="video-wrap">
-    <div class="poster-still poster-yokosuka" role="img" aria-label="Painted poster still: Dobuita street, Yokosuka. Painted, not a photograph. Opening clip not yet rendered."><span>DOBUITA · YOKOSUKA — painted poster still</span></div>
-    <button type="button" class="play-cover clip-not-rendered" data-episode="2">▶ Tap to play the opening clip</button>
-    <p class="video-note" role="status">Clip not yet rendered for Episode 2. Poster still shown. No video file exists for this episode.</p>
-  </div>
-</section>
-
-<section aria-labelledby="pano-h-2">
-  <h2 id="pano-h-2">Episode 2 · “Stand here” — one panorama viewpoint</h2>
-  <p class="lede">A painted still panorama of Dobuita street, built from CSS/painted assets — not a photograph. Drag left or right to look around. One hotspot jump.</p>
-  <div class="pano" tabindex="0" aria-label="Panorama: painted view of Dobuita street, Yokosuka. Drag to look around.">
-    <div class="pano-strip pano-strip-yokosuka" aria-hidden="true"></div>
-    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-2">Jump to the street ↓</button>
-  </div>
-  <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph.</p>
-  <div class="two-way" role="group" aria-label="Talk back — Episode 2, Yokosuka">
-    <h3>Talk back — Dobuita asks you something</h3>
-    <p>What caught your eye on this street? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
-    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="place-note" data-choice="A shopfront I noticed" data-prompt="On Dobuita I noticed: ">A shopfront I noticed</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="question" data-choice="I have walked Dobuita" data-prompt="I have walked Dobuita. What I found there was: ">I have walked Dobuita</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="2" data-kind="question" data-choice="I have never been — what should I look for first?" data-prompt="I have never been to Dobuita. What should I look for first? ">I have never been — what should I look for first?</button>
-    <p class="small">A place note is a suggestion, labelled not-yet-researched — never a fact, never a shop named as participating. TASK answers in chat, and your next step is Tachikawa, the airfield that became a park.</p>
-  </div>
-</section>
-<section class="pilot" aria-labelledby="pilot-h-2">
-  <h2 id="pilot-h-2">Episode 2 · The pilot — a GTA/Sega-style district</h2>
-  <p class="pilot-mark"><strong>Register: “Imagined, to be witnessed and experienced by everyone”.</strong> Fog is the feeling of moving through the place, not the pilot. No decision stops; no outside contract, permit, or permission is needed, and none is claimed. No shop is named as participating, and no shop participation is presumed.</p>
-  <p><strong>The district — Dobuita and the harbour steps.</strong> One dense small district, painted, walked on foot, outside the base: Dobuita street itself; the harbour steps down to the water; the back lane of tailors; the station slope. A working port town — mornings belong to the harbour, afternoons to the tailor row, evenings go neon. Shenmue's Dobuita is named in text only, as research context; no game image, screenshot, or logo is used.</p>
-  <p><strong>Named contacts — fictional, imagined, never real people.</strong> <strong>Rin</strong>, a tailor's apprentice who presses jackets. <strong>Haru</strong>, who knows every shop and charges in stories, not money. <strong>Mrs. Umi</strong>, who runs the harbour café and keeps every promise on her wall.</p>
-  <p><strong>Substories.</strong> <em>The Jacket That Fits Nobody</em> (Rin): a sukajan that fits nobody who tries it on — wear it down the street and let the street measure you. <em>Haru's Three Cats</em> (Haru): find the three painted cats hidden on Dobuita and he shows you the harbour steps and the view nobody photographs. <em>The Wall of Promises</em> (Mrs. Umi): deliver three IOUs left by fictional visitors who promised to come back.</p>
-  <p><strong>Look closely.</strong> A jacket button in the gutter, shaped like an anchor; a shop sign painted over three times, with three different names showing through; the harbour light at 5 p.m., turning the whole street gold; a tailor's chalk mark on a step, in the shape of a fish.</p>
-  <p><strong>Side streets — “Imagined — play”.</strong> <em>The Alley of Doors:</em> every door painted a different colour, and one door, opened, plays harbour sound. <em>The Backwards Machine:</em> the vending machine sells hot drinks in summer and cold drinks in winter, backwards on purpose. <em>The Cat Mayor:</em> a stray cat sits on the same step every day and the street treats it as the mayor; the cat approves everyone. Short, cleanly exited, never on the main road; no crime, no violence, no interpersonal conflict as entertainment.</p>
-  <p><strong>Calendar — one choice a day.</strong> Morning the harbour, afternoon the tailor row, evening neon on Dobuita. Saturday the street fills; Sunday the harbour is quiet. A different contact hands out the work each week. No clock, no score, no streaks.</p>
-  <p class="small">Painted only; figures are drawn silhouettes from behind. No photograph is used, although the street is photographable today. No shop sign, logo, or jacket design reproduced; no claim about which shops exist today. No music, no 2029 immersive scene — 2029 stays text only, labelled imagined future / what-if, not a prediction.</p>
-</section>
-</div><!-- /episode 2 -->
-
-<!-- ============ EPISODE 3 · TACHIKAWA ============ -->
-<div class="episode" id="episode-3" data-episode="3" hidden>
-<section aria-labelledby="scene-h-3">
-  <h2 id="scene-h-3">Episode 3 · Tachikawa — the airfield that became a park</h2>
-  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
-  Tachikawa Air Base closed permanently on 30 September 1977 and was fully returned that year; Showa Kinen Park opened on the former airfield on 26 October 1983. The scene is <strong>painted, not a photograph</strong> — the museum photograph is not used here — it is described in words only.</p>
-
-  <div class="scene-wrap">
-    <div class="viewport ep-tachikawa" data-episode="3" tabindex="0" aria-label="Tachikawa, airfield to park, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
-      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
-      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Park trees — Showa Kinen Park, present day</span></div>
-      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
-      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
-      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
-        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
-      </div>
-      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
-      <div class="layer layer-ui" aria-hidden="true"><span class="era">TACHIKAWA · airfield → park</span></div>
-
-      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e3-park" aria-label="Hotspot: the airfield becomes a park, on the record">1</button>
-      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e3-photo" aria-label="Hotspot: the museum photograph, not used here">2</button>
-      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e3-town" aria-label="Hotspot: the base town, imagined">3</button>
-
-      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — The airfield, 1977</div>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: airfield → silence → return → park → Tachikawa ↓</div>
-    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
-
-    <div class="cards">
-      <article class="card" id="card-e3-park" hidden tabindex="-1">
-        <h3>1 · The airfield becomes a park — “On the record”</h3>
-        <p>Tachikawa Air Base: permanently closed 30 September 1977, full return to Japan in 1977. Showa Kinen Park opened 26 October 1983, on the former airfield.</p>
-        <p class="source">Source line: Doc 03 (revised); integrated findings §2.1/§2.3. The painted change from runway to park is an imagined picture of a documented change.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e3-photo" hidden tabindex="-1">
-        <h3>2 · The museum photograph — “Not established” for use</h3>
-        <p>A c.1952 photograph of Akebonocho, Tachikawa, is held by a museum. It is the strongest single visual anchor among the four places — and it is not shown here. <strong>Not used.</strong> It is described in words only; it is not shown, copied, or traced.</p>
-        <p class="source">Source line: Visual team §2. Described in words only; not shown, copied, or traced.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e3-town" hidden tabindex="-1">
-        <h3>3 · The base town — “Imagined, to be witnessed and experienced by everyone”</h3>
-        <p>The town around the base as painted. Japanese voices for Tachikawa are absent except as summarised by city and tourism sources; no community viewpoint is invented here.</p>
-        <p class="source">Source line: Integrated findings §4, unknown 12. Painted only; no photograph used.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-    </div>
-
-    <p class="controls">
-      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
-      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
-    </p>
-  </div>
-
-  <div class="read-mode" hidden>
-    <h3>Read the scene — linear text, no panning or zooming required</h3>
-    <ol>
-      <li><strong>Beat 1 — The airfield, 1977.</strong> A painted airfield in its last year. Imagined reconstruction; figures are drawn silhouettes, not likenesses.</li>
-      <li><strong>Beat 2 — The runways fall silent.</strong> Base permanently closed 30 September 1977. On the record.</li>
-      <li><strong>Beat 3 — The return.</strong> Full return to Japan, 1977. On the record. The painted emptying is an imagined picture of a documented return.</li>
-      <li><strong>Beat 4 — Showa Kinen Park, present.</strong> Park opened 26 October 1983, on the former airfield. On the record. The museum photograph is not used here.</li>
-      <li><strong>Beat 5 — Tachikawa, today.</strong> A painted map dot, not a satellite image. No 2029 scene is built in this app.</li>
-    </ol>
-  </div>
-</section>
-
-<section aria-labelledby="video-h-3">
-  <h2 id="video-h-3">Episode 3 · Opening clip — airfield to park</h2>
-  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
-  <div class="video-wrap">
-    <div class="poster-still poster-tachikawa" role="img" aria-label="Painted poster still: Tachikawa airfield becoming Showa Kinen Park. Painted, not a photograph. Opening clip not yet rendered."><span>TACHIKAWA · AIRFIELD → PARK — painted poster still</span></div>
-    <button type="button" class="play-cover clip-not-rendered" data-episode="3">▶ Tap to play the opening clip</button>
-    <p class="video-note" role="status">Clip not yet rendered for Episode 3. Poster still shown. No video file exists for this episode.</p>
-  </div>
-</section>
-
-<section aria-labelledby="pano-h-3">
-  <h2 id="pano-h-3">Episode 3 · “Stand here” — one panorama viewpoint</h2>
-  <p class="lede">A painted still panorama of the park on the former airfield, built from CSS/painted assets — not a photograph. Drag left or right to look around. One hotspot jump.</p>
-  <div class="pano" tabindex="0" aria-label="Panorama: painted view of Showa Kinen Park, Tachikawa. Drag to look around.">
-    <div class="pano-strip pano-strip-tachikawa" aria-hidden="true"></div>
-    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-3">Jump to the park ↓</button>
-  </div>
-  <p class="small">Painted still panorama (CSS/painted assets). No WebGL, no 360° video, no photograph. The museum photograph is not used here.</p>
-  <div class="two-way" role="group" aria-label="Talk back — Episode 3, Tachikawa">
-    <h3>Talk back — Tachikawa asks you something</h3>
-    <p>Which do you see here — the airfield, or the park? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below.</p>
-    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="question" data-choice="I see the airfield" data-prompt="In Tachikawa I see the airfield. What I see is: ">I see the airfield</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="question" data-choice="I see the park" data-prompt="In Tachikawa I see the park. What I see is: ">I see the park</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="3" data-kind="memory" data-choice="I know a place that changed like this" data-prompt="I know a place that changed from one use to another, like Tachikawa. My place is: ">I know a place that changed like this</button>
-    <p class="small">Your answer changes what comes back: airfield or park, TASK answers with the record for that side — closed 1977, or opened 1983 — and a place that changed, in your own words, is held for human review, never shown as a fact.</p>
-  </div>
-</section>
-<section class="pilot" aria-labelledby="pilot-h-3">
-  <h2 id="pilot-h-3">Episode 3 · The pilot — a GTA/Sega-style district</h2>
-  <p class="pilot-mark"><strong>Register: “Imagined, to be witnessed and experienced by everyone”.</strong> Fog is the feeling of moving through the place, not the pilot. No decision stops; no outside contract, permit, or permission is needed, and none is claimed. The museum photograph is not used here.</p>
-  <p><strong>The district — the park, the runway line, the base town.</strong> One dense small district, painted, walked on foot: Showa Kinen Park on the former airfield; the old runway line, kept as a painted ghost line under the grass; the base-town streets around the park; the museum corner — the museum as a painted place, described in words only. The c.1952 Akebonocho photograph is described in words only; it is not shown, copied, or traced.</p>
-  <p><strong>Named contacts — fictional, imagined, never real people.</strong> <strong>Sora</strong>, who runs the park bicycle hire. <strong>Mr. Kaze</strong>, who walks the runway line every morning. <strong>Nana</strong>, who sells seed packets at the park gate, labelled with years.</p>
-  <p><strong>Substories.</strong> <em>Walk the Line</em> (Mr. Kaze): walk the runway line and the painted runway appears under the grass for a few steps, then fades. <em>The Squeaky Wheel</em> (Sora): follow the squeak of the hire bike and it leads you to the park's oldest tree. <em>The Seed Packets</em> (Nana): plant a packet — imagined — and see, painted, what grew in that year.</p>
-  <p><strong>Look closely.</strong> The runway line, visible only when it rains; a bench that faces the wrong way, and everyone sits on it backwards; a kite stuck in the same tree that nobody takes down — by now part of the tree.</p>
-  <p><strong>Side streets — “Imagined — play”.</strong> <em>The Rain Runway:</em> when it rains, the painted path shines like a runway and the park becomes an airfield for ten minutes, and children land paper planes on it. <em>The Backwards Bench:</em> sit on it the wrong way round and you see the park the way the airfield saw it. <em>The Permanent Kite:</em> the kite in the tree has been there so long the tree grew around its string, and the district votes every spring to leave it. Short, cleanly exited, never on the main road; no crime, no violence, no interpersonal conflict as entertainment.</p>
-  <p><strong>Calendar — one choice a day.</strong> Spring blossom, summer lawn, autumn leaves, winter bare branches. The park changes with the season, and the substories rotate with it. A different contact hands out the work each week. No clock, no score, no streaks.</p>
-  <p class="small">Painted only; figures are drawn silhouettes from behind. No photograph, and not the museum photograph. No claim about the exact footprint of base buildings inside today's park. No music, no 2029 immersive scene — 2029 stays text only, labelled imagined future / what-if, not a prediction.</p>
-</section>
-</div><!-- /episode 3 -->
-
-<!-- ============ EPISODE 4 · TAMA ============ -->
-<div class="episode" id="episode-4" data-episode="4" hidden>
-<section aria-labelledby="scene-h-4">
-  <h2 id="scene-h-4">Episode 4 · Tama — imagined, civilian-era framing only</h2>
-  <p class="lede">Scroll to zoom. Drag to pan. Drift is slow, with no clock and no score.
-  This whole episode is <strong>imagined</strong>: open grass, trees, and water, as a civilian imagining of recreation. Tama is an active annex — access is ID/guest-only — and it is <strong>not depicted as publicly visitable</strong>. No facility, building, boundary, or interior is shown. The era is unresolved and none is claimed.</p>
-
-  <div class="scene-wrap">
-    <div class="viewport ep-tama" data-episode="4" tabindex="0" aria-label="Tama Recreation Area, imagined, 2.5D layered scene. Use the Read the scene mode for a linear text version.">
-      <div class="layer layer-sky" data-speed="0.1" aria-hidden="true"></div>
-      <div class="layer layer-far" data-speed="0.25" aria-hidden="true"><span class="fuji" aria-hidden="true">Hills — imagined, civilian-era framing only</span></div>
-      <div class="layer layer-midfar" data-speed="0.5" aria-hidden="true"></div>
-      <div class="layer layer-mid" data-speed="1.0" aria-hidden="true"></div>
-      <div class="layer layer-figures" data-speed="1.25" aria-hidden="true">
-        <span class="runner r1" aria-hidden="true"></span><span class="runner r2" aria-hidden="true"></span><span class="runner r3" aria-hidden="true"></span>
-      </div>
-      <div class="layer layer-near" data-speed="1.6" aria-hidden="true"></div>
-      <div class="layer layer-ui" aria-hidden="true"><span class="era">TAMA · imagined — not a visit</span></div>
-
-      <button class="hotspot" type="button" style="left:20%;top:60%" data-card="card-e4-imagined" aria-label="Hotspot: imagined recreation, to be witnessed and experienced by everyone">1</button>
-      <button class="hotspot" type="button" style="left:52%;top:46%" data-card="card-e4-era" aria-label="Hotspot: which era, not established">2</button>
-      <button class="hotspot" type="button" style="left:76%;top:68%" data-card="card-e4-access" aria-label="Hotspot: access, on the record, ID or guest only">3</button>
-
-      <div class="zoom-label" aria-live="polite">Beat 1 of 5 — Open grass, imagined</div>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">Scroll down to zoom: grass → trees → water → the era question → Tama, imagined ↓</div>
-    <div class="scroll-track" aria-hidden="true"><div class="scroll-progress"></div></div>
-
-    <div class="cards">
-      <article class="card" id="card-e4-imagined" hidden tabindex="-1">
-        <h3>1 · Imagined recreation — “Imagined, to be witnessed and experienced by everyone”</h3>
-        <p>A painted imagining of open, civilian recreation — trees, grass, water — not a picture of any real facility. The scene is deliberately soft-edged: it shows its gaps rather than filling in a guess.</p>
-        <p class="source">Source line: Imagined, civilian-era framing only. No facility, building, boundary, or interior is depicted.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e4-era" hidden tabindex="-1">
-        <h3>2 · Which era? — “Not established”</h3>
-        <p>The era Carl intends to portray at Tama is undecided — arsenal, Korean-War depot, 1980s recreation, or present. Nothing in this scene settles it, and no era is claimed. If the era question cannot be settled, the honest course is to keep this episode as an internal imagined study and not build it further.</p>
-        <p class="source">Source line: Integrated findings §3/§4, unknown 15; Story team decisions list. Era selection needs Carl's go (C-4).</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-      <article class="card" id="card-e4-access" hidden tabindex="-1">
-        <h3>3 · Access — “On the record”</h3>
-        <p>Tama is an active annex. Access is U.S. military ID or guest-only. This episode does not depict Tama as publicly visitable and claims no access. No facility, building, boundary, or interior is shown.</p>
-        <p class="source">Source line: Research team — Tama, ID or guest-only access. No interior is depicted.</p>
-        <button type="button" class="close-card">Close</button>
-      </article>
-    </div>
-
-    <p class="controls">
-      <button type="button" class="drift-toggle" aria-pressed="true">Pause auto-drift</button>
-      <button type="button" class="read-toggle" aria-pressed="false">Read the scene (linear text)</button>
-    </p>
-  </div>
-
-  <div class="read-mode" hidden>
-    <h3>Read the scene — linear text, no panning or zooming required</h3>
-    <ol>
-      <li><strong>Beat 1 — Open grass, imagined.</strong> A painted imagining of open grass. Imagined, civilian-era framing only; figures are drawn silhouettes, not likenesses.</li>
-      <li><strong>Beat 2 — Trees and water.</strong> Painted trees and a lake edge. Imagined; no real facility is depicted.</li>
-      <li><strong>Beat 3 — Recreation, imagined.</strong> Leisure, imagined. No real person, no real event.</li>
-      <li><strong>Beat 4 — The question of era.</strong> Which era? Not established. The episode does not pick an era by drawing one.</li>
-      <li><strong>Beat 5 — Tama, imagined — not a visit.</strong> Tama is an active annex, ID/guest-only access. This episode is internal only. No 2029 scene is built in this app.</li>
-    </ol>
-  </div>
-</section>
-
-<section aria-labelledby="video-h-4">
-  <h2 id="video-h-4">Episode 4 · Opening clip — imagined recreation</h2>
-  <p class="lede">The opening clip for this episode has <strong>not yet been rendered</strong>. What you see below is a painted poster still — not a video, and not a photograph. Tapping play will tell you so, honestly, rather than playing a fake video.</p>
-  <div class="video-wrap">
-    <div class="poster-still poster-tama" role="img" aria-label="Painted poster still: Tama, imagined open grass and water. Painted, not a photograph. Opening clip not yet rendered."><span>TAMA · IMAGINED — painted poster still</span></div>
-    <button type="button" class="play-cover clip-not-rendered" data-episode="4">▶ Tap to play the opening clip</button>
-    <p class="video-note" role="status">Clip not yet rendered for Episode 4. Poster still shown. No video file exists for this episode.</p>
-  </div>
-</section>
-
-<section aria-labelledby="pano-h-4">
-  <h2 id="pano-h-4">Episode 4 · “Stand here” — one panorama viewpoint</h2>
-  <p class="lede">A painted still panorama of imagined open grass and water, built from CSS/painted assets — not a photograph, and not a view from inside the annex. Drag left or right to look around. One hotspot jump.</p>
-  <div class="pano" tabindex="0" aria-label="Panorama: painted imagined view of open grass and water at Tama. Drag to look around.">
-    <div class="pano-strip pano-strip-tama" aria-hidden="true"></div>
-    <button type="button" class="hotspot pano-hotspot" data-pano-jump="episode-4">Jump to the grass ↓</button>
-  </div>
-  <p class="small">Painted still panorama (CSS/painted assets), imagined. No WebGL, no 360° video, no photograph, no view from inside the annex.</p>
-  <div class="two-way" role="group" aria-label="Talk back — Episode 4, Tama">
-    <h3>Talk back — Tama asks you something</h3>
-    <p>This episode has no settled era. Which era should it be? Choose one — it only writes a draft, nothing is sent until you tap <strong>Send to TASK</strong> below. Your choice does not decide it; it is a question back, and TASK answers why the era is still open.</p>
-    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Show the 1980s recreation era" data-prompt="For Tama, show the 1980s recreation era, because: ">Show the 1980s recreation era</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Show the present, as it is" data-prompt="For Tama, show the present, as it is, because: ">Show the present, as it is</button>
-    <button type="button" class="choice-btn" data-two-way data-episode="4" data-kind="question" data-choice="Keep it imagined — do not pick an era" data-prompt="For Tama, keep it imagined and do not pick an era, because: ">Keep it imagined — do not pick an era</button>
-    <p class="small">Tama is an active annex, ID/guest-only access. No choice here claims access, and no era is settled by a visitor's vote — the era decision stays with Carl (C-4).</p>
-  </div>
-</section>
-<section class="pilot" aria-labelledby="pilot-h-4">
-  <h2 id="pilot-h-4">Episode 4 · The pilot — a GTA/Sega-style district (imagined, internal only)</h2>
-  <p class="pilot-mark"><strong>Register: “Imagined, to be witnessed and experienced by everyone”.</strong> This whole episode is imagined, civilian-era framing only, and internal only. Tama is an active annex; access is ID/guest-only; it is not depicted as publicly visitable, and no access is claimed. No era is claimed. No facility, building, boundary, fence line, or interior is depicted. No permission is claimed — none exists, none was sought. Fog is the feeling of moving through the place, not the pilot. No decision stops.</p>
-  <p><strong>The district — imagined: the meadow, the lake edge, the tree line.</strong> One small imagined district, painted, walked on foot: the meadow; the lake edge; the tree line; and the path that stops at a soft edge. The soft edge is the point — the path ends, the pilot says so plainly, and the visitor turns back. Nothing here is a visit.</p>
-  <p><strong>Named contacts — fictional, imagined, never real people.</strong> <strong>Pip</strong>, who counts ducks that aren't there. <strong>Mrs. Mori</strong>, who brings a picnic for one. <strong>The path-keeper</strong>, who sweeps leaves off a path nobody walks.</p>
-  <p><strong>Substories.</strong> <em>The Picnic for One</em> (Mrs. Mori): she sets a place for a guest who never arrives — the visitor is the guest, once. <em>The Duck Count</em> (Pip): the count is always wrong by one; the extra duck is the joke, and the lake keeps it. <em>The Path That Stops</em> (the path-keeper): help sweep the path to the soft edge and back — and stop where the sweeping stops.</p>
-  <p><strong>Look closely.</strong> One leaf falls a day, on schedule, from the same tree; the painted water shows the sky upside down; the meadow echoes — shout a word and it shouts back a different one.</p>
-  <p><strong>Side streets — “Imagined — play”.</strong> <em>The Echo Meadow:</em> shout a word and the meadow returns a different one, and the district keeps a list of the best returns. <em>The Upside-Down Lake:</em> lie on the grass and the world flips, briefly, politely. <em>The One-Leaf Tree:</em> the tree drops exactly one leaf a day, and nobody has ever caught it. Short, cleanly exited, never on the main road; no crime, no violence, no interpersonal conflict as entertainment.</p>
-  <p><strong>Calendar — one choice a day.</strong> Four seasons as four moods: spring green, summer still, autumn gold, winter bare. A different contact hands out the work each week. No clock, no score, no streaks — and the calendar never pretends this is a visit.</p>
-  <p class="small">Painted/CSS only; figures are drawn silhouettes from behind, at a distance, unidentifiable. Not a photograph, not a map, not installation imagery. No era claimed. If the era question cannot be settled, the honest course is to keep this episode as an internal imagined study and not build it further. No music, no 2029 immersive scene — 2029 stays text only, labelled imagined future / what-if, not a prediction.</p>
-</section>
-</div><!-- /episode 4 -->
-
-<!-- ============ SHARED: TALK BACK TO TASK — TWO-WAY ============ -->
+<!-- ============ TALK BACK — compact return path ============ -->
 <section id="talkback" aria-labelledby="talk-h" class="talkback">
-  <h2 id="talk-h">Talk back to TASK — this is the return path</h2>
-  <p class="lede">LIFF alone is one-way: you can look, tap, and scroll, but nothing comes back. This section is the way back. <strong>Nothing here sends silently.</strong> You write, you tick the box, you tap <strong>Send to TASK</strong>, and your words go — as a text message, from you — into the TASK chat in LINE, where a person reads them and answers you there. Nothing you write is published or shared.</p>
+  <h2 id="talk-h">Talk back to TASK</h2>
+  <p>Nothing sends silently. You write, tick the box, tap <strong>Send to TASK</strong> — your words go as a text message into the TASK chat in LINE, where a person reads them and answers you there. Nothing is published or shared.</p>
   <p id="talk-status" role="status">Checking LINE… If you are in a regular browser, talk-back needs LINE: open this app from the TASK chat in LINE.</p>
   <label for="contrib-type">What are you sending?</label>
   <select id="contrib-type">
@@ -518,7 +180,7 @@
     <option value="question">A question back to TASK</option>
   </select>
   <label for="contrib-text">Your words (up to 500 characters, text only — no photo, no file)</label>
-  <textarea id="contrib-text" rows="4" maxlength="500" placeholder="Write here. A choice above fills this in for you — edit it as you like."></textarea>
+  <textarea id="contrib-text" rows="4" maxlength="500" placeholder="Write here. A choice in the scene fills this in for you — edit it as you like."></textarea>
   <p><label><input type="checkbox" id="contrib-optin"> I am happy for TASK to keep and read my words, and to answer me in chat. I understand they will not be published or shared, and I can ask TASK to withdraw them.</label></p>
   <p>
     <button type="button" id="send-to-task">Send to TASK</button>
@@ -527,58 +189,26 @@
   </p>
   <h3>What you have written here</h3>
   <ul id="pending-list"><li>No contribution written yet. Nothing has been sent.</li></ul>
-  <p class="small">Kept on this device, this session only, until you send it. Sending puts it in the TASK chat, where a human reviews it first. It is never shown in the app, never published, never used as a fact, until a person at TASK has read it and, if it is to be shown at all, it is shown only as approved, with your words as you wrote them. What TASK will never ask you for: money, personal data, photos of children or of people without their consent, speaking for a community, naming or judging an identifiable real person, trauma, recruitment, outreach on TASK's behalf, or Carl's private material.</p>
-  <p class="small">Talk-back needs the LIFF browser, opened from a chat in LINE, and the <code>chat_message.write</code> permission on this LIFF app. That permission is enabled on LIFF app 2012800911-7BPP3dHp (scopes: openid, profile, chat_message.write, per the 2026-11-25 record). If LINE has not granted it to you, the Send button will tell you so honestly instead of failing silently — the app checks at run time, and the check, not this copy, decides what you see. If you opened this from Keep Memo, the recent-services list, or an external browser, sending will not work — open it from the TASK chat instead.</p>
+  <p class="small">Kept on this device, this session only, until you send it. Talk-back needs the LIFF browser, opened from a chat in LINE, and the <code>chat_message.write</code> permission on LIFF app 2012800911-7BPP3dHp. If LINE has not granted it, the Send button will tell you so honestly instead of failing silently — the app checks at run time, and the check, not this copy, decides what you see. If you opened this from Keep Memo, the recent-services list, or an external browser, sending will not work — open it from the TASK chat instead.</p>
 </section>
 
-<!-- ============ SHARED: 2029 QUESTION — TEXT ONLY ============ -->
-<section id="question-2029" aria-labelledby="q-h" class="whatif-text">
-  <h2 id="q-h">2029 — a question in words only (no scene built)</h2>
-  <p class="whatif-banner"><strong>2029 — imagined. A what-if, not a prediction.</strong></p>
-  <p><strong>What happened — America left?</strong></p>
-  <p>This is a stakes question, not a forecast. No cause is given for “America left”, because none has been established. No immersive 2029 scene, video, or prediction is built in this app — that needs a separate Carl go (C-7), plus the nine presentation requirements and a test reading. This question sits after all four episodes, the same for each.</p>
-  <p>Three honest paths, offered, none forced:</p>
-  <ol>
-    <li><strong>Look back at what actually happened before.</strong> Kanto Mura / Chofu: fully returned to Japan in 1974. Tachikawa: base permanently closed 30 September 1977, full return 1977; the airfield became Showa Kinen Park (opened 26 October 1983). Returns are real, with real consequences — loss and remaking both.</li>
-    <li><strong>Look at what is needed now, on the record.</strong> The U.S. Embassy Tokyo Public Affairs Section once stated, in an outdated, closed funding call, a need to strengthen the relationship between USFJ and host communities. That call is evidence of a stated need — not consent, not a live invitation, not an authorisation. Its amount is not impactful for us financially.</li>
-    <li><strong>Ask what would be worth keeping.</strong> If this were the future, what would you wish had been kept? A field where two countries’ children played together; a street where a tailor and a sailor met; a park that was once an airfield.</li>
-  </ol>
-  <p class="small">The visitor is returned to the present-day fog after this question — fog is the feeling of moving through the place, not a pilot. The what-if never loops and never ends in a donation or recruitment ask.</p>
-</section>
-
-<!-- ============ SHARED: NOTES & LOG ============ -->
-<section id="notes" aria-labelledby="notes-h">
-  <h2 id="notes-h">Notes, Pinatubo lesson, and instrumentation log</h2>
-
-  <h3>Pinatubo — internal note (documented, not a scene)</h3>
-  <p>America has left a nation before. In the Philippines, Mount Pinatubo erupted in June 1991. Operation Fiery Vigil evacuated about 20,000 people from Clark Air Base and Subic Bay. Clark was turned over on 1991-11-26 and the United States military never returned to it. The Philippine Senate rejected a new bases treaty 12–11 on 1991-09-16. Subic closed on 1992-11-24, ending a 94-year U.S. military presence. <strong>That departure was political as much as it was environmental</strong> — the volcano emptied Clark, but politics decided America would not come back. This is a history lesson for the 2029 question, not a prediction about Japan, and it is not built as a scene here.</p>
-  <p class="small">Internal note on the broken-down vacancy figure (for internal notes only, not public copy): the 2023 Housing and Land Survey counted 9.0 million vacant dwellings (13.8% of housing stock), but only 3.85 million had no plan to rent or sell. Public copy must use the broken-down figure, never a single headline number for “abandoned houses”.</p>
-
-  <h3>What this app does not do</h3>
-  <ul>
-    <li><code>liff.sendMessages()</code> is built and guarded in this code; sending needs the <code>chat_message.write</code> scope enabled and granted, which the app checks at run time and reports honestly if missing. No Flex Message sent, no ShareTargetPicker opened in LINE, no <code>liff.closeWindow()</code> called in LINE — those need a device test in LINE.</li>
-    <li>No real-time 3D, no Unity WebGL, no Genesis, no purchase, no MINI App features, no calendar, no multiplayer, no broadcast.</li>
-    <li>No likeness, illustration, animation, voice, or dialogue for John Okabayashi, Tony Reed, or Henry Williams beyond documented facts in words. No likeness, voice, or dialogue for any real person in any episode.</li>
-    <li>No yearbook photographs (no reuse licence), no music (no clearance), no archival photographs. The Tachikawa museum photograph is not used here.</li>
-    <li>No 2029 immersive scene, no Pinatubo footage.</li>
-    <li>No outside contract, permit, or permission is needed to run this app, and none is claimed — no partnership, consent, or funding is claimed anywhere in it. Fog is the feeling of moving through the place, not a pilot: the pilots are the GTA/Sega styles and stories, built and tested as episodes.</li>
-    <li>Episodes 2–4 have no rendered opening clip — poster still plus an honest "clip not yet rendered" note, not a fake video.</li>
-  </ul>
-
-  <h3>Instrumentation — client-side log only</h3>
-  <p class="small">Events are logged to the browser console and to this list only. No server, no personal data, no LIFF analytics claim. Retention: this page session only. Episode events: <code>episode_select</code>, <code>episode_entry</code>.</p>
+<!-- ============ NOTES — collapsed log only ============ -->
+<details id="notes" class="notes">
+  <summary>Notes &amp; log</summary>
+  <p class="small">Device test in LINE's real WebView: NOT RUN.</p>
+  <p class="small">Events are logged to the browser console and to this list only. No server, no personal data, no LIFF analytics claim. Retention: this page session only.</p>
   <ol id="event-log" aria-live="polite"><li>Log started — no events yet.</li></ol>
   <p><button type="button" id="return-btn">Return to chat (simulated)</button>
   <span class="small" id="return-note">In a real LIFF browser this would call <code>liff.closeWindow()</code>. Here there is no LIFF, so this button only logs the event and shows this note.</span></p>
-</section>
+</details>
 </main>
 
 <footer>
-  <p><strong>Internal review only — Rising Together four-episode LIFF-ready app, polished 2026-11-25.</strong>
-  Built from: Integrated Findings §5–§6; Technical team §§4–5 (P-01–P-18, D-01–D-22); Story team 9-shot storyboard; Visual team 7-layer stack and register system; Four Episodes Shared Brief 2026-11-24.
-  See <a href="README.md">README.md</a> and <a href="TEST-LOG.md">TEST-LOG.md</a> for scope, open questions, and test results.</p>
+  <p><strong>Internal review only — Rising Together, experience-first rebuild, 2026-11-25.</strong>
+  Painted only. No likeness, voice, or dialogue for any real person. No music. No 2029 immersive scene. No partnership, consent, or funding claimed. See <a href="README.md">README.md</a> and <a href="TEST-LOG.md">TEST-LOG.md</a>.</p>
 </footer>
 
 <script src="app.js"></script>
+<script src="play.js"></script>
 </body>
 </html>

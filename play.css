@@ -20,6 +20,13 @@
 #play-count{font-weight:700}
 #play-trust .play-trust-one{margin-right:10px;font-size:.9rem}
 #play-view{position:relative;height:340px;overflow:hidden;border:3px solid #333;border-radius:8px;background:linear-gradient(#e8d9a8 0%,#f2e6c0 40%,#d6c496 60%,#9a8a62 100%);touch-action:pan-y;cursor:pointer}
+/* Painted district as the street backdrop (2026-11-25 visual rebuild):
+   the CSS street — places, contacts, targets, player — walks on top of
+   the painting. The episode is set on the element by play.js build(). */
+#play-view[data-episode="1"]{background:url("assets/visuals/web/chofu-street.jpg") center/cover no-repeat}
+#play-view[data-episode="2"]{background:url("assets/visuals/web/yokosuka-harbour.jpg") center/cover no-repeat}
+#play-view[data-episode="3"]{background:url("assets/visuals/web/tachikawa-park.jpg") center/cover no-repeat}
+#play-view[data-episode="4"]{background:url("assets/visuals/web/tama-meadow.jpg") center/cover no-repeat}
 #play-street{position:absolute;left:0;top:0;width:2200px;height:340px;will-change:transform}
 #play-street.raining{filter:brightness(.82) saturate(1.25)}
 .play-place{position:absolute;top:0;bottom:0;width:220px;border:0;border-left:2px dashed rgba(0,0,0,.25);background:transparent;cursor:pointer;padding:0}

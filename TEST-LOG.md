@@ -6,6 +6,128 @@
 **Prototype:** `~/workspace/goals/rising-together/prototype/` — `index.html`, `styles.css`, `app.js`, `assets/`
 **Status:** Internal review only. Not publication, not launch, not a live LINE app.
 
+## Visual rebuild — tested 2026-11-25 (this round, to fill in after deploy)
+
+**What changed (Carl failed the old visuals — CSS/SVG stick figures, nothing
+recognisable):** six painted pictures, supplied as files, are now the scenes.
+Full-size originals (~4 MB each) stay in `assets/visuals/`; the app serves
+web copies in `assets/visuals/web/` — 1280 px wide JPEGs, ~130–300 KB each,
+1.27 MB for all six. No new images were generated.
+
+- **Locker room** (`locker-room.jpg`): the full scene background; the CSS/SVG
+  lockers and stick players are hidden, the beat controls and state machine
+  are untouched. The honest note is visible under the scene and inside
+  "About this moment": "Painted and imagined. Only WILLIAMS 32 is from the
+  record — the other jersey numbers and the team nickname in this picture
+  are invented by the painting, not facts."
+- **Line of scrimmage / field stage** (`field-line.jpg`): background of the
+  locker line scene (CSS yard lines and lineman rows hidden — the painting
+  already shows the line) and of the stage ground layer for Episode 1. Snap,
+  runner break, cheers all still run over the picture.
+- **Districts:** Chofu street is the Phaser Chofu district backdrop — loaded
+  asynchronously as a texture behind the player, Miki and the ball, with the
+  ground/sky/street/field shapes translucent so it shows through; if the
+  picture never arrives the painted geometry is the scene and the quest
+  still plays. Yokosuka harbour, Tachikawa park and Tama meadow are the
+  stage ground layer for Episodes 2–4 and the `#play-view` backdrop behind
+  the CSS street for those episodes. **No Phaser scene exists for Episodes
+  2–4 — the picture is the stage background with the CSS play street on top,
+  and that is what the app does; no Phaser is claimed there.**
+- **Known issue, not hidden:** the locker-room painting invents jersey
+  numbers 12 and 44, the "Tornadoes" nickname, and details like "1975",
+  "vs El Monte", "Nov 20". The field painting invents lineman numbers
+  72/76/64/55/63/78/74. Only WILLIAMS 32 is from the record (Hosho 1972).
+- **First-3-seconds recognition (from looking at the pictures):** locker
+  room — three players from behind, CHOFU sign, WILLIAMS 32, helmets on a
+  bench, field through the door; field — seven linemen from behind, packed
+  stands, floodlights, goalposts, sunset; Chofu street — cherry blossom,
+  tiled-roof houses, drink stand, bicycles, fenced field; Yokosuka harbour
+  — stone steps past tailor shops down to fishing boats and a grey naval
+  ship at sunset; Tachikawa park — cherry-blossom park with a long concrete
+  runway strip through it; Tama meadow — a misty path through tall grass
+  to a still lake. **Still not recognisable:** the Tama meadow has no
+  building, sign or landmark — nothing in it says Tama; it could be any
+  misty lakeside meadow.
+
+**NOT tested — and therefore NOT claimed:** no phone run, no LINE WebView
+run. Device test in LINE's real WebView: **NOT RUN** for the new visuals.
+
+## Device-test fixes — tested 2026-11-25 (evening, this round)
+
+**What was wrong:** the real-browser device test the same evening (headless
+Chromium 131, Playwright, 390×844 mobile emulation — full record in
+`../tools/browser-test/evidence/RESULTS.md`) failed three rows: D-05 and D-08
+(the hidden `#sidestreet` overlay covered the whole episode scene) and PH-05
+(ArrowLeft/ArrowRight/A/D never reached Phaser), plus PH-13 on exact wording
+only (em dash in the top register mark vs the comma in the pack and the PLAY
+lede). The full pack was **not** re-run — only the failed rows were re-tested.
+
+**Fixes (all in `prototype/`, redeployed to
+https://chwillpcs-task.github.io/rising-together/ the same evening):**
+1. **D-05/D-08 — overlay:** `styles.css` gained
+   `.sidestreet[hidden]{display:none}` next to the `.sidestreet` rule, the
+   same pattern the codebase already used for `.play-cover`. The author
+   stylesheet's `display:flex` had beaten the UA stylesheet's
+   `[hidden]{display:none}`. No other `[hidden]` element in the app has an
+   explicit `display` rule, so no other overlay has this conflict.
+2. **PH-05 — horizontal keys:** `play.js` no longer calls
+   `e.preventDefault()` unconditionally for ArrowLeft/ArrowRight/A/D. Its
+   document keydown handler now asks `phaserOwnsKeys()` first: when the
+   Phaser wrap is shown, booted (`window.__rtPhaser.ready`), and on screen,
+   the handler returns without claiming the keys or preventing default, so
+   Phaser 3.80.1's keyboard plugin sees them. When the game is hidden
+   (Episodes 2–4), not booted, or scrolled off screen, the DOM street owns
+   the keys and `preventDefault` still stops the page scrolling under the
+   walk. The `store.keys` movement itself is unchanged.
+3. **PH-13 — register wording:** the top header mark (`index.html:23`) and
+   the locker-room mark (`index.html:51`) changed from the em dash to the
+   comma — "Imagined, to be witnessed and experienced by everyone" — so the
+   mark is now identical everywhere it appears (header, locker room, PLAY
+   lede). Substance was already passing (Ajinomoto Stadium, no likeness, no
+   2029 in the game) and is untouched. The one remaining em-dash occurrence
+   of the phrase is in this log's own historical prose (the rebuild section
+   below, describing the mark as it was then) — a record, not app copy.
+
+**Re-tested in the real browser against the live site, 2026-11-25 evening**
+(`../tools/browser-test/retest-fixes.js`, `evidence/retest-fixes.json`,
+`evidence/retest-stage.png`; forwarder on 127.0.0.1:18080, no orphan):
+- **D-05/D-08 PASS:** with the side street closed, `#sidestreet`
+  `hidden=true`, computed `display:none`, rect 0×0. `elementFromPoint` over
+  hotspot "ball" returns the hotspot. A real touchscreen tap on it opens the
+  moment ("The Lost Ball", 2 choices); a real tap on "Chase the ball" fires
+  the choice — stage gains `.chasing`, `moment_choice` logged, daily job
+  marked done; Leave closes the moment. Screenshot `retest-stage.png` shows
+  the uncovered field, hotspots, and daily-job card. (One measurement note:
+  the first re-test run reported the choice tap as FAIL because it checked
+  for a change in the moment text — a chase choice changes the stage, not
+  the text. Re-probed correctly with `retest-choice.js`: PASS.)
+- **PH-05 PASS:** 1.5 s holds — ArrowLeft `isDown=true`, dx −38 px;
+  ArrowRight `isDown=true`, dx +45 px; `a` `isDown=true`, dx −42 px; `d`
+  `isDown=true`, dx +45 px (at ~10 fps under SwiftShader in this VM; the
+  original failure was 0 px for all four). Tap-to-walk still works: tap at
+  (195,600) arrived at (196,613).
+- **DOM street regression check PASS:** on Episode 2 (Phaser wrap hidden),
+  a 1.5 s ArrowRight hold moved the DOM street — `#play-street` transform
+  `translateX(-43px)` → `translateX(-403px)` — so the scoping did not take
+  the keys away from the street where it owns them.
+- **PH-13 PASS:** header, locker, and PLAY-lede marks all read the comma
+  wording; live `index.html` contains it 3 times and the em-dash version 0
+  times.
+- **Live deploy verified:** all 11 app URLs HTTP 200 via direct check
+  through the forwarder (`index.html`, `styles.css`, `app.js`, `play.js`,
+  `play.css`, `locker.js`, `locker.css`, `phaser.min.js`,
+  `phaser-game.js`, `assets/opening-clip.mp4`, `assets/poster-field.png`);
+  live files contain the fix strings (`.sidestreet[hidden]{display:none}`,
+  `phaserOwnsKeys`, comma wording). Repo sizes now match local
+  (`index.html` 24,194 B; `styles.css` 15,133 B; `play.js` 33,293 B).
+  `node --check` OK on all four JS files. 0 console/page errors in the
+  re-test run.
+- **Nothing else regressed in the rows re-tested.** The rest of the pack
+  was not re-run, so its earlier results stand as recorded in RESULTS.md.
+
+**NOT tested — and therefore NOT claimed (unchanged):** no phone run, no
+LINE WebView run. The re-test is headless Chromium on this VM, as before.
+
 ## Phaser PLAY mode — tested 2026-11-25 (this round)
 
 **What changed:** Phaser 3.80.1 is now the PLAY mode for Episode 1 (Chofu).

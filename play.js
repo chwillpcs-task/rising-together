@@ -533,9 +533,27 @@
   document.getElementById("play-right").addEventListener("pointerup", function () { store.keys.ArrowRight = false; });
   document.getElementById("play-right").addEventListener("pointerleave", function () { store.keys.ArrowRight = false; });
   document.getElementById("play-side-btn").addEventListener("click", openSide);
+  /* The Phaser game is the active keyboard surface whenever its wrap is
+     shown, booted, and on screen (Episode 1). Phaser 3.80.1's keyboard
+     plugin drops any keydown whose default was prevented, so when the game
+     owns the keys this handler must neither preventDefault nor claim them
+     — otherwise ArrowLeft/ArrowRight/A/D never reach Phaser (real-browser
+     device test, 2026-11-25, PH-05). When the game is hidden (Episodes
+     2–4), not booted, or scrolled off screen, the DOM street owns the keys
+     and preventDefault stops the page scrolling under the walk. */
+  function phaserOwnsKeys() {
+    var wrap = document.getElementById("phaser-wrap");
+    if (!wrap || wrap.hidden) return false;
+    if (!window.__rtPhaser || !window.__rtPhaser.ready) return false;
+    var r = wrap.getBoundingClientRect();
+    return r.bottom > 0 && r.top < window.innerHeight;
+  }
   document.addEventListener("keydown", function (e) {
     if (e.target && (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT")) return;
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "a" || e.key === "d") { store.keys[e.key] = true; e.preventDefault(); }
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "a" || e.key === "d") {
+      if (phaserOwnsKeys()) return; // Phaser takes the key; do not preventDefault.
+      store.keys[e.key] = true; e.preventDefault();
+    }
   });
   document.addEventListener("keyup", function (e) { store.keys[e.key] = false; });
 

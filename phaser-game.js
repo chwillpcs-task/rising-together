@@ -10,10 +10,15 @@
  * the app's event log), and completing the job marks the day's job done
  * in the stage above (window.__rtFinishJob, when the app exposes it).
  *
- * Painted / placeholder art only, generated in code. No photographs, no
- * likeness, no real person's voice or dialogue, no GTA/Sega art,
- * characters, music or trademarks. All people are fictional. Silent: no
- * music, no audio. No server, no Service Worker, no downloads.
+ * Painted art: the Chofu street painting (assets/visuals/web/chofu-street.jpg,
+ * 2026-11-25 visual rebuild) is the district backdrop, loaded as a texture
+ * behind the walkable player, Miki and the ball; the big ground/sky shapes
+ * are translucent so the painting shows through, and the painted geometry
+ * is the fallback if the picture never arrives. The figures themselves are
+ * still painted in code. No photographs, no likeness, no real person's
+ * voice or dialogue, no GTA/Sega art, characters, music or trademarks.
+ * All people are fictional. Silent: no music, no audio. No server, no
+ * Service Worker, no downloads.
  * If Phaser cannot load, the section says so honestly and the CSS
  * walkable street below still works — the game is never a dead end. */
 
@@ -186,8 +191,34 @@
 
     /* --- painted district, south (bottom) to north (top) --- */
 
-    // sky
-    this.add.rectangle(0, 0, WORLD_W, 160, 0xbfd9e8).setOrigin(0, 0);
+    /* Painted Chofu street as the backdrop (2026-11-25 visual rebuild).
+       It loads asynchronously, outside Phaser's loader, so a missing or
+       slow picture can never block the boot or the quest: the game starts
+       on the painted geometry below, and the picture is placed behind
+       everything (depth -10) the moment it arrives. If it never arrives,
+       the geometry is the scene — nothing is lost. */
+    (function loadStreetBackdrop() {
+      function place() {
+        try {
+          if (!self.textures.exists("chofu-street")) return;
+          var src = self.textures.get("chofu-street").getSourceImage();
+          var w = (src && src.width) || 1280, h = (src && src.height) || 853;
+          var s = Math.max(WORLD_W / w, WORLD_H / h);
+          self.add.image(WORLD_W / 2, WORLD_H / 2, "chofu-street").setScale(s).setDepth(-10);
+        } catch (e) { /* backdrop stays off; geometry is the fallback */ }
+      }
+      if (self.textures.exists("chofu-street")) { place(); return; }
+      if (typeof Image === "undefined") return;
+      var img = new Image();
+      img.onload = function () {
+        try { self.textures.addImage("chofu-street", img); place(); } catch (e) { /* backdrop stays off */ }
+      };
+      img.onerror = function () { /* backdrop stays off; geometry is the fallback */ };
+      img.src = "assets/visuals/web/chofu-street.jpg";
+    })();
+
+    // sky (translucent — the painting's sky shows through when it arrives)
+    this.add.rectangle(0, 0, WORLD_W, 160, 0xbfd9e8).setOrigin(0, 0).setAlpha(0.35);
     // sun
     this.add.circle(330, 42, 20, 0xffe08a);
     this.add.circle(330, 42, 13, 0xffeeb0);
@@ -213,8 +244,8 @@
       fontSize: "10px", color: "#5b7186"
     }).setOrigin(0.5, 0.5);
 
-    // ground
-    this.add.rectangle(0, 160, WORLD_W, WORLD_H - 160, 0x9db98a).setOrigin(0, 0);
+    // ground (translucent — the painting's street shows through)
+    this.add.rectangle(0, 160, WORLD_W, WORLD_H - 160, 0x9db98a).setOrigin(0, 0).setAlpha(0.45);
 
     // houses (fade as you walk toward the stadium)
     this.houseRects = [
@@ -240,17 +271,17 @@
       fontSize: "10px", color: "#4c6440"
     }).setOrigin(0.5, 0.5);
 
-    // street
-    this.add.rectangle(0, 282, WORLD_W, 62, 0x8d8d94).setOrigin(0, 0);
+    // street (translucent — the painting's road shows through)
+    this.add.rectangle(0, 282, WORLD_W, 62, 0x8d8d94).setOrigin(0, 0).setAlpha(0.6);
     this.add.rectangle(0, 282, WORLD_W, 4, 0xffffff).setOrigin(0, 0);
     this.add.rectangle(0, 340, WORLD_W, 4, 0xffffff).setOrigin(0, 0);
     for (var d = 0; d < 7; d++) {
       this.add.rectangle(30 + d * 55, 311, 26, 4, 0xffe08a).setOrigin(0.5, 0.5);
     }
 
-    // field
+    // field (translucent — the painting shows through)
     var f = this.add.graphics();
-    f.fillStyle(0x5da24a, 1);
+    f.fillStyle(0x5da24a, 0.55);
     f.fillRoundedRect(20, 372, 350, 300, 8);
     f.lineStyle(3, 0xffffff, 0.85);
     f.strokeRect(20, 372, 350, 300);
@@ -262,8 +293,8 @@
       fontSize: "11px", color: "#e8f3e2"
     }).setOrigin(0.5, 0.5);
 
-    // footpath at the south edge
-    this.add.rectangle(0, 726, WORLD_W, WORLD_H - 726, 0xcbb89a).setOrigin(0, 0);
+    // footpath at the south edge (translucent — the painting shows through)
+    this.add.rectangle(0, 726, WORLD_W, WORLD_H - 726, 0xcbb89a).setOrigin(0, 0).setAlpha(0.6);
     this.add.text(195, 742, "Chofu — a district to walk", {
       fontSize: "11px", color: "#6b5a3e"
     }).setOrigin(0.5, 0.5);

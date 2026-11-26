@@ -6,7 +6,40 @@
 **Prototype:** `~/workspace/goals/rising-together/prototype/` — `index.html`, `styles.css`, `app.js`, `assets/`
 **Status:** Internal review only. Not publication, not launch, not a live LINE app.
 
-## Visual rebuild — tested 2026-11-25 (this round, to fill in after deploy)
+## Visual rebuild — tested 2026-11-25 (this round)
+
+**Verified live 2026-11-25:** GitHub Pages build "built" (commit 8038681bd8).
+Live `index.html` 24,816 B with the `lk-note` present; all six web pictures
+HTTP 200 with sizes matching local (locker-room 283,118 B; field-line
+270,203 B; chofu-street 296,320 B; yokosuka-harbour 154,929 B;
+tachikawa-park 134,683 B; tama-meadow 132,263 B); `styles.css` 15,112 B,
+`play.css` 6,529 B, `locker.css` 9,612 B, `play.js` 33,394 B,
+`phaser-game.js` 28,663 B — all matching local.
+
+**Tested in this VM before deploy (headless Chromium 131, Playwright,
+390×844 mobile emulation, `/tmp/rt-visual/test.js` + follow-ups): 31 of 33
+checks passed on the first run; the two failures were test artefacts, both
+re-probed to PASS.** Locker beats travel locker → tunnel → line → snap →
+cheers → replay, with the painted locker room and field line as the scenes
+and the honest note visible; stage ground layer and `#play-view` backdrop
+show the right painting for every episode; locker hidden on Episodes 2–4,
+shown again on Episode 1; Phaser canvas boots and the `chofu-street`
+texture is present in the scene; Miki dialogue advances the quest to stage
+1 with the ball visible and the status line updated; register mark exact;
+Ajinomoto Stadium present; no `<audio>`. Failure 1 ("lk-facts carries
+note") was the probe using `innerText` on a closed `<details>` — the note
+is in the DOM and `textContent` confirms it. Failure 2 ("failed requests")
+was the LINE LIFF SDK (`static.line-scdn.net`, unreachable from this VM —
+pre-existing, external) and the clip's metadata preload being aborted by
+the browser (the clip itself serves 200, untouched by this change). One
+real-browser slowness note: at ~10 fps under SwiftShader, tap-to-walk
+crosses the Phaser district slowly — the quest logic itself is verified;
+walking speed on a real phone is unmeasured.
+
+**NOT tested — and therefore NOT claimed:** no phone run, no LINE WebView
+run. Device test in LINE's real WebView: **NOT RUN** for the new visuals.
+The visual record for this rebuild is filed in Drive (Rising Together LINE
+Research folder): "Rising Together Visual Rebuild - 2026-11-25.pdf".
 
 **What changed (Carl failed the old visuals — CSS/SVG stick figures, nothing
 recognisable):** six painted pictures, supplied as files, are now the scenes.

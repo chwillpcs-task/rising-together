@@ -71,9 +71,15 @@ line of scrimmage (camera zooms in, huddle breaks) → tap **Snap the ball** →
 the play moves (Williams 32 breaks right) → the crowd rises, CHEERS. Replay,
 or walk on to the field stage. Facts (9–1, Far East Champions, positions,
 Hosho 1972 pp. 96–107, single visual read) live behind "About this moment"
-only. Painted / SVG only, no faces, no likeness, no voice, no dialogue, no
+only. Painted pictures as the scene backgrounds (2026-11-25 visual rebuild:
+`assets/visuals/web/locker-room.jpg` for the locker room, `field-line.jpg`
+for the line of scrimmage), no faces, no likeness, no voice, no dialogue, no
 music, no audio — cheers are visual. Register mark persistent in the section
 header. Hidden on Episodes 2–4, shown again on Episode 1.
+**Known issue, stated in the app:** the painting invents details — only
+WILLIAMS 32 is from the record; the other jersey numbers (12, 44) and the
+team nickname ("Tornadoes") in the picture are invented by the painting, not
+facts. The note is visible under the scene and inside "About this moment".
 
 ## GTA/Sega-style pilots (2026-11-25)
 
@@ -255,7 +261,9 @@ Ajinomoto Stadium, and finishing the job marks the day's job done in the
 stage above. Tap to walk, arrow keys / WASD, tap Miki (or E / Space) to
 talk. Silent, no server, no Service Worker. It boots lazily, pauses on
 other episodes, and hides on Episodes 2–4, which have no Phaser scene
-yet. If Phaser cannot load, the section says so honestly and the CSS
+yet — their districts are the painted pictures as the stage background
+with the CSS street on top (2026-11-25 visual rebuild; no Phaser scene
+exists for Episodes 2–4, and none is claimed). If Phaser cannot load, the section says so honestly and the CSS
 street below still works. The CSS district is kept below as "More jobs in
 this district" — the other Chofu jobs (Old Jiro, Aya) and the full
 districts for Episodes 2–4. Verified in this VM: `node --check` on all

@@ -535,13 +535,15 @@
   document.getElementById("play-right").addEventListener("pointerleave", function () { store.keys.ArrowRight = false; });
   document.getElementById("play-side-btn").addEventListener("click", openSide);
   /* The Phaser game is the active keyboard surface whenever its wrap is
-     shown, booted, and on screen (Episode 1). Phaser 3.80.1's keyboard
-     plugin drops any keydown whose default was prevented, so when the game
-     owns the keys this handler must neither preventDefault nor claim them
-     — otherwise ArrowLeft/ArrowRight/A/D never reach Phaser (real-browser
-     device test, 2026-11-25, PH-05). When the game is hidden (Episodes
-     2–4), not booted, or scrolled off screen, the DOM street owns the keys
-     and preventDefault stops the page scrolling under the walk. */
+     shown, booted, and on screen (all four episodes since the 2026-11-26
+     emulation build — the game is the district for the episode, not
+     Chofu only). Phaser 3.80.1's keyboard plugin drops any keydown whose
+     default was prevented, so when the game owns the keys this handler
+     must neither preventDefault nor claim them — otherwise
+     ArrowLeft/ArrowRight/A/D never reach Phaser (real-browser device
+     test, 2026-11-25, PH-05). When the game is not booted or scrolled
+     off screen, the DOM street owns the keys and preventDefault stops
+     the page scrolling under the walk. */
   function phaserOwnsKeys() {
     var wrap = document.getElementById("phaser-wrap");
     if (!wrap || wrap.hidden) return false;

@@ -24,11 +24,13 @@ Four Episodes Shared Brief 2026-11-24 (`../episodes/shared-brief.md`).
   Japan map, Read-it, clip, talk-back and LIFF. No external CSS/JS
   libraries. No photographs, no yearbook images, no copied game or shop
   images. PLAY mode and the locker room live in their own files
-  (`play.js`/`play.css`, `locker.js`/`locker.css`); the Phaser district
-  lives in `phaser.min.js` (vendored Phaser 3.80.1) and `phaser-game.js`;
-  `app.js` keeps only the
-  integration — episode switching calls `window.__rtPlaySetEpisode(n)` when
-  it exists. No duplicate wiring: each button has exactly one handler.
+  (`play.js`/`play.css`, `locker.js`/`locker.css`); the Phaser districts
+  live in `phaser.min.js` (vendored Phaser 3.80.1), `engine.js` (the
+  data-driven district engine) and `emulation.js` (the loader), with the
+  four districts as data in `data/*.json`. `app.js` keeps only the
+  integration — episode switching calls `window.__rtPlaySetEpisode(n)` and
+  `window.__rtPhaserSetEpisode(n)` when they exist. No duplicate wiring:
+  each button has exactly one handler.
 - The stage: scroll = travel through 5 beats per episode (field → same
   ground re-dressed → housing fading house by house → Ajinomoto Stadium
   rising → animated Japan map), drag-to-pan = walking, auto-drift and
@@ -249,26 +251,40 @@ No server, no personal data, no LIFF analytics claim. Retention: this page sessi
 
 The sibling experience-first rebuild (same day, same files) already gave the stage: visitor in the scene on load, hotspots that do something (chase, train, runway line, rain, cats, ducks), a daily job, side streets as text, an animated Japan map. PLAY mode adds what that stage did not have: free walking, multi-step jobs, and a tracker you can see fill. The two layers are complementary, not duplicates. `app.js` `switchEpisode()` now also calls `window.__rtPlaySetEpisode(n)` so the district follows the episode.
 
-**Phaser PLAY mode (2026-11-25, same day):** the Chofu district is now a
-real Phaser 3 game, not CSS. `phaser.min.js` (Phaser 3.80.1, vendored
-locally, no CDN) and `phaser-game.js` (adapted from
-`../tools/phaser-district/game.js` — same painted district, same job "The
-Lost Ball", same save key `rising-together:v1`) sit at the top of the
-`#play` section as the PLAY mode for Episode 1: walk the district, talk
-to Miki, find the lost ball on the field, bring it back — the trust heart
-fills, the district map lights up, the houses fade as you walk toward
-Ajinomoto Stadium, and finishing the job marks the day's job done in the
-stage above. Tap to walk, arrow keys / WASD, tap Miki (or E / Space) to
-talk. Silent, no server, no Service Worker. It boots lazily, pauses on
-other episodes, and hides on Episodes 2–4, which have no Phaser scene
-yet — their districts are the painted pictures as the stage background
-with the CSS street on top (2026-11-25 visual rebuild; no Phaser scene
-exists for Episodes 2–4, and none is claimed). If Phaser cannot load, the section says so honestly and the CSS
-street below still works. The CSS district is kept below as "More jobs in
-this district" — the other Chofu jobs (Old Jiro, Aya) and the full
-districts for Episodes 2–4. Verified in this VM: `node --check` on all
-scripts, local HTTP 200s, jsdom 41 checks 0 failed including a full
-play-through of The Lost Ball (see `TEST-LOG.md`). **Not yet verified on
-a real browser, a phone, or in LINE's real WebView — device test NOT RUN.**
+**Emulation — all four districts as Phaser places (2026-11-26):** Carl's
+clarification, in substance: "when I say emulation, I really want the
+users to see or think they are in something like a Sega and GTA look-a-like
+environments and people popping sometimes." The Phaser layer is now the
+data-driven engine (`engine.js`, `data/*.json`, loaded by `emulation.js`)
+for ALL FOUR episodes, replacing the Chofu-only `phaser-game.js` (removed
+from the deploy; it survives in git history). What a visitor now sees:
+a dense street with neon shop signs in our own words (RAMEN, TAILOR, CAFÉ
+— no trademarks), warm-lit windows, street lamps, a vending machine, the
+landmark alive (boats bobbing in the harbour, trees swaying in the park,
+butterflies over the meadow, floodlights over the stadium); people popping
+in and out — Kenji opens the shutter of the shuttered shop, Jin the sailor
+walks down the harbour steps, Yuki chases a ball across the field, a cat
+trots across the street, unnamed walkers cross and are gone; and in Chofu
+a "Snap the ball" button — the ball snaps, a plain runner crosses, the
+10-figure crowd rises and CHEERS! appears with confetti. No Sega or GTA
+art, character, music or trademark is copied; the feeling is stolen, never
+the picture. The crowd carries no numbers and no names — only WILLIAMS 32
+is on the Hosho record, and it is not used here. All three jobs per
+district play in the game (The Lost Ball included); finishing one marks
+the day's job done in the stage above. The save key is now
+`rising-together:v2` (per-district), so a visitor who finished The Lost
+Ball in the old v1 build starts fresh here; the CSS street below keeps its
+own progress and is still the fallback if Phaser cannot start. Verified
+in this VM: `node --check` on all scripts, all four data files validate,
+local HTTP 200s, and a real-browser Playwright run (Chromium, 390×844):
+**47 checks, 0 failed** — boot, signs, NPC spawn/walk/despawn, walker,
+cat, snap crowd, full Lost Ball playthrough, episode switches to Yokosuka,
+Tachikawa and Tama, register mark, locker room and talk-back intact (see
+`TEST-LOG.md`). The one console error in the run was the external LIFF SDK
+(`static.line-scdn.net`) failing to load in this sandbox
+(`ERR_TUNNEL_CONNECTION_FAILED`) — pre-existing, not part of this build.
+**Not yet verified on a real phone, or in LINE's real WebView — device
+test NOT RUN.** Frame rate was ~4 fps under SwiftShader in this VM; that
+is a test-environment number, not a phone number, and is not claimed.
 
 **Still not there (honest):** no real 3D, no vehicle, no other players, no multiplayer — LIFF cannot do those, and none is claimed. No music. No 2029 immersive scene. The district is 2D painted CSS, one street per episode, not an open city. The stage and the district are two separate places in one page; they do not yet share one camera or one player.

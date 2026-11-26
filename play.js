@@ -234,6 +234,7 @@
   /* ---- Build the district for the active episode ---- */
   function build() {
     var ep = epState();
+    if (view) view.setAttribute("data-episode", store.ep); // painted district backdrop (2026-11-25)
     titleEl.textContent = "Play — " + ep.name;
     var day = new Date().getDay();
     dayEl.textContent = "Today: " + ep.dayJobs[day] + " — one job a day, your pick.";

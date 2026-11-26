@@ -29,7 +29,9 @@ button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible
 .layer-far{background:transparent}
 .far-label{position:absolute;right:12%;top:16%;font-size:.85rem;background:rgba(255,255,255,.75);padding:4px 8px;border-radius:4px}
 .layer-midfar{background:url("assets/poster-housing.png") center 30%/cover no-repeat;opacity:.45}
-.layer-mid{background:url("assets/poster-field.png") center 60%/cover no-repeat}
+/* Painted field picture as the ground layer (2026-11-25 visual rebuild):
+   the line of scrimmage at sunset replaces the old poster still. */
+.layer-mid{background:url("assets/visuals/web/field-line.jpg") center 60%/cover no-repeat}
 .layer-figures{display:block}
 .layer-near{background:linear-gradient(transparent 78%,rgba(60,90,40,.55) 82%,rgba(40,70,30,.75));pointer-events:none}
 /* Warm faded past -> full-colour present as you travel: the wash fades with scroll. */
@@ -94,18 +96,19 @@ button:focus-visible,a:focus-visible,select:focus-visible,textarea:focus-visible
 .viewport[data-beat="2"] .layer-midfar{opacity:.28}
 .viewport[data-beat="3"] .layer-midfar{opacity:.08}
 .viewport[data-beat="4"] .layer-midfar{opacity:0}
-/* Episode palettes — painted CSS only */
+/* Episode palettes — painted pictures as the ground layer (2026-11-25
+   visual rebuild): each episode's stage is its district painting. */
 .viewport[data-episode="2"] .layer-sky{background:linear-gradient(#bcd6e8,#dfe9ee 55%,#c8b49a)}
 .viewport[data-episode="2"] .layer-midfar{background:linear-gradient(180deg,transparent 0%,#7d9bb5 30%,#5d7d99 60%,#48647c 100%);opacity:.45}
-.viewport[data-episode="2"] .layer-mid{background:linear-gradient(90deg,rgba(90,60,40,.55) 0 12%,rgba(140,90,55,.5) 12% 26%,rgba(70,90,110,.5) 26% 44%,rgba(150,110,70,.5) 44% 62%,rgba(90,70,50,.5) 62% 82%,rgba(120,80,60,.5) 82% 100%),linear-gradient(#c8b49a 62%,#8a7a5f 62% 100%)}
+.viewport[data-episode="2"] .layer-mid{background:url("assets/visuals/web/yokosuka-harbour.jpg") center 60%/cover no-repeat}
 .viewport[data-episode="2"] .layer-near{background:linear-gradient(transparent 78%,rgba(70,60,45,.55) 82%,rgba(50,45,35,.75))}
 .viewport[data-episode="3"] .layer-sky{background:linear-gradient(#cfe3c0,#eef3df 55%,#b9cf9a)}
 .viewport[data-episode="3"] .layer-midfar{background:linear-gradient(180deg,transparent 0%,#6f9a5f 35%,#4e7d44 65%,#3c6334 100%);opacity:.45}
-.viewport[data-episode="3"] .layer-mid{background:linear-gradient(90deg,transparent 46%,rgba(200,200,190,.65) 46% 54%,transparent 54%),linear-gradient(#a8c48a 60%,#7fae62 60% 100%)}
+.viewport[data-episode="3"] .layer-mid{background:url("assets/visuals/web/tachikawa-park.jpg") center 60%/cover no-repeat}
 .viewport[data-episode="3"] .layer-near{background:linear-gradient(transparent 78%,rgba(50,90,40,.55) 82%,rgba(35,70,30,.75))}
 .viewport[data-episode="4"] .layer-sky{background:linear-gradient(#d8e8d8,#eef4ea 55%,#c4d6c2)}
 .viewport[data-episode="4"] .layer-midfar{background:linear-gradient(180deg,transparent 0%,#8aa87e 35%,#6b9463 65%,#557a4f 100%);opacity:.45}
-.viewport[data-episode="4"] .layer-mid{background:radial-gradient(ellipse 40% 30% at 70% 72%,rgba(120,160,190,.7),transparent 70%),linear-gradient(#b5d3a0 58%,#8fbf7d 58% 100%)}
+.viewport[data-episode="4"] .layer-mid{background:url("assets/visuals/web/tama-meadow.jpg") center 60%/cover no-repeat}
 .viewport[data-episode="4"] .layer-near{background:linear-gradient(transparent 78%,rgba(60,100,55,.55) 82%,rgba(40,80,40,.75))}
 /* Per-episode figures: only the ones that belong to this district move */
 .viewport[data-episode="1"] .runner,.viewport[data-episode="1"] .ball,.viewport[data-episode="1"] .kite{display:block}

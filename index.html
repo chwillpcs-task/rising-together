@@ -182,25 +182,29 @@
   </section>
 </div>
 
-<!-- ============ PLAY — WALK THE DISTRICT (2026-11-25) ============
+<!-- ============ PLAY — WALK THE DISTRICT (2026-11-25, emulation 2026-11-26) ============
      The stage above is where you look and tap moments. This is where you
-     WALK and DO jobs: the Phaser 3 Chofu district is the PLAY mode for
-     Episode 1 — walk, talk to Miki, find the lost ball, bring it back,
-     and watch the trust heart fill and the district map light up. The
-     CSS street below holds the other Chofu jobs (Old Jiro, Aya) and the
-     full districts for Episodes 2–4, which have no Phaser scene yet.
-     Same pilots, played. Painted only, silent, no server. -->
+     WALK and DO jobs: the Phaser 3 districts are the PLAY mode for ALL
+     FOUR episodes — walk, meet someone, take a small job, do it, and watch
+     the district change. The districts feel like a Sega / GTA place at
+     first glance: a dense street, neon shop signs in our own words, lit
+     windows, lamps, people popping in and out — a tailor opens a shutter,
+     a sailor walks down the harbour steps, a kid chases a ball, a cat
+     crosses the street — and in Chofu a crowd rises and cheers at the
+     snap. Nothing copied: no Sega or GTA art, character, music or
+     trademark. The CSS street below holds the same jobs a second way.
+     Painted only, silent, no server. -->
 <section id="play" aria-labelledby="play-h">
   <h2 id="play-h">Play — walk the district</h2>
-  <p class="play-lede">Walk the street, meet someone, take a small job, do it, and watch the district change. Tap the district to walk there, or use arrow keys / WASD. <span class="play-register">Imagined, to be witnessed and experienced by everyone.</span></p>
+  <p class="play-lede">Walk the street, meet someone, take a small job, do it, and watch the district change. Tap the district to walk there, or use arrow keys / WASD. People pop in and out — tap one to say hello. <span class="play-register">Imagined, to be witnessed and experienced by everyone.</span></p>
   <div id="phaser-wrap">
-    <div id="phaser-game" role="application" aria-label="Walkable Chofu district game. Tap to walk, tap Miki to talk, find the lost ball and bring it back."></div>
-    <p id="phaser-status" role="status">The Lost Ball — walk the Chofu district, talk to Miki, find the ball, bring it back.</p>
+    <div id="phaser-game" role="application" aria-label="Walkable district game, one per episode. Tap to walk, tap a person to talk, do a small job. People pop in and out; in Chofu, snap the ball and the crowd rises."></div>
+    <p id="phaser-status" role="status">Chofu — walk the district. People pop in and out — tap one to say hello.</p>
     <p id="phaser-fallback" hidden></p>
-    <p class="phaser-note">Chofu, Episode 1 — the Phaser district. Painted, silent, no music. Progress is kept on this device only. The houses fade as you walk toward Ajinomoto Stadium.</p>
+    <p class="phaser-note">All four episodes — the Phaser district for the place you chose. Painted, silent, no music. Neon shop signs in our own words, lit windows, lamps, people popping in and out. In Chofu, tap “Snap the ball” and the crowd rises. Progress is kept on this device only.</p>
   </div>
   <h3 class="play-sub">More jobs in this district — walk the street</h3>
-  <p class="play-lede">The Lost Ball is played in the game above. The street below holds the other Chofu jobs, and the full districts for Episodes 2–4.</p>
+  <p class="play-lede">The game above walks all four districts, with every job. The street below plays the same jobs a second way, on foot.</p>
   <div id="play-hud" role="status">
     <span class="play-day" id="play-day"></span>
     <span id="play-map" aria-label="Places visited"></span>
@@ -300,6 +304,7 @@
 <script src="play.js"></script>
 <script src="locker.js"></script>
 <script src="phaser.min.js"></script>
-<script src="phaser-game.js"></script>
+<script src="engine.js"></script>
+<script src="emulation.js"></script>
 </body>
 </html>

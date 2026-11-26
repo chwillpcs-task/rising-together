@@ -21,8 +21,15 @@
 #locker-room[data-state="play"] .lk-scene-line,
 #locker-room[data-state="cheers"] .lk-scene-line { display: block; }
 
-/* --- Locker room: lockers, bench, three backs, CHOFU above --- */
-.lk-lockers { position: absolute; inset: 0 0 34% 0; display: flex; gap: 4px; padding: 18px 12px 0; }
+/* --- Locker room: the painted locker-room picture is the scene (2026-11-25
+   visual rebuild). The CSS/SVG lockers and stick-figure players are gone:
+   the painting shows the green lockers, the CHOFU sign, and the three
+   players from behind — OKABAYASHI, REED, WILLIAMS 32 — with the field
+   through the open door. The CSS figures are kept in the HTML but hidden,
+   so the beat controls and the state machine are untouched. --- */
+.lk-scene-locker { background: url("assets/visuals/web/locker-room.jpg") center/cover no-repeat #101c13; }
+.lk-scene-locker .lk-lockers, .lk-scene-locker .lk-chofu, .lk-scene-locker .lk-bench,
+.lk-scene-locker .lk-players, .lk-scene-locker .lk-door { display: none; }
 .lk-locker { flex: 1; background: linear-gradient(#4a5a52, #33413a); border: 1px solid #223028; border-radius: 4px 4px 0 0; }
 .lk-chofu { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); font-weight: 800; letter-spacing: .35em; font-size: 1.5rem; color: #f5d76e; text-shadow: 0 2px 0 #000; }
 .lk-bench { position: absolute; left: 6%; right: 6%; bottom: 26%; height: 12px; background: #6b4f2e; border-radius: 3px; }
@@ -45,8 +52,14 @@
 #locker-room[data-state="tunnel"].lk-walking .lk-tunnel-team { left: 38%; }
 .lk-tunnel-team svg { width: 52px; height: 70px; }
 
-/* --- Line of scrimmage: field, zoom, huddle breaks, snap --- */
-.lk-scene-line { background: linear-gradient(#2e6b3e 0 62%, #8a6a3a 62% 100%); transition: transform .9s ease; transform-origin: 50% 62%; }
+/* --- Line of scrimmage: the painted field picture is the scene (2026-11-25
+   visual rebuild). The painting already shows the line — seven linemen
+   from behind, the field, the stands, the goalposts at sunset — so the
+   CSS yard lines and lineman rows are hidden. The snap still moves: the
+   runner (32 WILLIAMS) breaks right, the ball moves, the crowd rises,
+   CHEERS appears. --- */
+.lk-scene-line { background: url("assets/visuals/web/field-line.jpg") center/cover no-repeat #2e6b3e; transition: transform .9s ease; transform-origin: 50% 62%; }
+.lk-scene-line .lk-yard, .lk-scene-line .lk-team-line, .lk-scene-line .lk-scrimmage { display: none; }
 #locker-room[data-state="line"] .lk-scene-line,
 #locker-room[data-state="play"] .lk-scene-line,
 #locker-room[data-state="cheers"] .lk-scene-line { transform: scale(1.55); }
@@ -79,6 +92,8 @@
 .lk-controls button[hidden] { display: none; }
 .lk-step { margin: 0; font-size: .9rem; color: #f2f0e4; }
 .lk-facts { padding: 0 .8rem .8rem; background: #1d3a24; color: #d8d2c0; font-size: .85rem; }
+/* Honest note, visible under the scene (2026-11-25 visual rebuild). */
+.lk-note { margin: 0; padding: .6rem .8rem; background: #1d3a24; color: #f5d76e; font-size: .85rem; }
 .lk-facts summary { cursor: pointer; color: #f5d76e; }
 .lk-facts p { margin: .4rem 0; }
 @media (prefers-reduced-motion: reduce) {
